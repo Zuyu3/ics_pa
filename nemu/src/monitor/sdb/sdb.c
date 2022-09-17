@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
@@ -57,7 +58,8 @@ static int cmd_si(char *args) {
   // TODO: Maybe some bugs here. Need further tests.
   int n = 0;
   if (args)
-    for (int i = 0; args[i] != '\0'; i++)
+    sscanf(args, "%d", &n);
+    /*for (int i = 0; args[i] != '\0'; i++)
     {
       if (args[i] < '0' || args[i] > '9')
       {
@@ -67,18 +69,27 @@ static int cmd_si(char *args) {
         return 0;
       }
       n = n * 10 + args[i] - '0';
-    }
+    }*/
   n = n ? n : 1;
   cpu_exec(n);
   return 0;
 }
 
-static int cmd_info(char *args){
-  //TODO:implement this function.
+static int cmd_info(char *args){ 
   if(args[0] == 'r'){
     isa_reg_display();
   }
+  //TODO:implement info w later.
   return 0; 
+}
+
+static int cmd_x(char *args){
+  int n = 0, addr;
+  if (args) {
+    sscanf(args, "%d %x", &n, &addr);
+  }
+    printf("0x%-10x   0x%-10x", addr, vaddr_read(addr, n));
+  return 0;
 }
 
 static struct {
@@ -91,6 +102,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "Run the program one step", cmd_si},
   {"info", "Print state of the program", cmd_info},
+  {"x", "Scanf the memory and output", cmd_x},
   /* TODO: Add more commands */
 
 };
