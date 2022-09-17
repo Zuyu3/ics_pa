@@ -54,6 +54,7 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
+  //TODO: Maybe some bugs here. Need further test.
   int N = 0;
   for (int i = 0; args[i] != '\0'; i++) {
     if(args[i] <'0' || args[i] > '9'){
@@ -69,6 +70,9 @@ static int cmd_si(char *args) {
 
 static int cmd_info(char *args){
   //TODO:implement this function.
+  if(args[0] == 'r'){
+    isa_reg_display();
+  }
   return 0; 
 }
 
