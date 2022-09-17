@@ -55,6 +55,8 @@ static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
   //TODO: Maybe some bugs here. Need further test.
+  if(args == NULL)
+  printf("get a NULL as argument.\n");
   int N = 0;
   for (int i = 0; args[i] != '\0'; i++) {
     if(args[i] <'0' || args[i] > '9'){
