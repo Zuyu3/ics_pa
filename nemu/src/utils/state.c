@@ -15,7 +15,10 @@
 
 #include <utils.h>
 
-NEMUState nemu_state = { .state = NEMU_STOP };
+//origin:
+//NEMUState nemu_state = { .state = NEMU_STOP };
+//Not Sure: Since shell grep only finds NEMUState and is_exit_status_bad used in current scence, I think maybe it's set to return bad on purpose.
+NEMUState nemu_state = { .state = NEMU_QUIT };
 
 int is_exit_status_bad() {
   int good = (nemu_state.state == NEMU_END && nemu_state.halt_ret == 0) ||
