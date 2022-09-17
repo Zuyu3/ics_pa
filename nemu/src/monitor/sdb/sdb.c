@@ -84,7 +84,8 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
-  unsigned int n = 0, addr;
+  int n = 0;
+  vaddr_t addr;
   if (args) {
     sscanf(args, "%d %x", &n, &addr);
   }
