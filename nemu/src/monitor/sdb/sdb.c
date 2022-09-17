@@ -54,8 +54,8 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
-  // TODO: Maybe some bugs here. Need further test.
-  int N = 0;
+  // TODO: Maybe some bugs here. Need further tests.
+  int n = 0;
   if (args)
     for (int i = 0; args[i] != '\0'; i++)
     {
@@ -64,10 +64,10 @@ static int cmd_si(char *args) {
         printf("Error. Only unsigned integers are allowed. Please input a valid argument.\n");
         break;
       }
-      N = N * 10 + args[i] - '0';
+      n = n * 10 + args[i] - '0';
     }
-  N = N ? N : 1;
-  cpu_exec(N);
+  n = n ? n : 1;
+  cpu_exec(n);
   return 0;
 }
 
