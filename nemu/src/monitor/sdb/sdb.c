@@ -88,7 +88,7 @@ static int cmd_x(char *args){
   if (args) {
     sscanf(args, "%d %x", &n, &addr);
   }
-    printf("0x%-10x   0x%-10x", addr, vaddr_read(addr, n));
+    printf("0x%-10x   0x%-10x\n", addr, vaddr_read(addr, n));
   return 0;
 }
 
