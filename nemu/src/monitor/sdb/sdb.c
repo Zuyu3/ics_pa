@@ -47,12 +47,30 @@ static int cmd_c(char *args) {
   return 0;
 }
 
-
 static int cmd_q(char *args) {
   return -1;
 }
 
 static int cmd_help(char *args);
+
+static int cmd_si(char *args) {
+  int N = 0;
+  for (int i = 0; args[i] != '\0'; i++) {
+    if(args[i] <'0' || args[i] > '9'){
+      printf("Error. Only unsigned integers are allowed. Please input a valid argument.\n");
+      break;
+    }
+      N = N * 10 + args[i] - '0';
+  }
+  N = N ? N : 1;
+  cpu_exec(N);
+  return 0;
+}
+
+static int cmd_info(char *args){
+  //TODO:implement this function.
+  return 0; 
+}
 
 static struct {
   const char *name;
@@ -62,7 +80,8 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si", "Run the program one step", cmd_si},
+  {"info", "Print state of the program", cmd_info},
   /* TODO: Add more commands */
 
 };
