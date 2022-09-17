@@ -62,7 +62,9 @@ static int cmd_si(char *args) {
       if (args[i] < '0' || args[i] > '9')
       {
         printf("Error. Only unsigned integers are allowed. Please input a valid argument.\n");
-        break;
+        
+        //Not Sure: argument not integer. Abandon exec here.
+        return 0;
       }
       n = n * 10 + args[i] - '0';
     }
