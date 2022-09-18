@@ -94,6 +94,17 @@ static int cmd_x(char *args){
   return 0;
 }
 
+static int cmd_p(char *args){
+  bool is_success;
+  word_t res;
+  res = expr(args, &is_success);
+  if(is_success)
+    printf("%d\n", res);
+  else
+    printf("Error. Expression is invalid.\n");
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -105,6 +116,7 @@ static struct {
   { "si", "Run the program one step", cmd_si},
   {"info", "Print state of the program", cmd_info},
   {"x", "Scanf the memory and output", cmd_x},
+  {"p", "Get the answer of expression and print it out.", cmd_p},
   /* TODO: Add more commands */
 
 };
