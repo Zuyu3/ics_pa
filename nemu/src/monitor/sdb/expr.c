@@ -101,6 +101,12 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+        
+
+        if(substr_len > 32){
+          printf("Substr is too long.\n");
+          assert(0);
+        }
 
         switch (rules[i].token_type)
         {
@@ -127,6 +133,41 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int p, int q){
+  /*check if the expression is surrounded by a matched pair of parentheses.
+   *return true if it is.
+  */
+  //TODO: implement this function later.
+  return true;
+}
+
+word_t eval(int p, int q) {
+  if (p > q) {
+    //Bad expression.
+    //TODO:maybe need further check here.
+    return 0;
+  }
+  else if (p == q) {
+    // Single token.
+    // For now this token should be a number.
+    // Return the value of the number.
+    //TODO: implement Hex numbers here.
+    word_t res;
+    sscanf(tokens[p].str, "%d", &res);
+    return res;
+  }
+  else if (check_parentheses(p, q) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  }
+  else {
+    /* We should do more things here. */
+    //TODO: implement it here.
+    return 0;
+  }
+}
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
