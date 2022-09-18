@@ -44,6 +44,7 @@ static struct rule {
   {"\\/", '/'},
   {"\\(", '('},
   {"\\)", ')'},
+  {"\\d", TK_DECNUM},
   {"\\d+", TK_DECNUM},
   
   
