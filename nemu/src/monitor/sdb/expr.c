@@ -44,7 +44,8 @@ static struct rule {
   {"\\/", '/'},
   {"\\(", '('},
   {"\\)", ')'},
-  {"\\d", TK_DECNUM},
+  {"[0-9]", TK_DECNUM},
+  {"[0-9]+", TK_DECNUM},
   {"\\d+", TK_DECNUM},
   
   
@@ -89,7 +90,6 @@ static bool make_token(char *e) {
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
-              printf("%s\n", rules[i].regex);
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
@@ -114,6 +114,7 @@ static bool make_token(char *e) {
           for (int j = 0; j < substr_len; j++) {
             tokens[nr_token].str[j] = substr_start[j];
           }
+          nr_token++;
         }
         break;
       }
