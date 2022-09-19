@@ -146,8 +146,7 @@ static bool make_token(char *e)
   return true;
 }
 
-bool check_parentheses(int p, int q)
-{
+bool check_parentheses(int p, int q) {
   /*check if the expression is surrounded by a matched pair of parentheses.
    *return true if it is.
    */
@@ -165,25 +164,23 @@ word_t eval(int p, int q, bool *success)
     // Bad expression.
     // TODO:maybe need further check here.
     *success = false;
+    printf("Error at %d %d\n", p, q);
     return 0;
   }
-  else if (p == q)
-  {
+  else if (p == q) {
     // Single token.
     // For now this token should be a number.
     // Return the value of the number.
     sscanf(tokens[p].str, "%d", &res);
     return res;
   }
-  else if (check_parentheses(p, q) == true)
-  {
+  else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
     return eval(p + 1, q - 1, success);
   }
-  else
-  {
+  else {
     // TODO: implement it here.
     // first scan for '+' || '-'
     for (int i = p + 1, parenthesesCounter = 0; i < q; i++)
@@ -210,9 +207,9 @@ word_t eval(int p, int q, bool *success)
       case ')':
         if (parenthesesCounter > 0)
           parenthesesCounter--;
-        else
-        {
+        else {
           *success = false;
+          printf("Error. parentheses not match at position %d. %d '(' remains\n", i, parenthesesCounter);
           return 0;
         }
         break;
@@ -249,6 +246,7 @@ word_t eval(int p, int q, bool *success)
         else
         {
           *success = false;
+          printf("Error. parentheses not match at position %d. %d '(' remains\n", i, parenthesesCounter);
           return 0;
         }
         break;
@@ -257,6 +255,7 @@ word_t eval(int p, int q, bool *success)
       }
     }
     *success = false;
+    printf("No arithmetic operators\n");
     // TODO:cause an error.
     return 0;
   }
