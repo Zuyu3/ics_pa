@@ -151,9 +151,22 @@ bool check_parentheses(int p, int q) {
    *return true if it is.
    */
   // TODO: check it later.
-  if (tokens[p].type == '(' && tokens[q].type == ')')
-    return true;
-  return false;
+  if (tokens[p].type != '(' || tokens[q].type != ')')
+    return false;
+  int parenthesesCounter = 0;
+  for(int i = p + 1; i < q; i++){
+    switch (tokens[i].type)
+    {
+    case '(':
+      parenthesesCounter++;
+      break;
+    case ')':
+    parenthesesCounter--;
+    default:
+      break;
+    }
+  }
+  return parenthesesCounter == 0;
 }
 
 word_t eval(int p, int q, bool *success)
