@@ -271,5 +271,5 @@ word_t expr(char *e, bool *success)
   }
   *success = true;
   // TODO: maybe need to check success here.
-  return eval(0, nr_token, success);
+  return eval(0, nr_token - 1, success);
 }
