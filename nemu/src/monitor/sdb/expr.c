@@ -163,8 +163,6 @@ bool check_parentheses(int p, int q) {
     case ')':
     if(parenthesesCounter > 0)
     parenthesesCounter--;
-    else
-    return false;
     default:
       break;
     }
