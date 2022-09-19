@@ -161,12 +161,15 @@ bool check_parentheses(int p, int q) {
       parenthesesCounter++;
       break;
     case ')':
+    if(parenthesesCounter > 0)
     parenthesesCounter--;
+    else
+    return false;
     default:
       break;
     }
   }
-  printf("check parentheses at %d and %d, result is %d", p, q, parenthesesCounter);
+  printf("check parentheses at %d and %d, result is %d\n", p, q, parenthesesCounter);
   return parenthesesCounter == 0;
 }
 
