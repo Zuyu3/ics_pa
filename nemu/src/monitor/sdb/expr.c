@@ -199,6 +199,10 @@ word_t eval(int p, int q, bool *success)
      */
     return eval(p + 1, q - 1, success);
   }
+  else if (tokens[p].type != TK_DECNUM || tokens[p].type != '(' || tokens[q].type != TK_DECNUM || tokens[q].type != '('){
+    *success = false;
+    return 0;
+  }
   else {
     // TODO: implement it here.
     // first scan for '+' || '-'
