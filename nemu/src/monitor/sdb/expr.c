@@ -154,7 +154,7 @@ bool check_parentheses(int p, int q) {
   if (tokens[p].type != '(' || tokens[q].type != ')')
     return false;
   int parenthesesCounter = 0;
-  for(int i = p + 1; i < q; i++){
+  for(int i = p; i <= q; i++){
     switch (tokens[i].type)
     {
     case '(':
@@ -162,7 +162,11 @@ bool check_parentheses(int p, int q) {
       break;
     case ')':
     if(parenthesesCounter > 0)
-    parenthesesCounter--;
+      parenthesesCounter--;
+    else{
+      printf("check parentheses at %d and %d, result is %d\n", p, q, parenthesesCounter);
+      return parenthesesCounter == 0;
+    }
     default:
       break;
     }
