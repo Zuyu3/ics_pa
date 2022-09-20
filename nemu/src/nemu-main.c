@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
   /* Start engine. */
   FILE *fp = fopen("tools/gen-expr/input", "r");
   char toEvalExpr[50000];
-  int stdAnswer, myAnswer;
+  unsigned int stdAnswer, myAnswer;
   bool s = true;
 
   for(int i = 0; i < 10000; i++){

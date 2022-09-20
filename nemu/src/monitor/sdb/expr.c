@@ -171,7 +171,7 @@ bool check_parentheses(int p, int q) {
       break;
     }
   }
-  printf("check parentheses at %d and %d, result is %d\n", p, q, parenthesesCounter);
+  //printf("check parentheses at %d and %d, result is %d\n", p, q, parenthesesCounter);
   return parenthesesCounter == 0;
 }
 
