@@ -297,6 +297,10 @@ word_t expr(char *e, bool *success)
   else
   printf("%s", tokens[i].str);
   }
+    for(int i = 0; i < nr_token; i++){
+  if(tokens[i].type == TK_DECNUM)
+  printf("%d\n", i);
+  }
   printf("\n");
   *success = true;
   // TODO: maybe need to check success here.
