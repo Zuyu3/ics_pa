@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
       assert(0);
     }
     printf("%d\n%s\n", stdAnswer, toEvalExpr);
+    printf("%c   %c", toEvalExpr[267], toEvalExpr[268]);
     myAnswer = expr(toEvalExpr, &s);
     if(myAnswer != stdAnswer){
       printf("WA!\ninput expression is: %s\n Standard is %d, but my answer is %d\n",toEvalExpr, stdAnswer, myAnswer);
