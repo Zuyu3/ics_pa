@@ -37,12 +37,10 @@ int main(int argc, char *argv[]) {
 
   for(int i = 0; i < 10000; i++){
     if(!fscanf(fp, "%d", &stdAnswer)){
-      printf("Scanf Error! \n");
-      assert(0);
+      break;
     }
     if(!fgets(toEvalExpr, 50000, fp)){
-      printf("Scanf Error! \n");
-      assert(0);
+      break;
     }
     Log("%d\n%s", stdAnswer, toEvalExpr);
     myAnswer = expr(toEvalExpr, &s);
