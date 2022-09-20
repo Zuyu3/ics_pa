@@ -19,6 +19,7 @@ void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
 int is_exit_status_bad();
+word_t expr(char *e, bool *success);
 
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
@@ -29,6 +30,22 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
+  FILE *fp = fopen("tools/gen-expr/input", "r");
+  char toEvalExpr[50000];
+  int stdAnswer, myAnswer;
+  bool s = true;
+
+  for(int i = 0; i < 10000; i++){
+    if(fscanf(fp, "%s%d", toEvalExpr, &stdAnswer)){
+      printf("Scanf Error! \n");
+      assert(0);
+    }
+    myAnswer = expr(toEvalExpr, &s);
+    if(myAnswer != stdAnswer){
+      printf("WA!\ninput expression is: %s\n Standard is %d, but my answer is %d\n",toEvalExpr, stdAnswer, myAnswer);
+      assert(0);
+    }
+  }
   engine_start();
 
   return is_exit_status_bad();
