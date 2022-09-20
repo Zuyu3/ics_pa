@@ -44,14 +44,14 @@ int main(int argc, char *argv[]) {
       printf("Scanf Error! \n");
       assert(0);
     }
-    printf("%d\n%s\n", stdAnswer, toEvalExpr);
+    printf("%d\n%s", stdAnswer, toEvalExpr);
     myAnswer = expr(toEvalExpr, &s);
     if(myAnswer != stdAnswer){
       printf("WA!\ninput expression is: %s\n Standard is %d, but my answer is %d\n",toEvalExpr, stdAnswer, myAnswer);
       assert(0);
     }
     else{
-      printf("Pass expression %d\n", i);
+      printf("Pass expression %d\n\n", i);
     }
   }
   engine_start();
