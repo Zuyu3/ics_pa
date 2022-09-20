@@ -30,18 +30,19 @@ static char *code_format =
     "  printf(\"%%u\", result); "
     "  return 0; "
     "}";
+int buf_index;
 
-void gen_space(int *index){
+void gen_space(){
   int res = rand() % 4;
   for(int i = 0; i < res; i++){
-    buf[*index] = ' ';
-    (*index)++;
+    buf[buf_index] = ' ';
+    buf_index++;
   }
 }
 
-void gen_num(int *index)
+void gen_num()
 {
-  int l = *index;
+  int l = buf_index;
   int res = rand();
   char temp;
   while (res)
@@ -50,74 +51,71 @@ void gen_num(int *index)
     l++;
     res /= 10;
   }
-  for (int i = *index, j = l - 1; i < j; i++, j--)
+  for (int i = buf_index, j = l - 1; i < j; i++, j--)
   {
     temp = buf[i];
     buf[i] = buf[j];
     buf[j] = temp;
   }
-  *index = l;
+  buf_index = l;
+  gen_space();
 }
 
-void gen_rand_op(int *index){
+void gen_rand_op(){
   int res = rand() % 4;
   switch (res)
   {
   case 0:
-    buf[*index] = '+';
-    (*index)++;
+    buf[buf_index] = '+';
+    buf_index++;
     break;
   case 1:
-    buf[*index] = '-';
-    (*index)++;
+    buf[buf_index] = '-';
+    buf_index++;
     break;
   case 2:
-    buf[*index] = '*';
-    (*index)++;
+    buf[buf_index] = '*';
+    buf_index++;
     break;
   case 3:
-    buf[*index] = '/';
-    (*index)++;
+    buf[buf_index] = '/';
+    buf_index++;
     break;
   default:
     break;
   }
+  gen_space();
 }
 
-static void gen_rand_expr(int *index, int max_loop_number)
-{
-  //TODO:filter expressions including " / 0"
-  int loop_number = rand() % max_loop_number;
-  for (int i = 0; i < loop_number; i++)
-    switch (rand() % 3)
-    {
-    case 0:
-      gen_num(index);
-      gen_space(index);
-      break;
-    case 1:
-      buf[*index] = '(';
-      (*index)++;
-      gen_space(index);
-      max_loop_number = max_loop_number * 10 / 12;
-      gen_rand_expr(index, max_loop_number);
-      buf[*index] = ')';
-      (*index)++;
-      gen_space(index);
-      break;
-    default:
-      max_loop_number = max_loop_number * 10 / 12;
-      gen_rand_expr(index, max_loop_number);
-      gen_space(index);
-
-      gen_rand_op(index);
-      gen_space(index);
-
-      max_loop_number = max_loop_number * 10 / 12;
-      gen_rand_expr(index, max_loop_number);
-      gen_space(index);
-      break;
-    }
+void gen_rand_expr(int gen_level) {
+  if(gen_level == 0){
+    gen_num();
+    gen_space();
+    return;
+  }
+  int gen_level_moder = gen_level / 5 * 3 + 1;
+  int gen_level_adder = gen_level / 5;
+  switch (rand() % 10) {
+  case 0:
+  case 1:
+    gen_num(buf_index);
+    break;
+  case 2:
+  case 3:
+  case 4:
+  case 5:
+    buf[buf_index++] = '(';
+    gen_space();
+    gen_rand_expr(rand() % gen_level_moder + gen_level_adder);
+    buf[buf_index++] = ')';
+    gen_space();
+    break;
+  default:
+    gen_rand_expr(rand() % gen_level_moder + gen_level_adder);
+    gen_rand_op();
+    gen_rand_expr(rand() % gen_level_moder + gen_level_adder);
+    break;
+  }
 }
 
 int main(int argc, char *argv[])
@@ -130,10 +128,11 @@ int main(int argc, char *argv[])
     sscanf(argv[1], "%d", &loop);
   }
   int i;
-  int index = 0;
   for (i = 0; i < loop; i++)
   {
-    gen_rand_expr(&index, 6000);
+    buf_index = 0;
+    gen_rand_expr(3000);
+    buf[buf_index++] = '\0';
 
     sprintf(code_buf, code_format, buf);
 
@@ -141,7 +140,7 @@ int main(int argc, char *argv[])
     assert(fp != NULL);
     fputs(code_buf, fp);
     fclose(fp);
-
+    
     int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
     if (ret != 0)
       continue;
