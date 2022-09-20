@@ -57,6 +57,7 @@ void gen_num()
     buf[i] = buf[j];
     buf[j] = temp;
   }
+  buf[l++] = 'u';
   buf_index = l;
   gen_space();
 }
