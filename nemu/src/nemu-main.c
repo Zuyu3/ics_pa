@@ -29,7 +29,8 @@ int main(int argc, char *argv[]) {
   init_monitor(argc, argv);
 #endif
 
-  /* Start engine. */
+
+  /*
   FILE *fp = fopen("tools/gen-expr/input", "r");
   char toEvalExpr[50000];
   unsigned int stdAnswer, myAnswer;
@@ -52,6 +53,8 @@ int main(int argc, char *argv[]) {
       printf("Pass expression %d\n\n", i + 1);
     }
   }
+  */
+  /* Start engine. */
   engine_start();
 
   return is_exit_status_bad();
