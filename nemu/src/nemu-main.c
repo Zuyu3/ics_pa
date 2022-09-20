@@ -40,11 +40,13 @@ int main(int argc, char *argv[]) {
       printf("Scanf Error! \n");
       assert(0);
     }
+    printf("%d\n%s\n", stdAnswer, toEvalExpr);
     myAnswer = expr(toEvalExpr, &s);
     if(myAnswer != stdAnswer){
       printf("WA!\ninput expression is: %s\n Standard is %d, but my answer is %d\n",toEvalExpr, stdAnswer, myAnswer);
       assert(0);
     }
+    break;
   }
   engine_start();
 
