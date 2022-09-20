@@ -24,7 +24,8 @@ enum
 {
   TK_NOTYPE = 256,
   TK_EQ,
-  TK_DECNUM
+  TK_DECNUM,
+  TK_DECNUMU,
 
   /* TODO: Add more token types */
 
@@ -49,6 +50,7 @@ static struct rule
     {"\\(", '('},
     {"\\)", ')'},
     {"[0-9]+", TK_DECNUM},
+    {"[0-9]+(u)?", TK_DECNUMU},
 
 };
 
@@ -122,6 +124,15 @@ static bool make_token(char *e)
         {
         case TK_NOTYPE:
           break;
+        case TK_DECNUMU:
+          tokens[nr_token].type = rules[i].token_type;
+          for (int j = 0; j < substr_len; j++)
+          {
+            tokens[nr_token].str[j] = substr_start[j];
+          }
+          tokens[nr_token].str[substr_len - 1] = 0;
+          nr_token++;
+          break;        
         default:
           tokens[nr_token].type = rules[i].token_type;
           for (int j = 0; j < substr_len; j++)

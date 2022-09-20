@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
-  FILE *fp = fopen("tools/gen-expr/input", "r");
+  /*FILE *fp = fopen("tools/gen-expr/input", "r");
   char toEvalExpr[50000];
   unsigned int stdAnswer, myAnswer;
   bool s = true;
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
     else{
       printf("Pass expression %d\n\n", i + 1);
     }
-  }
+  }*/
   engine_start();
 
   return is_exit_status_bad();
