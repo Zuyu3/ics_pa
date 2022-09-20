@@ -49,7 +49,7 @@ static struct rule
     {"\\/", '/'},
     {"\\(", '('},
     {"\\)", ')'},
-    {"[0-9]+(u)?", TK_DECNUMU},
+    {"[0-9]+u", TK_DECNUMU},
     {"[0-9]+", TK_DECNUM},
 
 };
