@@ -292,7 +292,6 @@ word_t expr(char *e, bool *success)
   }
   for (int i = 0; i < nr_token; i++)
   {
-    getchar();
     if (tokens[i].type == TK_DECNUM)
       printf("__");
 
