@@ -36,7 +36,11 @@ int main(int argc, char *argv[]) {
   bool s = true;
 
   for(int i = 0; i < 10000; i++){
-    if(!fscanf(fp, "%d%s", &stdAnswer, toEvalExpr)){
+    if(!fscanf(fp, "%d", &stdAnswer)){
+      printf("Scanf Error! \n");
+      assert(0);
+    }
+    if(!fgets(toEvalExpr, 50000, fp)){
       printf("Scanf Error! \n");
       assert(0);
     }
