@@ -50,6 +50,9 @@ int main(int argc, char *argv[]) {
       printf("WA!\ninput expression is: %s\n Standard is %d, but my answer is %d\n",toEvalExpr, stdAnswer, myAnswer);
       assert(0);
     }
+    else{
+      printf("Pass expression %d\n", i);
+    }
   }
   engine_start();
 
