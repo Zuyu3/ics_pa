@@ -131,6 +131,7 @@ static bool make_token(char *e)
             tokens[nr_token].str[j] = substr_start[j];
           }
           tokens[nr_token].str[substr_len - 1] = 0;
+          tokens[nr_token].type = TK_DECNUM;
           nr_token++;
           break;        
         default:
