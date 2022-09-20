@@ -291,17 +291,20 @@ word_t expr(char *e, bool *success)
     *success = false;
     return 0;
   }
-  for(int i = 0; i < nr_token; i++){
-  if(tokens[i].type == TK_DECNUM)
-  printf("__");
-  else
-  printf("%s", tokens[i].str);
-  }
-    for(int i = 0; i < nr_token; i++){
-  if(tokens[i].type == TK_DECNUM)
-  printf("%d\n", i);
+  for (int i = 0; i < nr_token; i++)
+  {
+    if (tokens[i].type == TK_DECNUM)
+      printf("__");
+
+    else
+      printf("%s", tokens[i].str);
   }
   printf("\n");
+  for (int i = 0; i < nr_token; i++)
+  {
+    if (tokens[i].type == TK_DECNUM)
+      printf("%d   %s\n", i, tokens[i].str);
+  }
   *success = true;
   // TODO: maybe need to check success here.
   return eval(0, nr_token - 1, success);
