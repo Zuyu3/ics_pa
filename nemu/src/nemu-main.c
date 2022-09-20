@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
       assert(0);
     }
     else{
-      printf("Pass expression %d\n\n", i);
+      printf("Pass expression %d\n\n", i + 1);
     }
   }
   engine_start();
