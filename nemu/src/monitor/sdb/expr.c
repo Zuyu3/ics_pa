@@ -206,7 +206,7 @@ word_t eval(int p, int q, bool *success)
   else {
     // TODO: implement it here.
     // first scan for '+' || '-'
-    for (int i = p, parenthesesCounter = 0; i < q; i++)
+    for (int i = q, parenthesesCounter = 0; i > p; i--)
     {
       switch (tokens[i].type)
       {
@@ -224,10 +224,10 @@ word_t eval(int p, int q, bool *success)
           return *success ? res : 0;
         }
         break;
-      case '(':
+      case ')':
         parenthesesCounter++;
         break;
-      case ')':
+      case '(':
         if (parenthesesCounter > 0)
           parenthesesCounter--;
         else {
@@ -242,7 +242,7 @@ word_t eval(int p, int q, bool *success)
     }
 
     // second scan for '*' || '/'
-    for (int i = p, parenthesesCounter = 0; i < q; i++)
+    for (int i = q, parenthesesCounter = 0; i > p; i--)
     {
       switch (tokens[i].type)
       {
@@ -260,10 +260,10 @@ word_t eval(int p, int q, bool *success)
           return *success ? res : 0;
         }
         break;
-      case '(':
+      case ')':
         parenthesesCounter++;
         break;
-      case ')':
+      case '(':
         if (parenthesesCounter > 0)
           parenthesesCounter--;
         else
