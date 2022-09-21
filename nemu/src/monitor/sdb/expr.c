@@ -252,7 +252,7 @@ word_t eval(int p, int q, bool *success)
      */
     return eval(p + 1, q - 1, success);
   }
-  else if ((tokens[p].type != '(' && (tokens[p].type < TK_EQ || tokens[p].type > TK_UNARY_MULT)) || (tokens[q].type != TK_DECNUM && tokens[q].type != ')')){
+  else if ((tokens[p].type != '(' && (tokens[p].type < TK_EQ || tokens[p].type > TK_UNARY_MULT)) || (tokens[q].type != '}' && (tokens[q].type < TK_EQ || tokens[q].type > TK_UNARY_MULT))) {
     printf("Ban before operators\n");
     *success = false;
     return 0;
