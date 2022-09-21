@@ -407,7 +407,7 @@ word_t eval(int p, int q, bool *success)
       }
     }
 
-    // third scan for '*' or '/'
+    // third scan for unary '-' or '*'
     // associate with right side
     for (int i = p, parenthesesCounter = 0; i < q; i++)
     {
@@ -430,10 +430,10 @@ word_t eval(int p, int q, bool *success)
           return *success ? res : 0;
         }
         break;
-      case ')':
+      case '(':
         parenthesesCounter++;
         break;
-      case '(':
+      case ')':
         if (parenthesesCounter > 0)
           parenthesesCounter--;
         else
