@@ -243,9 +243,13 @@ word_t eval(int p, int q, bool *success)
     // For now this token should be a number.
     // Return the value of the number.
     if(tokens[p].type == TK_DECNUM)
-    *success = sscanf(tokens[p].str, "%d", &res);
-    else
-    *success = sscanf(tokens[p].str, "%x", &res);
+      *success = sscanf(tokens[p].str, "%d", &res);
+    else if (tokens[p].type == TK_DECNUM)
+      *success = sscanf(tokens[p].str, "%x", &res);
+    else {
+      //TODO:
+      return 0;
+    }
     return *success? res: 0;
   }
   else if (check_parentheses(p, q) == true) {
@@ -290,7 +294,6 @@ word_t eval(int p, int q, bool *success)
         break;
       }
     }
-
     
     // scan for '==' or '!='
     for (int i = q, parenthesesCounter = 0; i > p; i--)
