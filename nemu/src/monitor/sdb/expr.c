@@ -335,6 +335,39 @@ word_t eval(int p, int q, bool *success)
         break;
       }
     }
+
+    // third scan for '*' || '/'
+    // associate with right side
+    for (int i = p, parenthesesCounter = 0; i < q; i++)
+    {
+      switch (tokens[i].type)
+      {
+      case TK_UNARY_MINUS:
+        if (!parenthesesCounter)
+        {
+          res = 0 - eval(i + 1, q, success);
+          return *success ? res : 0;
+        }
+        break;
+      case TK_UNARY_MULT:
+        break;
+      case ')':
+        parenthesesCounter++;
+        break;
+      case '(':
+        if (parenthesesCounter > 0)
+          parenthesesCounter--;
+        else
+        {
+          *success = false;
+          printf("Error. parentheses not match at position %d. %d '(' remains\n", i, parenthesesCounter);
+          return 0;
+        }
+        break;
+      default:
+        break;
+      }
+    }
     *success = false;
     printf("No arithmetic operators\n");
     // TODO:cause an error.
