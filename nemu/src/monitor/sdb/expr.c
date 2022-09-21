@@ -29,6 +29,7 @@ enum
   TK_UNARY_MINUS,
   TK_HEXNUM,
   TK_HEXNUMU,
+  TK_REGISTER,
   /* TODO: Add more token types */
 
 };
@@ -55,7 +56,7 @@ static struct rule
     {"[0-9]+", TK_DECNUM},
     {"0x[0-9]+u", TK_HEXNUMU},
     {"0x[0-9]+", TK_HEXNUM},
-
+    
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -91,6 +92,17 @@ typedef struct token
 static Token tokens[60000] __attribute__((used)) = {};
 static int nr_token __attribute__((used)) = 0;
 
+bool is_unary_operator(int x) {
+  int certain_type[] = {')', TK_DECNUM, TK_HEXNUM, TK_REGISTER};
+  if(x == 0)
+    return true;
+  for(int i = 0; i < 4; i++){
+    if(tokens[x].type == certain_type[i])
+      return true;
+  }
+  return false;
+}
+
 static bool make_token(char *e)
 {
   int position = 0;
@@ -118,7 +130,7 @@ static bool make_token(char *e)
          * of tokens, some extra actions should be performed.
          */
 
-        if (substr_len > 60000)
+        if (substr_len > 32)
         {
           printf("Substr is too long.\n");
           assert(0);
@@ -129,6 +141,7 @@ static bool make_token(char *e)
         case TK_NOTYPE:
           break;
         case TK_HEXNUMU:
+          //unsigned int
           tokens[nr_token].type = TK_HEXNUM;
           for (int j = 0; j < substr_len; j++)
             tokens[nr_token].str[j] = substr_start[j];
@@ -136,12 +149,20 @@ static bool make_token(char *e)
           nr_token++;
           break;
         case TK_DECNUMU:
+          //unsigned hex int
           tokens[nr_token].type = TK_DECNUM;
           for (int j = 0; j < substr_len; j++)
             tokens[nr_token].str[j] = substr_start[j];
           tokens[nr_token].str[substr_len - 1] = 0;
           nr_token++;
-          break;      
+          break; 
+        case '-':
+          if(is_unary_operator(i)) {
+            tokens[nr_token].type = TK_UNARY_MINUS;
+            tokens[nr_token].str[0] = '-';
+            nr_token++;
+            break;
+          } 
         default:
           tokens[nr_token].type = rules[i].token_type;
           for (int j = 0; j < substr_len; j++)
