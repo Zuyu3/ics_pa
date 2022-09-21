@@ -99,7 +99,7 @@ static int cmd_p(char *args){
   word_t res;
   res = expr(args, &is_success);
   if(is_success)
-    printf("%d\n", res);
+    printf("%u\n", res);
   else
     printf("Error. Expression is invalid.\n");
   return 0;

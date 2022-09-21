@@ -332,7 +332,7 @@ word_t eval(int p, int q, bool *success)
       case TK_UNARY_MINUS:
         if (!parenthesesCounter)
         {
-          res = 0 - eval(i + 1, q, success);
+          res = 0u - eval(i + 1, q, success);
           return *success ? res : 0;
         }
         break;
