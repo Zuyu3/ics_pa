@@ -274,11 +274,11 @@ word_t eval(int p, int q, bool *success)
         if (!parenthesesCounter)
         {
           res = eval(i + 1, q, success);
-          if(res == 0){
-            printf("Error. Divide 0.\n");
+          /*if(res == 0){
+            printf("Divide 0.\n");
             *success = false;
           }
-          else
+          else*/
             res = eval(p, i - 1, success) / res;
           return *success ? res : 0;
         }
