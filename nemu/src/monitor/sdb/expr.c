@@ -237,7 +237,10 @@ word_t eval(int p, int q, bool *success)
     // Single token.
     // For now this token should be a number.
     // Return the value of the number.
+    if(tokens[p].type == TK_DECNUM)
     *success = sscanf(tokens[p].str, "%d", &res);
+    else
+    *success = sscanf(tokens[p].str, "%x", &res);
     return *success? res: 0;
   }
   else if (check_parentheses(p, q) == true) {
