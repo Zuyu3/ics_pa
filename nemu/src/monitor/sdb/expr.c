@@ -157,10 +157,11 @@ static bool make_token(char *e)
           nr_token++;
           break; 
         case '-':
+          printf("Find minus at position %d\n", i);
           if(is_unary_operator(i)) {
             tokens[nr_token].type = TK_UNARY_MINUS;
             tokens[nr_token].str[0] = '-';
-            printf("Find unary minus at position %d\n", i);
+            printf("is unary minus\n");
             nr_token++;
             break;
           } 
