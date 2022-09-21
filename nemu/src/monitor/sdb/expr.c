@@ -165,6 +165,13 @@ static bool make_token(char *e)
             nr_token++;
             break;
           }
+        case '*':
+          if(is_unary_operator(nr_token)) {
+            tokens[nr_token].type = TK_UNARY_MULT;
+            tokens[nr_token].str[0] = '*';
+            nr_token++;
+            break;
+          }          
         default:
           tokens[nr_token].type = rules[i].token_type;
           for (int j = 0; j < substr_len; j++)
