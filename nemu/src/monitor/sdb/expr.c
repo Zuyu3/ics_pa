@@ -232,19 +232,6 @@ word_t eval(int p, int q, bool *success)
     *success = sscanf(tokens[p].str, "%d", &res);
     return *success? res: 0;
   }
-  else if (p +1 == q) {
-    switch (tokens[p].type)
-    {
-    case TK_UNARY_MINUS:
-      return 0 - eval(q, q, success);
-    case TK_UNARY_MULT:
-      //TODO: implement it later
-      return 0;
-    default:
-      *success = false;
-      return 0;
-    }
-  }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
@@ -257,7 +244,7 @@ word_t eval(int p, int q, bool *success)
   }
   else {
     // TODO: implement it here.
-    // first scan for '+' || '-'
+    // scan for '+' or '-'
     for (int i = q, parenthesesCounter = 0; i > p; i--)
     {
       switch (tokens[i].type)
@@ -293,7 +280,7 @@ word_t eval(int p, int q, bool *success)
       }
     }
 
-    // second scan for '*' || '/'
+    // second scan for '*' or '/'
     for (int i = q, parenthesesCounter = 0; i > p; i--)
     {
       switch (tokens[i].type)
@@ -336,7 +323,7 @@ word_t eval(int p, int q, bool *success)
       }
     }
 
-    // third scan for '*' || '/'
+    // third scan for '*' or '/'
     // associate with right side
     for (int i = p, parenthesesCounter = 0; i < q; i++)
     {
@@ -370,7 +357,6 @@ word_t eval(int p, int q, bool *success)
     }
     *success = false;
     printf("No arithmetic operators\n");
-    // TODO:cause an error.
     return 0;
   }
 }
