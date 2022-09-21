@@ -229,8 +229,8 @@ word_t eval(int p, int q, bool *success)
     // Single token.
     // For now this token should be a number.
     // Return the value of the number.
-    sscanf(tokens[p].str, "%d", &res);
-    return res;
+    *success = sscanf(tokens[p].str, "%d", &res);
+    return *success? res: 0;
   }
   else if (p +1 == q) {
     switch (tokens[p].type)
@@ -251,7 +251,7 @@ word_t eval(int p, int q, bool *success)
      */
     return eval(p + 1, q - 1, success);
   }
-  else if ((tokens[p].type != TK_DECNUM && tokens[p].type != '(') || (tokens[q].type != TK_DECNUM && tokens[q].type != ')')){
+  else if ((tokens[p].type != TK_DECNUM && tokens[p].type != TK_UNARY_MINUS && tokens[p].type != TK_UNARY_MULT && tokens[p].type != '(') || (tokens[q].type != TK_DECNUM && tokens[q].type != ')')){
     *success = false;
     return 0;
   }
