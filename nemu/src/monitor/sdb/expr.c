@@ -26,7 +26,9 @@ enum
   TK_EQ,
   TK_DECNUM,
   TK_DECNUMU,
-
+  TK_UNARY_MINUS,
+  TK_HEXNUM,
+  TK_HEXNUMU,
   /* TODO: Add more token types */
 
 };
@@ -51,6 +53,8 @@ static struct rule
     {"\\)", ')'},
     {"[0-9]+u", TK_DECNUMU},
     {"[0-9]+", TK_DECNUM},
+    {"0x[0-9]+u", TK_HEXNUMU},
+    {"0x[0-9]+", TK_HEXNUM},
 
 };
 
@@ -114,7 +118,7 @@ static bool make_token(char *e)
          * of tokens, some extra actions should be performed.
          */
 
-        if (substr_len > 32)
+        if (substr_len > 60000)
         {
           printf("Substr is too long.\n");
           assert(0);
@@ -124,22 +128,24 @@ static bool make_token(char *e)
         {
         case TK_NOTYPE:
           break;
-        case TK_DECNUMU:
-          tokens[nr_token].type = rules[i].token_type;
+        case TK_HEXNUMU:
+          tokens[nr_token].type = TK_HEXNUM;
           for (int j = 0; j < substr_len; j++)
-          {
             tokens[nr_token].str[j] = substr_start[j];
-          }
           tokens[nr_token].str[substr_len - 1] = 0;
-          tokens[nr_token].type = TK_DECNUM;
           nr_token++;
-          break;        
+          break;
+        case TK_DECNUMU:
+          tokens[nr_token].type = TK_DECNUM;
+          for (int j = 0; j < substr_len; j++)
+            tokens[nr_token].str[j] = substr_start[j];
+          tokens[nr_token].str[substr_len - 1] = 0;
+          nr_token++;
+          break;      
         default:
           tokens[nr_token].type = rules[i].token_type;
           for (int j = 0; j < substr_len; j++)
-          {
             tokens[nr_token].str[j] = substr_start[j];
-          }
           //printf("%d    %s\n", tokens[nr_token].type, tokens[nr_token].str);
           nr_token++;
         }
