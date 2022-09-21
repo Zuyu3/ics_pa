@@ -98,9 +98,9 @@ bool is_unary_operator(int x) {
     return true;
   for(int i = 0; i < 4; i++){
     if(tokens[x - 1].type == certain_type[i])
-      return true;
+      return false;
   }
-  return false;
+  return true;
 }
 
 static bool make_token(char *e)
