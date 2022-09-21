@@ -97,7 +97,7 @@ bool is_unary_operator(int x) {
   if(x == 0)
     return true;
   for(int i = 0; i < 4; i++){
-    if(tokens[x].type == certain_type[i])
+    if(tokens[x - 1].type == certain_type[i])
       return true;
   }
   return false;
@@ -158,7 +158,7 @@ static bool make_token(char *e)
           break; 
         case '-':
           printf("Find minus at position %d\n", position);
-          if(is_unary_operator(nr_token - 1)) {
+          if(is_unary_operator(nr_token)) {
             tokens[nr_token].type = TK_UNARY_MINUS;
             tokens[nr_token].str[0] = '-';
             printf("is unary minus\n");
