@@ -51,6 +51,8 @@ static struct rule
     {" +", TK_NOTYPE}, // spaces
     {"\\+", '+'},      // plus
     {"==", TK_EQ},     // equal
+    {"!=", TK_NEQ},
+    {"&&", TK_LAND},
     {"\\-", '-'},
     {"\\*", '*'},
     {"\\/", '/'},
@@ -259,6 +261,73 @@ word_t eval(int p, int q, bool *success)
   }
   else {
     // TODO: implement it here.
+    
+    // scan for "&&"
+    for (int i = q, parenthesesCounter = 0; i > p; i--)
+    {
+      switch (tokens[i].type)
+      {
+      case TK_LAND:
+        if (!parenthesesCounter)
+        {
+          res = eval(p, i - 1, success) && eval(i + 1, q, success);
+          return *success ? res : 0;
+        }
+        break;
+      case ')':
+        parenthesesCounter++;
+        break;
+      case '(':
+        if (parenthesesCounter > 0)
+          parenthesesCounter--;
+        else {
+          *success = false;
+          printf("Error. parentheses not match at position %d. %d '(' remains\n", i, parenthesesCounter);
+          return 0;
+        }
+        break;
+      default:
+        break;
+      }
+    }
+
+    
+    // scan for '==' or '!='
+    for (int i = q, parenthesesCounter = 0; i > p; i--)
+    {
+      switch (tokens[i].type)
+      {
+      case TK_EQ:
+        if (!parenthesesCounter)
+        {
+          res = eval(p, i - 1, success) == eval(i + 1, q, success);
+          return *success ? res : 0;
+        }
+        break;
+      case TK_NEQ:
+        if (!parenthesesCounter)
+        {
+          res = eval(p, i - 1, success) != eval(i + 1, q, success);
+          return *success ? res : 0;
+        }
+        break;
+      case ')':
+        parenthesesCounter++;
+        break;
+      case '(':
+        if (parenthesesCounter > 0)
+          parenthesesCounter--;
+        else {
+          *success = false;
+          printf("Error. parentheses not match at position %d. %d '(' remains\n", i, parenthesesCounter);
+          return 0;
+        }
+        break;
+      default:
+        break;
+      }
+    }
+   
     // scan for '+' or '-'
     for (int i = q, parenthesesCounter = 0; i > p; i--)
     {
