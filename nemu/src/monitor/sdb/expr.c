@@ -30,6 +30,7 @@ enum
   TK_HEXNUM,
   TK_HEXNUMU,
   TK_REGISTER,
+  TK_UNARY_MULT,
   /* TODO: Add more token types */
 
 };
@@ -157,14 +158,12 @@ static bool make_token(char *e)
           nr_token++;
           break; 
         case '-':
-          printf("Find minus at position %d\n", position);
           if(is_unary_operator(nr_token)) {
             tokens[nr_token].type = TK_UNARY_MINUS;
             tokens[nr_token].str[0] = '-';
-            printf("is unary minus\n");
             nr_token++;
             break;
-          } 
+          }
         default:
           tokens[nr_token].type = rules[i].token_type;
           for (int j = 0; j < substr_len; j++)
@@ -232,6 +231,19 @@ word_t eval(int p, int q, bool *success)
     // Return the value of the number.
     sscanf(tokens[p].str, "%d", &res);
     return res;
+  }
+  else if (p +1 == q) {
+    switch (tokens[p].type)
+    {
+    case TK_UNARY_MINUS:
+      return 0 - eval(q, q, success);
+    case TK_UNARY_MULT:
+      //TODO: implement it later
+      return 0;
+    default:
+      *success = false;
+      return 0;
+    }
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
