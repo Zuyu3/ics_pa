@@ -58,8 +58,8 @@ static struct rule
     {"\\)", ')'},
     {"0x[0-9]+u", TK_HEXNUMU},
     {"0x[0-9]+", TK_HEXNUM},
-    {"[0-9]+u", TK_DECNUMU},
-    {"[0-9]+", TK_DECNUM},
+    {"[0-9a-f]+u", TK_DECNUMU},
+    {"[0-9a-f]+", TK_DECNUM},
 
     
 };
