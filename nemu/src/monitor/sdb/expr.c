@@ -56,10 +56,10 @@ static struct rule
     {"\\/", '/'},
     {"\\(", '('},
     {"\\)", ')'},
-    {"0x[0-9]+u", TK_HEXNUMU},
-    {"0x[0-9]+", TK_HEXNUM},
-    {"[0123456789abcdefABCDEF]+u", TK_DECNUMU},
-    {"[0123456789abcdefABCDEF]+", TK_DECNUM},
+    {"0x[0123456789abcdefABCDEF]+u", TK_HEXNUMU},
+    {"0x[0123456789abcdefABCDEF]+", TK_HEXNUM},
+    {"[0-9]+u", TK_DECNUMU},
+    {"[0-9]+", TK_DECNUM},
 
     
 };
