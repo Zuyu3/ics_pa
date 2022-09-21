@@ -19,6 +19,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <memory/vaddr.h>
 
 enum
 {
@@ -337,6 +338,14 @@ word_t eval(int p, int q, bool *success)
         }
         break;
       case TK_UNARY_MULT:
+        if (!parenthesesCounter)
+        {
+          res = eval(i + 1, q, success);
+          if(*success == false)
+            return 0;
+          res = vaddr_read((vaddr_t)res , 4);
+          return *success ? res : 0;
+        }
         break;
       case ')':
         parenthesesCounter++;
