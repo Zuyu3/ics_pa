@@ -33,6 +33,7 @@ enum
   TK_HEXNUM,
   TK_HEXNUMU,
   TK_REGISTER,
+  TK_REGISTER_NOSUCH, //no such register
   TK_UNARY_MULT,
   /* TODO: Add more token types */
 
@@ -62,9 +63,10 @@ static struct rule
     {"0x[0123456789abcdefABCDEF]+", TK_HEXNUM},
     {"[0-9]+u", TK_DECNUMU},
     {"[0-9]+", TK_DECNUM},
-    {"\\$(0|ra|[sgt]p|t[0-6]|a[0-7]|s[0-9]|s10|s11)", TK_REGISTER},
-    {"\\$.{1,2}", TK_REGISTER}
     //$0, ra, sp, gp, tp, t0, t1, t2, s0, s1, a0, a1, a2, a3, a4, a5, a6, a7, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, t3, t4, t5, t6
+    {"\\$(0|ra|[sgt]p|t[0-6]|a[0-7]|s[0-9]|s10|s11)", TK_REGISTER},
+    //No such register
+    {"\\$.{1,2}", TK_REGISTER_NOSUCH},
     
 };
 
@@ -179,6 +181,9 @@ static bool make_token(char *e)
             nr_token++;
             break;
           }
+        case TK_REGISTER_NOSUCH:
+        printf("register name wrong at position %d\n%s\n%*.s^\n", position, e, position, "");
+        return false;
         default:
           tokens[nr_token].type = rules[i].token_type;
           for (int j = 0; j < substr_len; j++)
@@ -229,6 +234,29 @@ bool check_parentheses(int p, int q) {
   return parenthesesCounter == 0;
 }
 
+const char *decode_register(int x){
+  printf("decode: %s\n", tokens[x].str);
+  char ori[][6] = {
+  {"$0"}, {"$ra"}, {"$sp"}, {"$gp"}, {"$tp"}, {"$t0"}, {"$t1"}, {"$t2"},
+  {"$s0"}, {"$s1"}, {"$a0"}, {"$a1"}, {"$a2"}, {"$a3"}, {"$a4"}, {"$a5"},
+  {"$a6"}, {"$a7"}, {"$s2"}, {"$s3"}, {"$s4"}, {"$s5"}, {"$s6"}, {"$s7"},
+  {"$s8"}, {"$s9"}, {"$s10"}, {"$s11"}, {"$t3"}, {"$t4"}, {"$t5"}, {"$t6"}
+  };
+  const char *result[] = {
+  "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
+  "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
+  "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
+  "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
+  };
+  
+  for(int i = 0; i < 32; i++){
+    if(tokens[x].str == ori[i]){
+      return result[i];
+    }
+  }
+  return 0;
+}
+
 word_t eval(int p, int q, bool *success)
 {
   word_t res;
@@ -249,8 +277,7 @@ word_t eval(int p, int q, bool *success)
     else if (tokens[p].type == TK_DECNUM)
       *success = sscanf(tokens[p].str, "%x", &res);
     else if (tokens[p].type == TK_REGISTER) {
-      res = isa_reg_str2val("$0", success);
-      return *success ? res: 0; 
+      decode_register(p);
     }
     return *success? res: 0;
   }
