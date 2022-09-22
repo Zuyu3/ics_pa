@@ -201,10 +201,9 @@ static bool make_token(char *e)
 }
 
 bool check_parentheses(int p, int q) {
-  /*check if the expression is surrounded by a matched pair of parentheses.
-   *return true if it is.
-   */
-  // TODO: check it later.
+  //check if the expression is surrounded by a matched pair of parentheses.
+  //return true if it is.
+
   if (tokens[p].type != '(' || tokens[q].type != ')')
     return false;
   int parenthesesCounter = 0;
@@ -214,13 +213,13 @@ bool check_parentheses(int p, int q) {
     case '(':
       parenthesesCounter++;
       break;
+   
     case ')':
     if(parenthesesCounter > 0)
       parenthesesCounter--;
-    else{
-      //printf("check parentheses at %d and %d, result is %d\n", p, q, parenthesesCounter);
+    else
       return false;
-    }
+   
     default:
       break;
     }
@@ -257,14 +256,13 @@ word_t eval(int p, int q, bool *success)
   if (p > q)
   {
     // Bad expression.
-    // TODO:maybe need further check here.
     *success = false;
     printf("Error at %d %d\n", p, q);
     return 0;
   }
   else if (p == q) {
     // Single token.
-    // For now this token should be a number.
+    // For now this token should be dealt as a number, (including registers and numbers)
     // Return the value of the number.
     if(tokens[p].type == TK_DECNUM)
       *success = sscanf(tokens[p].str, "%d", &res);
@@ -282,12 +280,14 @@ word_t eval(int p, int q, bool *success)
     return eval(p + 1, q - 1, success);
   }
   else if ((tokens[p].type != '(' && (tokens[p].type < TK_EQ || tokens[p].type > TK_UNARY_MULT)) || (tokens[q].type != ')' && (tokens[q].type < TK_EQ || tokens[q].type > TK_UNARY_MULT))) {
+    //expression invalid, return false immediately.
+    //TODO: modify this when adding more functions.
     *success = false;
     return 0;
   }
   else {
-    // TODO: implement it here.
-    
+    //scan tokens in order.
+
     // scan for "&&"
     for (int i = q, parenthesesCounter = 0; i > p; i--)
     {
@@ -389,7 +389,7 @@ word_t eval(int p, int q, bool *success)
       }
     }
 
-    // second scan for '*' or '/'
+    // scan for '*' or '/'
     for (int i = q, parenthesesCounter = 0; i > p; i--)
     {
       switch (tokens[i].type)
@@ -432,8 +432,8 @@ word_t eval(int p, int q, bool *success)
       }
     }
 
-    // third scan for unary '-' or '*'
-    // associate with right side
+    // scan for unary '-' or '*'
+    // note: associate with right side
     for (int i = p, parenthesesCounter = 0; i < q; i++)
     {
       switch (tokens[i].type)
@@ -472,6 +472,8 @@ word_t eval(int p, int q, bool *success)
         break;
       }
     }
+    
+    //no match with valid operators.
     *success = false;
     printf("invalid expression\n");
     return 0;
@@ -486,7 +488,9 @@ word_t expr(char *e, bool *success)
     *success = false;
     return 0;
   }
-  /*for (int i = 0; i < nr_token; i++)
+
+  /*debug module
+  for (int i = 0; i < nr_token; i++)
   {
     if (tokens[i].type == TK_DECNUM)
       printf("__");
@@ -500,6 +504,7 @@ word_t expr(char *e, bool *success)
     if (tokens[i].type == TK_DECNUM)
       printf("%d   %s\n", i, tokens[i].str);
   }*/
+
   *success = true;
   return eval(0, nr_token - 1, success);
 }
