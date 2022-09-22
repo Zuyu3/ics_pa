@@ -38,14 +38,14 @@ WP* new_wp(char *e){
   //TODO:implement it later
   WP* p = head;
   WP* h = free_;
-
+  
+  //check expr
   memset(h->expr, 0, sizeof(h->expr));
   strcpy(h->expr, e);
   bool s = true;
   h->last_value = expr(h->expr, &s);
-  if(!s) {
-    printf("Expression invalid.\n");
-  }
+  if(!s)
+    return NULL;
 
 
   if(!free_)
