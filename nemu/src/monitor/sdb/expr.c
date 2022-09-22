@@ -278,7 +278,7 @@ word_t eval(int p, int q, bool *success)
     else if (tokens[p].type == TK_DECNUM)
       *success = sscanf(tokens[p].str, "%x", &res);
     else if (tokens[p].type == TK_REGISTER) {
-      decode_register(p);
+      res = isa_reg_str2val(decode_register(p), success);
     }
     return *success? res: 0;
   }
