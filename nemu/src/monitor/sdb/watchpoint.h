@@ -1,4 +1,6 @@
 #include"sdb.h"
+#include<common.h>
+
 
 #define NR_WP 32
 
@@ -7,7 +9,6 @@ typedef struct watchpoint {
   char expr[5000];
   word_t last_value;
   struct watchpoint *next;
-
 
   /* TODO: Add more members if necessary */
 
