@@ -115,7 +115,7 @@ void print_watchpoints() {
   }
   printf("%-10s%-20s%-25s%s\n", "Num", "Type", "Disp Enb Address", "What");
   while(p != NULL) {
-    printf("%-10d%-20s%-25s%s\n", p->NO, "Type", "Disp Enb Address", p->expr);
+    printf("%-10d%-20s%-25s%s\n", p->NO, "watchpoint", "keep y", p->expr);
     p = p->next;
   }
   return;
