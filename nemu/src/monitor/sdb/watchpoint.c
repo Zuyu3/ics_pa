@@ -103,7 +103,7 @@ void free_wp(WP *wp) {
   }
 }
 /* TODO: Implement the functionality of watchpoint */
-
+/*
 int main(){
   init_wp_pool();
   char cmd;
@@ -149,3 +149,4 @@ int main(){
   }
   return 0;
 }
+*/
