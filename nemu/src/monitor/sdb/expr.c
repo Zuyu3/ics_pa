@@ -62,7 +62,7 @@ static struct rule
     {"0x[0123456789abcdefABCDEF]+", TK_HEXNUM},
     {"[0-9]+u", TK_DECNUMU},
     {"[0-9]+", TK_DECNUM},
-    {"$0", TK_REGISTER},
+    {"\\$0", TK_REGISTER},
     {"$ra", TK_REGISTER},
     {"[sgt]p", TK_REGISTER},
     {"t[0-6]", TK_REGISTER},
