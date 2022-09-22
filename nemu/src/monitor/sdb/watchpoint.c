@@ -147,6 +147,7 @@ bool check_wp_change() {
       p->last_value = new_value;
       signal = true;
     }
+    p = p->next;
   }
   return signal;
 }
