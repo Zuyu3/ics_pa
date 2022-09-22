@@ -13,7 +13,7 @@
 * See the Mulan PSL v2 for more details.
 ***************************************************************************************/
 
-#include "sdb.h"
+#include"sdb.h"
 #include"watchpoint.h"
 
 #define NR_WP 32
@@ -27,6 +27,7 @@ void init_wp_pool() {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
     memset(wp_pool[i].expr, 0, sizeof(wp_pool[i].expr));
+    wp_pool[i].last_value = 0;
   }
 
   head = NULL;
@@ -42,19 +43,16 @@ WP* new_wp(char *e){
   if(!head){
     head = free_;
     free_ = free_->next;
-    memset(head->expr, 0, sizeof(head->expr));
-    strcpy(head->expr, e);
     head->next = NULL;
-    return head;
+    h = head;
   }
   else if(head->NO > free_->NO) {
     p = free_->next;
     free_->next = head;
     head = free_;
     free_ = p;
-    memset(head->expr, 0, sizeof(head->expr));
-    strcpy(head->expr, e);
-    return head;
+    h = head;
+
   }
   else {
     p = head;
@@ -64,10 +62,10 @@ WP* new_wp(char *e){
     free_ = free_->next;
     h->next = p->next;
     p->next = h;
-    memset(h->expr, 0, sizeof(h->expr));
-    strcpy(h->expr, e);
-    return h;
   }
+  memset(h->expr, 0, sizeof(h->expr));
+  strcpy(h->expr, e);
+  return h;
 }
 
 void free_wp(int x) {
