@@ -107,8 +107,7 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char *args){
-  if(!new_wp(args))
-    printf("No free watchpoint\n");
+  new_wp(args);
   return 0;
   //TODO:check it later
 }

@@ -48,8 +48,10 @@ WP* new_wp(char *e){
     return NULL;
   //printf("value is %d\n", h->last_value);
 
-  if(!free_)
+  if(!free_) {
+    printf("No free watchpoint\n");
     return NULL;
+  }
   if(!head){
     head = free_;
     free_ = free_->next;
@@ -129,6 +131,23 @@ void print_watchpoints() {
     p = p->next;
   }
   return;
+}
+
+bool check_wp_change() {
+  if(!head)
+    return false;
+  WP* p = head;
+  bool s = true;
+  uint32_t new_value;
+  while(p != NULL) {
+    new_value = expr(p->expr, &s);
+    if(new_value != p->last_value) {
+      printf("touch watchpoint %d\nvalue change from %d to %d.\n", p->NO, p->last_value, new_value);
+      p->last_value = new_value;
+      return true;
+    }
+  }
+  return false;
 }
 
 /* TODO: Implement the functionality of watchpoint */
