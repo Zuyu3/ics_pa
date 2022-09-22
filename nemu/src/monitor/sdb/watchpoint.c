@@ -14,6 +14,7 @@
 ***************************************************************************************/
 
 #include "sdb.h"
+#include<stdio.h>
 
 #define NR_WP 32
 
@@ -42,6 +43,7 @@ void init_wp_pool() {
 WP* new_wp(){
   //TODO:implement it later
   WP* p = head;
+  WP* h;
   if(!free_)
     return NULL;
   if(!head){
@@ -50,13 +52,23 @@ WP* new_wp(){
     head->next = NULL;
     return head;
   }
-  while(p->next)
-    p = p->next;
-  p->next = free_;
-  free_ = free_->next;
-  p = p->next;
-  p->next = NULL;
-  return p;
+  else if(head->NO > free_->NO) {
+    p = free_->next;
+    free_->next = head;
+    head = free_;
+    free_ = p;
+    return head;
+  }
+  else {
+    p = head;
+    while(p->next && p->next->NO < free_->NO)
+      p = p->next;
+    h = free_;
+    free_ = free_->next;
+    h->next = p->next;
+    p->next = h;
+    return h;
+  }
 }
 
 void free_wp(WP *wp) {
@@ -76,6 +88,7 @@ void free_wp(WP *wp) {
     return;
   }
   else if(free_->NO > wp->NO) {
+    p->next = wp->next;
     wp->next = free_;
     free_ = wp;
     return;
@@ -91,3 +104,48 @@ void free_wp(WP *wp) {
 }
 /* TODO: Implement the functionality of watchpoint */
 
+int main(){
+  init_wp_pool();
+  char cmd;
+  int label;
+  WP *p = NULL;
+  while(1){
+    if(scanf("%c", &cmd))
+    return 0;
+    switch (cmd)
+    {
+      case 'n':
+        p = new_wp();
+        if(p)
+          printf("add watchpoint %d\n", p->NO);
+        else
+          printf("No more watchpoints left. Abandon.\n");
+        break;
+      case 'f':
+        if(scanf("%d", &label)){
+          return 0;
+        }
+        free_wp(wp_pool + label);
+        printf("free watchpoint %d\n", wp_pool[label].NO);
+        break;
+      case 'q':
+        return 0;
+      default:
+        break;
+      }
+      printf("working watchpoints are:\n");
+      p = head;
+      while(p){
+        printf("%d -> ", p->NO);
+        p = p->next;
+      }
+      printf("\nfree watchpoints are:\n");
+      p = free_;
+      while(p){
+        printf("%d -> ", p->NO);
+        p = p->next;
+      }
+      printf("\n\n\n");
+  }
+  return 0;
+}
