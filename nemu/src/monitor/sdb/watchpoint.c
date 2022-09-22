@@ -137,17 +137,18 @@ bool check_wp_change() {
   if(!head)
     return false;
   WP* p = head;
+  bool signal = false;
   bool s = true;
   uint32_t new_value;
   while(p != NULL) {
     new_value = expr(p->expr, &s);
     if(new_value != p->last_value) {
-      printf("touch watchpoint %d\nvalue change from %d to %d.\n", p->NO, p->last_value, new_value);
+      printf("touch watchpoint %d. Content is %s\nvalue change from %d to %d.\n\n", p->NO, p->expr, p->last_value, new_value);
       p->last_value = new_value;
-      return true;
+      signal = true;
     }
   }
-  return false;
+  return signal;
 }
 
 /* TODO: Implement the functionality of watchpoint */
