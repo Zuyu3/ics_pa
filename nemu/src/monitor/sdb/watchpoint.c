@@ -38,7 +38,7 @@ WP* new_wp(char *e){
   //TODO:implement it later
   WP* p = head;
   WP* h = free_;
-  
+
   //check expr
   memset(h->expr, 0, sizeof(h->expr));
   strcpy(h->expr, e);
@@ -54,15 +54,12 @@ WP* new_wp(char *e){
     head = free_;
     free_ = free_->next;
     head->next = NULL;
-    h = head;
   }
   else if(head->NO > free_->NO) {
     p = free_->next;
     free_->next = head;
     head = free_;
     free_ = p;
-    h = head;
-
   }
   else {
     p = head;
