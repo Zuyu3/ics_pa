@@ -79,6 +79,12 @@ void free_wp(int x) {
   WP* p = head;
   if(!head)
     return;
+  if(head == wp) {
+    wp->next = free_;
+    free_ = wp;
+    head = NULL;
+    return;
+  }
   while(p->next){
     if(p->next == wp){
         p->next = p->next->next;
