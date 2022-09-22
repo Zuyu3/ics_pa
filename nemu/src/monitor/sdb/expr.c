@@ -250,7 +250,7 @@ const char *decode_register(int x){
   };
   
   for(int i = 0; i < 32; i++){
-    if(strcmp(tokens[x].str, ori[i])){
+    if(!strcmp(tokens[x].str, ori[i])){
       printf("match at %d   %s", i, result[i]);
       return result[i];
     }
