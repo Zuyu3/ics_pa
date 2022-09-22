@@ -62,7 +62,8 @@ static struct rule
     {"0x[0123456789abcdefABCDEF]+", TK_HEXNUM},
     {"[0-9]+u", TK_DECNUMU},
     {"[0-9]+", TK_DECNUM},
-
+    {"$0|$ra|$[sgt]p|$t[0-6]|$a[0-7]|$s[0-9]|$s10|$s11", TK_REGISTER},
+    //$0, ra, sp, gp, tp, t0, t1, t2, s0, s1, a0, a1, a2, a3, a4, a5, a6, a7, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, t3, t4, t5, t6
     
 };
 
@@ -176,7 +177,14 @@ static bool make_token(char *e)
             tokens[nr_token].str[0] = '*';
             nr_token++;
             break;
-          }          
+          }
+        case TK_REGISTER:
+          tokens[nr_token].type = rules[i].token_type;
+          for (int j = 1; j < substr_len; j++)
+            tokens[nr_token].str[j] = substr_start[j];
+          printf("%d  %s\n",tokens[nr_token].type, tokens[nr_token].str);
+          nr_token++;
+          break;
         default:
           tokens[nr_token].type = rules[i].token_type;
           for (int j = 0; j < substr_len; j++)
