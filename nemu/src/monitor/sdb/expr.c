@@ -235,7 +235,6 @@ bool check_parentheses(int p, int q) {
 }
 
 const char *decode_register(int x){
-  printf("decode: %s\n", tokens[x].str);
   char ori[][6] = {
   {"$0"}, {"$ra"}, {"$sp"}, {"$gp"}, {"$tp"}, {"$t0"}, {"$t1"}, {"$t2"},
   {"$s0"}, {"$s1"}, {"$a0"}, {"$a1"}, {"$a2"}, {"$a3"}, {"$a4"}, {"$a5"},
@@ -251,7 +250,6 @@ const char *decode_register(int x){
   
   for(int i = 0; i < 32; i++){
     if(!strcmp(tokens[x].str, ori[i])){
-      printf("match at %d   %s", i, result[i]);
       return result[i];
     }
   }
