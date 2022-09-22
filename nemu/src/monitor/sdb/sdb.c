@@ -18,12 +18,12 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include "watchpoint.h"
 #include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
 void init_regex();
-void init_wp_pool();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -57,8 +57,9 @@ static int cmd_help(char *args);
 static int cmd_si(char *args) {
   // TODO: Maybe some bugs here. Need further tests.
   int n = 0;
-  if (args)
+  if (args) {
     sscanf(args, "%d", &n);
+  }
     /*for (int i = 0; args[i] != '\0'; i++)
     {
       if (args[i] < '0' || args[i] > '9')
@@ -79,7 +80,9 @@ static int cmd_info(char *args){
   if(args[0] == 'r'){
     isa_reg_display();
   }
-  //TODO:implement info w later.
+  if(args[0] == 'w'){
+    print_watchpoints();
+  }
   return 0; 
 }
 
@@ -105,6 +108,20 @@ static int cmd_p(char *args){
   return 0;
 }
 
+static int cmd_w(char *args){
+  if(!new_wp(args))
+    printf("No free watchpoint\n");
+  return 0;
+  //TODO:check it later
+}
+
+static int cmd_d(char *args){
+  int t;
+  sscanf(args, "%d", &t);
+  free_wp(t);
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -117,6 +134,9 @@ static struct {
   {"info", "Print state of the program", cmd_info},
   {"x", "Scanf the memory and output", cmd_x},
   {"p", "Get the answer of expression and print it out.", cmd_p},
+  {"w", "Add a watchpoint.", cmd_w},
+  {"d", "delete a watchpoint", cmd_d},
+
   /* TODO: Add more commands */
 
 };

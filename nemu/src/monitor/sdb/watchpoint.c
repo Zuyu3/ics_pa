@@ -14,17 +14,9 @@
 ***************************************************************************************/
 
 #include "sdb.h"
-#include<stdio.h>
+#include"watchpoint.h"
 
 #define NR_WP 32
-
-typedef struct watchpoint {
-  int NO;
-  struct watchpoint *next;
-
-  /* TODO: Add more members if necessary */
-
-} WP;
 
 static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
@@ -34,13 +26,14 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
+    memset(wp_pool[i].expr, 0, sizeof(wp_pool[i].expr));
   }
 
   head = NULL;
   free_ = wp_pool;
 }
 
-WP* new_wp(){
+WP* new_wp(char *e){
   //TODO:implement it later
   WP* p = head;
   WP* h;
@@ -49,6 +42,8 @@ WP* new_wp(){
   if(!head){
     head = free_;
     free_ = free_->next;
+    memset(head->expr, 0, sizeof(head->expr));
+    strcpy(head->expr, e);
     head->next = NULL;
     return head;
   }
@@ -57,6 +52,8 @@ WP* new_wp(){
     free_->next = head;
     head = free_;
     free_ = p;
+    memset(head->expr, 0, sizeof(head->expr));
+    strcpy(head->expr, e);
     return head;
   }
   else {
@@ -67,14 +64,21 @@ WP* new_wp(){
     free_ = free_->next;
     h->next = p->next;
     p->next = h;
+    memset(h->expr, 0, sizeof(h->expr));
+    strcpy(h->expr, e);
     return h;
   }
 }
 
-void free_wp(WP *wp) {
+void free_wp(int x) {
+  if(x >= NR_WP || x < 0) {
+    printf("Error. watchpoint index overflow.\n");
+    return;
+  }
+  WP *wp = wp_pool + x;
   WP* p = head;
   if(!head)
-  return;
+    return;
   while(p->next){
     if(p->next == wp){
         p->next = p->next->next;
@@ -102,29 +106,43 @@ void free_wp(WP *wp) {
     return;
   }
 }
+
+void print_watchpoints() {
+  WP* p = head;
+  if(!p) {
+    printf("No watchpoint.\n");
+    return;
+  }
+  printf("%-10s%-20s%-25s%s\n", "Num", "Type", "Disp Enb Address", "What");
+  while(p != NULL) {
+    printf("%-10d%-20s%-25s%s\n", p->NO, "Type", "Disp Enb Address", p->expr);
+    p = p->next;
+  }
+  return;
+}
+
 /* TODO: Implement the functionality of watchpoint */
 /*
 int main(){
   init_wp_pool();
   char cmd;
   int label;
+  char *toEval[20000];
   WP *p = NULL;
   while(1){
-    if(scanf("%c", &cmd))
-    return 0;
+    scanf("%c", &cmd);
     switch (cmd)
     {
       case 'n':
-        p = new_wp();
+        scanf("%s", toEval);
+        p = new_wp(toEval);
         if(p)
           printf("add watchpoint %d\n", p->NO);
         else
           printf("No more watchpoints left. Abandon.\n");
         break;
       case 'f':
-        if(scanf("%d", &label)){
-          return 0;
-        }
+        scanf("%d", &label);
         free_wp(wp_pool + label);
         printf("free watchpoint %d\n", wp_pool[label].NO);
         break;
@@ -136,7 +154,7 @@ int main(){
       printf("working watchpoints are:\n");
       p = head;
       while(p){
-        printf("%d -> ", p->NO);
+        printf("%d  %s\n", p->NO, p->expr);
         p = p->next;
       }
       printf("\nfree watchpoints are:\n");
