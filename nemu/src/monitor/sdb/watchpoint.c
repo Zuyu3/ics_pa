@@ -14,6 +14,7 @@
 ***************************************************************************************/
 
 #include"watchpoint.h"
+word_t expr(char *e, bool *success);
 
 #define NR_WP 32
 
@@ -36,7 +37,17 @@ void init_wp_pool() {
 WP* new_wp(char *e){
   //TODO:implement it later
   WP* p = head;
-  WP* h;
+  WP* h = free_;
+
+  memset(h->expr, 0, sizeof(h->expr));
+  strcpy(h->expr, e);
+  bool s = true;
+  h->last_value = expr(h->expr, &s);
+  if(!s) {
+    printf("Expression invalid.\n");
+  }
+
+
   if(!free_)
     return NULL;
   if(!head){
@@ -62,8 +73,7 @@ WP* new_wp(char *e){
     h->next = p->next;
     p->next = h;
   }
-  memset(h->expr, 0, sizeof(h->expr));
-  strcpy(h->expr, e);
+
   return h;
 }
 
