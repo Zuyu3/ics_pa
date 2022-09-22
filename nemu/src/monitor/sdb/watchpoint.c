@@ -46,7 +46,8 @@ WP* new_wp(char *e){
   h->last_value = expr(h->expr, &s);
   if(!s)
     return NULL;
-
+  else
+    printf("value is %d\n", h->last_value);
 
   if(!free_)
     return NULL;
