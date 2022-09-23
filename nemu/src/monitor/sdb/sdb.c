@@ -102,6 +102,10 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
   bool is_success;
   word_t res;
+  if(!strlen(args)) {
+    printf("0 length\n");
+    return 0;
+  }
   res = expr(args, &is_success);
   if(is_success)
     printf("%u\n", res);
