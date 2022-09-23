@@ -482,7 +482,7 @@ word_t eval(int p, int q, bool *success)
 word_t expr(char *e, bool *success)
 {
   memset(tokens, 0, sizeof(tokens));
-  if (!make_token(e) || nr_token == 0)
+  if (!make_token(e))
   {
     *success = false;
     return 0;
