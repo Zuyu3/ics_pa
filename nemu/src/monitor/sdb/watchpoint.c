@@ -139,7 +139,7 @@ bool check_wp_change() {
   WP* p = head;
   bool signal = false;
   bool s = true;
-  uint32_t new_value;
+  word_t new_value;
   while(p != NULL) {
     new_value = expr(p->expr, &s);
     if(new_value != p->last_value) {
