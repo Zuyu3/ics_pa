@@ -266,7 +266,7 @@ word_t eval(int p, int q, bool *success)
     // Return the value of the number.
     if(tokens[p].type == TK_DECNUM)
       *success = sscanf(tokens[p].str, "%d", &res);
-    else if (tokens[p].type == TK_DECNUM)
+    else if (tokens[p].type == TK_HEXNUM)
       *success = sscanf(tokens[p].str, "%x", &res);
     else if (tokens[p].type == TK_REGISTER) {
       res = isa_reg_str2val(decode_register(p), success);
