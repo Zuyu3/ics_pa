@@ -458,6 +458,7 @@ word_t eval(int p, int q, bool *success)
             return 0;
           if(res < 0x80000000u  || res > 0x8fffffffu){
             *success = false;
+            printf("Error. Address overflow.\n");
             return 0;
           }
           else
