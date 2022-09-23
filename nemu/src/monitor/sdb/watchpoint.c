@@ -39,6 +39,11 @@ WP* new_wp(char *e){
   WP* p = head;
   WP* h = free_;
 
+  if(!free_) {
+    printf("No free watchpoint\n");
+    return NULL;
+  }
+
   //check expr
   memset(h->expr, 0, sizeof(h->expr));
   strcpy(h->expr, e);
@@ -48,10 +53,6 @@ WP* new_wp(char *e){
     return NULL;
   //printf("value is %d\n", h->last_value);
 
-  if(!free_) {
-    printf("No free watchpoint\n");
-    return NULL;
-  }
   if(!head){
     head = free_;
     free_ = free_->next;
