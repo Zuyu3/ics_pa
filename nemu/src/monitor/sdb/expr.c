@@ -97,7 +97,7 @@ typedef struct token
   char str[100];
 } Token;
 
-static Token tokens[2000] __attribute__((used)) = {};
+static Token tokens[500] __attribute__((used)) = {};
 static int nr_token __attribute__((used)) = 0;
 
 bool is_unary_operator(int x) {
@@ -137,13 +137,19 @@ static bool make_token(char *e)
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+        if (nr_token >= 500) {
+          printf("tokens overflow\n");
+          return false;
+        }
 
         if (substr_len >= 100)
         {
           printf("Substr is too long.\n");
           return false;
         }
-
+        
+        memset(tokens[nr_token].str, 0, sizeof(tokens[nr_token].str));
+        
         switch (rules[i].token_type)
         {
         case TK_NOTYPE:
@@ -481,7 +487,6 @@ word_t eval(int p, int q, bool *success)
 
 word_t expr(char *e, bool *success)
 {
-  memset(tokens, 0, sizeof(tokens));
   if (!make_token(e))
   {
     *success = false;
