@@ -94,10 +94,10 @@ void init_regex()
 typedef struct token
 {
   int type;
-  char str[32];
+  char str[100];
 } Token;
 
-static Token tokens[6000] __attribute__((used)) = {};
+static Token tokens[5000] __attribute__((used)) = {};
 static int nr_token __attribute__((used)) = 0;
 
 bool is_unary_operator(int x) {
@@ -138,9 +138,10 @@ static bool make_token(char *e)
          * of tokens, some extra actions should be performed.
          */
 
-        if (substr_len > 32)
+        if (substr_len >= 100)
         {
           printf("Substr is too long.\n");
+          return false;
         }
 
         switch (rules[i].token_type)
