@@ -5,7 +5,7 @@
 
 typedef struct watchpoint {
   int NO;
-  char expr[5000];
+  char expr[500];
   word_t last_value;
   struct watchpoint *next;
 

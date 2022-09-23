@@ -97,7 +97,7 @@ typedef struct token
   char str[100];
 } Token;
 
-static Token tokens[5000] __attribute__((used)) = {};
+static Token tokens[2000] __attribute__((used)) = {};
 static int nr_token __attribute__((used)) = 0;
 
 bool is_unary_operator(int x) {
