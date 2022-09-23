@@ -503,8 +503,8 @@ word_t expr(char *e, bool *success)
     if (tokens[i].type == TK_DECNUM)
       printf("%d   %s\n", i, tokens[i].str);
   }*/
+  return 0;
 
-
-  *success = true;
-  return eval(0, nr_token - 1, success);
+  //*success = true;
+  //return eval(0, nr_token - 1, success);
 }
