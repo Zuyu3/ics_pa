@@ -103,7 +103,7 @@ static int cmd_p(char *args){
   bool is_success;
   word_t res;
   if(!args) {
-    printf("0 length\n");
+    printf("No expr\n");
     return 0;
   }
   res = expr(args, &is_success);
