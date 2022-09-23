@@ -77,10 +77,12 @@ static int cmd_si(char *args) {
 }
 
 static int cmd_info(char *args){ 
-  if(args[0] == 'r'){
+  char subcmd;
+  sscanf(args, "%c", &subcmd);
+  if(subcmd == 'r'){
     isa_reg_display();
   }
-  if(args[0] == 'w'){
+  if(subcmd == 'w'){
     print_watchpoints();
   }
   return 0; 
