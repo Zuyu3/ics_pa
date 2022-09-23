@@ -456,8 +456,12 @@ word_t eval(int p, int q, bool *success)
           res = eval(i + 1, q, success);
           if(*success == false)
             return 0;
-          if(res < 0x80000000 || res > 0x8fffffff)
-          res = vaddr_read((vaddr_t)res , 4);
+          if(res < 0x80000000u  || res > 0x8fffffffu){
+            *success = false;
+            return 0;
+          }
+          else
+            res = vaddr_read((vaddr_t)res , 4);
           return *success ? res : 0;
         }
         break;
