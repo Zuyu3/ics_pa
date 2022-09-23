@@ -33,6 +33,7 @@ enum
   TK_HEXNUM,
   TK_HEXNUMU,
   TK_REGISTER,
+  TK_PC,
   TK_REGISTER_NOSUCH, //no such register
   TK_UNARY_MULT,
   /* TODO: Add more token types */
@@ -65,6 +66,7 @@ static struct rule
     {"[0-9]+", TK_DECNUM},
     //$0, ra, sp, gp, tp, t0, t1, t2, s0, s1, a0, a1, a2, a3, a4, a5, a6, a7, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, t3, t4, t5, t6
     {"\\$(0|ra|[sgt]p|t[0-6]|a[0-7]|s10|s11|s[0-9])", TK_REGISTER},
+    {"\\$pc", TK_PC},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -275,6 +277,9 @@ word_t eval(int p, int q, bool *success)
       *success = sscanf(tokens[p].str, "%x", &res);
     else if (tokens[p].type == TK_REGISTER) {
       res = isa_reg_str2val(decode_register(p), success);
+    }
+    else if(tokens[p].type == TK_PC) {
+      res = get_pc();
     }
     return *success? res: 0;
   }
