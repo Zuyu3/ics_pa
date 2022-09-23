@@ -149,7 +149,7 @@ static bool make_token(char *e)
         }
         
         memset(tokens[nr_token].str, 0, sizeof(tokens[nr_token].str));
-        
+
         switch (rules[i].token_type)
         {
         case TK_NOTYPE:
@@ -456,6 +456,7 @@ word_t eval(int p, int q, bool *success)
           res = eval(i + 1, q, success);
           if(*success == false)
             return 0;
+          if(res < 0x80000000 || res > 0x8fffffff)
           res = vaddr_read((vaddr_t)res , 4);
           return *success ? res : 0;
         }
