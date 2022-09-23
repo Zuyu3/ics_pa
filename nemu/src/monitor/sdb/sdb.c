@@ -102,7 +102,7 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
   bool is_success;
   word_t res;
-  if(!strlen(args)) {
+  if(!args) {
     printf("0 length\n");
     return 0;
   }
