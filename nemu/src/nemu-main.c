@@ -58,7 +58,6 @@ int main(int argc, char *argv[]) {
  
   /* Start engine. */
   engine_start();
-  nemu_state.state = NEMU_QUIT;
   
   return is_exit_status_bad();
 }
