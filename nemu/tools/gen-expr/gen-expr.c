@@ -63,7 +63,7 @@ void gen_num()
 }
 
 void gen_rand_op(){
-  int res = rand() % 4;
+  int res = rand() % 3;
   switch (res)
   {
   case 0:
@@ -76,10 +76,6 @@ void gen_rand_op(){
     break;
   case 2:
     buf[buf_index] = '*';
-    buf_index++;
-    break;
-  case 3:
-    buf[buf_index] = '/';
     buf_index++;
     break;
   default:
