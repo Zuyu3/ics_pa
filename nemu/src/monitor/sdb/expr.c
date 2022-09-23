@@ -488,7 +488,6 @@ word_t expr(char *e, bool *success)
     return 0;
   }
 
-  /*debug module
   for (int i = 0; i < nr_token; i++)
   {
     if (tokens[i].type == TK_DECNUM)
@@ -502,7 +501,8 @@ word_t expr(char *e, bool *success)
   {
     if (tokens[i].type == TK_DECNUM)
       printf("%d   %s\n", i, tokens[i].str);
-  }*/
+  }
+
 
   *success = true;
   return eval(0, nr_token - 1, success);
