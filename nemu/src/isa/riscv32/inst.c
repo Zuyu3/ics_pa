@@ -116,7 +116,7 @@ static int decode_exec(Decode *s) {
 
 
   INSTPAT("0000001 ????? ????? 000 ????? 01100 11", mul    , R, R(dest) = src1 * src2);
-  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, printf("%x %ld\n", src1, (long signed)src1); helper = (int64_t)src1 * (int64_t)src2; helper >>= 32; R(dest) = (word_t) helper);
+  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, printf("%x %ld\n", src1, (__int64_t)src1); helper = (int64_t)src1 * (int64_t)src2; helper >>= 32; R(dest) = (word_t) helper);
   //INSTPAT("0000001 ????? ????? 010 ????? 01100 11", mulhsu , R, R(dest) = (word_t)helper(src1, src2));
 
 
