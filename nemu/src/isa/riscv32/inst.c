@@ -52,6 +52,14 @@ static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, wor
   }
 }
 
+int helper(int x, int y) {
+    int res;
+    long long helper;
+    helper = (long long)x * (long long)y;
+    res = helper >> 32;
+    return res;
+}
+
 static int decode_exec(Decode *s) {
   int dest = 0;
   word_t src1 = 0, src2 = 0, imm = 0;
@@ -107,7 +115,7 @@ static int decode_exec(Decode *s) {
 
 
   INSTPAT("0000001 ????? ????? 000 ????? 01100 11", mul    , R, R(dest) = src1 * src2); //
-  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, R(dest) = (word_t)(((int64_t)src1 * (int64_t)src2) >> 32)); //
+  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, R(dest) = (word_t)helper(src1, src2)); //
 
 
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
