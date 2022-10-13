@@ -52,18 +52,9 @@ static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, wor
   }
 }
 
-int helper(int x, int y) {
-    int res;
-    long long helper;
-    helper = (long long)x * (long long)y;
-    res = helper >> 32;
-    return res;
-}
-
 static int decode_exec(Decode *s) {
   int dest = 0;
   word_t src1 = 0, src2 = 0, imm = 0;
-  long long helper;
   s->dnpc = s->snpc;
 
 #define INSTPAT_INST(s) ((s)->isa.inst.val)
@@ -116,7 +107,7 @@ static int decode_exec(Decode *s) {
 
 
   INSTPAT("0000001 ????? ????? 000 ????? 01100 11", mul    , R, R(dest) = src1 * src2);
-  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, helper = (SEXT(src1, 32) * SEXT(src2, 32)) >> 32; R(dest) = (word_t) helper);
+  INSTPAT("0000001 ????? ????? 001 ????? 01100 11", mulh   , R, R(dest) = (word_t)((SEXT(src1, 32) * SEXT(src2, 32)) >> 32));
   //INSTPAT("0000001 ????? ????? 010 ????? 01100 11", mulhsu , R, R(dest) = (word_t)helper(src1, src2));
 
 
