@@ -5,7 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 size_t strlen(const char *s) {
-  panic("Not tested");
+  //panic("Not tested");
   size_t res = 0;
   while(*s != '\0'){
     res++;
