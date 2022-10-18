@@ -56,7 +56,7 @@ int sprintf(char *out, const char *fmt, ...) {
               break;
           case 's':
               strcpy(out + res, va_arg(ap, char*));
-              //res += strlen(out + res);
+              res += strlen(out + res);
               break;
           case 'c':
               *(out + res) = va_arg(ap, int);
