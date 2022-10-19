@@ -14,6 +14,7 @@ void add_ibuf_log(char *ilog) {
 #define get_log(i) (iringbuf[i % IBUF_SIZE])
 
 void print_ibuf_log() {
+  printf("Here are the %d most recent instructions executed before the program error\n", IBUF_SIZE);
   for(int i = (iringbuf_index + 1) % IBUF_SIZE; i != iringbuf_index; i = (i + 1) % IBUF_SIZE) {
     printf("%s\n", iringbuf[i]);
   }
