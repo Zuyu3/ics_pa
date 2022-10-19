@@ -19,6 +19,7 @@
 #include <isa.h>
 void add_mbuf_log(int , paddr_t, int, word_t);
 void print_mbuf_log();
+void print_ibuf_log();
 
 #if   defined(CONFIG_PMEM_MALLOC)
 static uint8_t *pmem = NULL;
@@ -39,6 +40,7 @@ static void pmem_write(paddr_t addr, int len, word_t data) {
 }
 
 static void out_of_bound(paddr_t addr) {
+  print_ibuf_log();
   print_mbuf_log();
   panic("address = " FMT_PADDR " is out of bound of pmem [" FMT_PADDR ", " FMT_PADDR "] at pc = " FMT_WORD,
       addr, PMEM_LEFT, PMEM_RIGHT, cpu.pc);
