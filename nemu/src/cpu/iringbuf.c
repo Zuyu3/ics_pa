@@ -15,8 +15,6 @@ void add_ibuf_log(char *ilog) {
     iringbuf_index = (iringbuf_index + 1) % IBUF_SIZE;
 }
 
-#define get_log(i) (iringbuf[i % IBUF_SIZE])
-
 void print_ibuf_log() {
   #ifndef CONFIG_ITRACE_COND
     return;
