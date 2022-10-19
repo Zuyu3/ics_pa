@@ -19,7 +19,7 @@ void print_ibuf_log() {
   #ifndef CONFIG_ITRACE_COND
     return;
   #endif
-  printf("Here are the %d most recent instructions executed before the program error\n", IBUF_SIZE);
+  printf("Here are the %d most recent instructions executed before the program error\n\n", IBUF_SIZE);
   for(int i = (iringbuf_index + 1) % IBUF_SIZE; i != iringbuf_index; i = (i + 1) % IBUF_SIZE) {
     if(!strcmp(iringbuf[i], ""))
       continue;
