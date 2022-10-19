@@ -40,6 +40,7 @@ static void pmem_write(paddr_t addr, int len, word_t data) {
 }
 
 static void out_of_bound(paddr_t addr) {
+  printf("\n\n\n");
   print_ibuf_log();
   printf("\n\n\n");
   print_mbuf_log();
