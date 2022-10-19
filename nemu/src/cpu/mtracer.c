@@ -19,7 +19,7 @@ void add_mbuf_log(char *ilog) {
 }
 
 
-void print_ibuf_log() {
+void print_mbuf_log() {
   #ifndef CONFIG_MTRACE
     return;
   #endif
