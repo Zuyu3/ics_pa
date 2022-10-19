@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include <generated/autoconf.h>
+#include<common.h>
 
 #define MBUF_SIZE 50
 #define MBUF_LENGTH 100
@@ -8,13 +9,13 @@
 static char mringbuf[MBUF_SIZE][MBUF_LENGTH];
 static int mringbuf_index = 0;
 
-
-void add_mbuf_log(char *ilog) {
+void add_mbuf_log(int read_or_write, paddr_t addr, int len, word_t data) {
     #ifndef CONFIG_MTRACE
       return;
     #endif
 
-    strcpy(mringbuf[mringbuf_index], ilog);
+    sprintf(mringbuf[mringbuf_index], "%c :  %x     %d    %d    %x", read_or_write? 'r': 'w', addr, len, data, data);
+
     mringbuf_index = (mringbuf_index + 1) % MBUF_SIZE;
 }
 
@@ -23,7 +24,7 @@ void print_mbuf_log() {
   #ifndef CONFIG_MTRACE
     return;
   #endif
-  printf("Here are the %d most recent instructions executed before the program error\n", MBUF_SIZE);
+  printf("Here are the %d most recent memory operates before the program error\n", MBUF_SIZE);
   for(int i = (mringbuf_index + 1) % MBUF_SIZE; i != mringbuf_index; i = (i + 1) % MBUF_SIZE) {
     if(!strcmp(mringbuf[i], ""))
       continue;
