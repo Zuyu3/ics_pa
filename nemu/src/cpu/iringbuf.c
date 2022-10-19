@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include <generated/autoconf.h>
 #define IBUF_SIZE 50
 #define IBUF_LENGTH 100
 
