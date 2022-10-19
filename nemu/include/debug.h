@@ -19,6 +19,7 @@
 #include <common.h>
 #include <stdio.h>
 #include <utils.h>
+void print_ibuf_log();
 
 #define Log(format, ...) \
     _Log(ANSI_FMT("[%s:%d %s] " format, ANSI_FG_BLUE) "\n", \
@@ -36,7 +37,7 @@
     } \
   } while (0)
 
-#define panic(format, ...) Assert(0, format, ## __VA_ARGS__)
+#define panic(format, ...) print_ibuf_log(); Assert(0, format, ## __VA_ARGS__)
 
 #define TODO() panic("please implement me")
 
