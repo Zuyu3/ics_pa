@@ -14,7 +14,7 @@ void add_mbuf_log(int read_or_write, paddr_t addr, int len, word_t data) {
       return;
     #endif
 
-    sprintf(mringbuf[mringbuf_index], "%c :    %-10x  %-3d   %-15d    0x%x", read_or_write? 'r': 'w', addr, len, data, data);
+    sprintf(mringbuf[mringbuf_index], "    %c :    %-10x  %-3d   %-15d    0x%x", read_or_write? 'r': 'w', addr, len, data, data);
 
     mringbuf_index = (mringbuf_index + 1) % MBUF_SIZE;
 }
@@ -25,7 +25,7 @@ void print_mbuf_log() {
     return;
   #endif
   printf("Here are the %d most recent memory operates before the program error\n", MBUF_SIZE);
-  printf("op       addr     len       data       hex data\n\n");
+  printf("    op       addr     len       data           hex data\n\n");
   for(int i = (mringbuf_index + 1) % MBUF_SIZE; i != mringbuf_index; i = (i + 1) % MBUF_SIZE) {
     if(!strcmp(mringbuf[i], ""))
       continue;
