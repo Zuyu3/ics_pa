@@ -23,6 +23,6 @@ void print_ibuf_log() {
   for(int i = (iringbuf_index + 1) % IBUF_SIZE; i != iringbuf_index; i = (i + 1) % IBUF_SIZE) {
     if(!strcmp(iringbuf[i], ""))
       continue;
-    printf("      %s\n", iringbuf[i]);
+    printf("    %s\n", iringbuf[i]);
   }
 }
