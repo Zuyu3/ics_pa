@@ -25,5 +25,4 @@ void print_ibuf_log() {
       continue;
     printf("      %s\n", iringbuf[i]);
   }
-  printf("--->  %s\n", iringbuf[iringbuf_index]);
 }
