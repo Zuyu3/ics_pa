@@ -8,6 +8,9 @@ static char iringbuf[IBUF_SIZE][IBUF_LENGTH];
 static int iringbuf_index = 0;
 
 void add_ibuf_log(char *ilog) {
+    #ifndef CONFIG_ITRACE_COND
+      return;
+    #endif
     strcpy(iringbuf[iringbuf_index], ilog);
     iringbuf_index = (iringbuf_index + 1) % IBUF_SIZE;
 }

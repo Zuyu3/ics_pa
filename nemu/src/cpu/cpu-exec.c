@@ -120,9 +120,7 @@ void cpu_exec(uint64_t n) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
 
     case NEMU_ABORT:
-      #ifdef CONFIG_ITRACE_COND
-        print_ibuf_log();
-      #endif
+      print_ibuf_log();
     case NEMU_END: 
       Log("nemu: %s at pc = " FMT_WORD,
           (nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
