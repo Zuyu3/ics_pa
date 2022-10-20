@@ -102,6 +102,7 @@ void init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */
 
   /* Parse arguments. */
+  printf("\n---------------------\nargs are:\n");
   for(int i = 0; i < argc; i++)
     printf("%s\n", argv[i]);
   getchar();
