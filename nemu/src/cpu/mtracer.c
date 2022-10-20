@@ -24,7 +24,7 @@ void print_mbuf_log() {
   #ifndef CONFIG_MTRACE
     return;
   #endif
-  printf("Here are the %d most recent memory operates before the program error\n", MBUF_SIZE);
+  printf("Here are the %d most recent memory operates before the program error\n\n", MBUF_SIZE);
   printf("    op       addr     len       data           hex data\n\n");
   for(int i = (mringbuf_index + 1) % MBUF_SIZE; i != mringbuf_index; i = (i + 1) % MBUF_SIZE) {
     if(!strcmp(mringbuf[i], ""))
