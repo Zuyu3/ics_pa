@@ -196,7 +196,7 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
                 }
             }
 
-            func_tracer_index = i;
+            func_tracer_index = i - 1;
             return;
         }
 
