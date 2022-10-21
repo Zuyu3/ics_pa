@@ -142,9 +142,9 @@ void init_func_table(char *bin_path, char *ftracer_log_path) {
         exit(1);
     }
     strcpy(elf_path, bin_path);
-    elf_path[strlen(elf_path) - 3] = 'e';
-    elf_path[strlen(elf_path) - 2] = 'l';
-    elf_path[strlen(elf_path) - 1] = 'f';
+    strcpy(&elf_path[strlen(elf_path) - 3], "elf");
+    printf("%s\n", elf_path);
+    getchar();
 
     fp = fopen(elf_path, "r");
     reset_fp_offset();
@@ -169,6 +169,8 @@ void init_func_table(char *bin_path, char *ftracer_log_path) {
     //for(int i = 0; i < func_table_size; i++)
     //  printf("%d  %x %s\n", i, func_table[i].func_start_addr, func_table[i].func_name);
     //printf("%d\n", func_table_size);
+
+    strcpy(&ftracer_log_path[strlen(ftracer_log_path) - 12], "ftracer-log.txt");
     fp = fopen(ftracer_log_path, "w");
 }
 
