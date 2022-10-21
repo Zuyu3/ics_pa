@@ -69,6 +69,8 @@ static long load_img() {
 }
 
 static int parse_args(int argc, char *argv[]) {
+    printf("last argv is: %s\n", argv[argc - 1]);
+  getchar();
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},
     {"log"      , required_argument, NULL, 'l'},
@@ -96,8 +98,7 @@ static int parse_args(int argc, char *argv[]) {
     }
   }
   
-  printf("last argv is: %s\n", argv[argc - 1]);
-  getchar();
+
 
   return 0;
 }
