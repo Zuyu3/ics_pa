@@ -23,6 +23,7 @@ void init_difftest(char *ref_so_file, long img_size, int port);
 void init_device();
 void init_sdb();
 void init_disasm(const char *triple);
+void init_func_table();
 
 static void welcome() {
   Log("Trace: %s", MUXDEF(CONFIG_TRACE, ANSI_FMT("ON", ANSI_FG_GREEN), ANSI_FMT("OFF", ANSI_FG_RED)));
@@ -69,8 +70,8 @@ static long load_img() {
 }
 
 static int parse_args(int argc, char *argv[]) {
-    printf("last argv is: %s\n", argv[argc - 1]);
-  getchar();
+  init_func_table();
+
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},
     {"log"      , required_argument, NULL, 'l'},
@@ -97,9 +98,6 @@ static int parse_args(int argc, char *argv[]) {
         exit(0);
     }
   }
-  
-
-
   return 0;
 }
 
@@ -109,12 +107,14 @@ void init_monitor(int argc, char *argv[]) {
   /* Parse arguments. */
   
   
+  /*
   printf("\n---------------------\nargs are:\n");
   for(int i = 0; i < argc; i++){
     printf("%s\n", argv[i]);
-    //getchar();
+    getchar();
   }
   printf("end args\n---------------------------\n\n");
+  */
   
   parse_args(argc, argv);
 
