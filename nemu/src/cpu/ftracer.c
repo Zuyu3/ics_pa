@@ -128,8 +128,6 @@ void load_func_strtab_name(unsigned int strtab_start_addr) {
 }
 
 void init_func_table(char *bin_path) {
-    printf("%s\n", bin_path);
-    getchar();
     strcpy(elf_path, bin_path);
     elf_path[strlen(elf_path) - 3] = 'e';
     elf_path[strlen(elf_path) - 2] = 'l';
@@ -139,10 +137,10 @@ void init_func_table(char *bin_path) {
     reset_fp_offset();
     printf("%s\n", elf_path);
     load_elf_header(elf_header);
-    //printf("%u\n%u\n%u\n%u\n", elf_header->e_shoff, elf_header->e_shentsize, elf_header->e_shnum, elf_header->e_shstrndx);
+    printf("%u\n%u\n%u\n%u\n", elf_header->e_shoff, elf_header->e_shentsize, elf_header->e_shnum, elf_header->e_shstrndx);
 
     load_section_header();
-    //for(int i = 0; i < elf_header->e_shnum; i++)  printf("%-10x  %-10x  %-10x %s\n", sh_data[i].sh_name_offset, sh_data[i].sh_offset, sh_data[i].sh_size, sh_data[i].sh_name);
+    for(int i = 0; i < elf_header->e_shnum; i++)  printf("%-10x  %-10x  %-10x %s\n", sh_data[i].sh_name_offset, sh_data[i].sh_offset, sh_data[i].sh_size, sh_data[i].sh_name);
 
     for(int i = 0; i < elf_header->e_shnum; i++) {
         if(!strcmp(sh_data[i].sh_name, ".symtab")) {
