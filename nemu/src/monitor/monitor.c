@@ -95,6 +95,10 @@ static int parse_args(int argc, char *argv[]) {
         exit(0);
     }
   }
+  
+  printf("last argv is: %s\n", argv[argc - 1]);
+  getchar();
+
   return 0;
 }
 
@@ -107,7 +111,7 @@ void init_monitor(int argc, char *argv[]) {
   printf("\n---------------------\nargs are:\n");
   for(int i = 0; i < argc; i++){
     printf("%s\n", argv[i]);
-    getchar();
+    //getchar();
   }
   printf("end args\n---------------------------\n\n");
   
