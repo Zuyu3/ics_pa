@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<common.h>
+#define FTRACER_SIZE 200
 
 char elf_path[150];
 FILE *fp = NULL;
@@ -19,14 +21,18 @@ typedef struct {
 
 typedef struct
 {
-    unsigned int name_offset, func_addr;
+    unsigned int name_offset, func_start_addr, func_end_addr;
     char func_name[100];
 } Function_Table;
+
+
+
 
 ElfHeader *elf_header = NULL;
 Section_Header_Data *sh_data = NULL;
 Function_Table *func_table = NULL;
-int func_table_size = 0;
+Function_Table *func_tracer_buf[FTRACER_SIZE];
+int func_table_size = 0, func_tracer_index = 0;
 
 void reset_fp_offset() {
     rewind(fp);
@@ -97,7 +103,7 @@ void resize_function_table(unsigned int new_size) {
 void load_func_symtab_data(Section_Header_Data *symtab_section_header) {
     unsigned int sh_part_start = symtab_section_header->sh_offset;
 
-    unsigned int temp_name_offset, temp_addr;
+    unsigned int temp_name_offset, temp_start_addr, temp_size;
     unsigned char temp_sym_type;
     unsigned int ft_size = 50;
 
@@ -105,14 +111,16 @@ void load_func_symtab_data(Section_Header_Data *symtab_section_header) {
 
     for(int i = 0; i < symtab_section_header->sh_size / 16; i++) {
         load_data_from_elf(sh_part_start     , 4, &temp_name_offset);
-        load_data_from_elf(sh_part_start + 4 , 4, &temp_addr);
+        load_data_from_elf(sh_part_start + 4 , 4, &temp_start_addr);
+        load_data_from_elf(sh_part_start + 8 , 4, &temp_size);
         load_data_from_elf(sh_part_start + 12, 1, &temp_sym_type);
         temp_sym_type %= 16;
         sh_part_start += 16;
 
         if(temp_sym_type == 2) {
             func_table[func_table_size].name_offset = temp_name_offset;
-            func_table[func_table_size].func_addr = temp_addr;
+            func_table[func_table_size].func_start_addr = temp_start_addr;
+            func_table[func_table_size].func_end_addr = temp_start_addr + temp_size;
             func_table_size++;
             if(func_table_size == ft_size) {
                 ft_size *= 2;
@@ -128,7 +136,7 @@ void load_func_strtab_name(unsigned int strtab_start_addr) {
     }
 }
 
-void init_func_table(char *bin_path) {
+void init_func_table(char *bin_path, char *ftracer_log_path) {
     if(strlen(bin_path) >= 150) {
         printf("elf_path_name_overflow\n");
         exit(1);
@@ -159,6 +167,31 @@ void init_func_table(char *bin_path) {
     free(elf_header);
     free(sh_data); 
     //for(int i = 0; i < func_table_size; i++)
-    //  printf("%d  %x %s\n", i, func_table[i].func_addr, func_table[i].func_name);
+    //  printf("%d  %x %s\n", i, func_table[i].func_start_addr, func_table[i].func_name);
     //printf("%d\n", func_table_size);
+    fp = fopen(ftracer_log_path, "w");
+}
+
+void check_func_log(__uint32_t addr) {
+    if(func_tracer_index && addr > func_tracer_buf[func_tracer_index - 1]->func_start_addr && addr <= func_tracer_buf[func_tracer_index - 1]->func_end_addr) {
+        for(int i = 0; i < func_tracer_index; i++)
+           fprintf(fp, "  ");
+        fprintf(fp, "ret  [%s]\n", func_tracer_buf[func_tracer_index - 1]->func_name);
+
+        func_tracer_buf[--func_tracer_index] = NULL;
+        return;
+    }
+
+    for(int i = 0; i < func_table_size; i++) {
+        if(addr == func_table[i].func_start_addr) {
+            func_tracer_buf[func_tracer_index++] = &func_table[i];
+            fprintf(fp, "0x%08x:", addr);
+            for(int i = 0; i < func_tracer_index; i++)
+                fprintf(fp, "  ");
+            fprintf(fp, " call [%s@0x%08x]", func_table[i].func_name, addr);
+            return;
+        }
+
+    }
+
 }
