@@ -190,7 +190,7 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
             fprintf(fp, "0x%08x:", curr_addr);
             for(int i = 0; i < func_tracer_index; i++)
                 fprintf(fp, "  ");
-            fprintf(fp, " call [%s@0x%08x]\n", func_table[i].func_name, target_addr);
+            fprintf(fp, " call [%s @0x%08x]\n", func_table[i].func_name, target_addr);
             return;
         }
 
