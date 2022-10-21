@@ -140,7 +140,6 @@ void init_func_table(char *bin_path) {
 
     fp = fopen(elf_path, "r");
     reset_fp_offset();
-    //printf("%s\n", elf_path);
     load_elf_header(elf_header);
     //printf("%u\n%u\n%u\n%u\n", elf_header->e_shoff, elf_header->e_shentsize, elf_header->e_shnum, elf_header->e_shstrndx);
 
@@ -159,8 +158,7 @@ void init_func_table(char *bin_path) {
 
     free(elf_header);
     free(sh_data); 
-    for(int i = 0; i < func_table_size; i++)
-    printf("%x  %x %s\n", func_table[i].name_offset, func_table[i].func_addr, func_table[i].func_name);
-    printf("%d\n", func_table_size);
-    //getchar();
+    //for(int i = 0; i < func_table_size; i++)
+    //  printf("%d  %x %s\n", i, func_table[i].func_addr, func_table[i].func_name);
+    //printf("%d\n", func_table_size);
 }
