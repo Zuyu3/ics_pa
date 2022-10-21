@@ -174,7 +174,7 @@ void init_func_table(char *bin_path, char *nemu_log_path) {
     fflush(fp);
 }
 
-void check_func_log(__uint32_t addr) {
+void check_func_log(vaddr_t addr) {
     if(func_tracer_index && addr > func_tracer_buf[func_tracer_index - 1]->func_start_addr && addr <= func_tracer_buf[func_tracer_index - 1]->func_end_addr) {
         for(int i = 0; i < func_tracer_index; i++)
            fprintf(fp, "  ");
