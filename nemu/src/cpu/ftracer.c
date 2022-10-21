@@ -182,7 +182,7 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
     #endif
 
     //printf("%x %x\n", curr_addr, target_addr);
-    for(int i = func_tracer_index - 1; i >= 0; i--) 
+    for(int i = func_tracer_index - 2; i >= 0; i--) 
         if(target_addr > func_tracer_buf[i]->func_start_addr && target_addr <= func_tracer_buf[i]->func_end_addr) {
             fprintf(fp, "0x%08x:", curr_addr);
 
@@ -196,7 +196,7 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
                 }
             }
 
-            func_tracer_index = i - 1;
+            func_tracer_index = i;
             return;
         }
 
