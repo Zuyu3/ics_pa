@@ -178,13 +178,9 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
     #ifndef CONFIG_FTRACE
         return;
     #endif
-    printf("%x %x\n", curr_addr, target_addr);
-    if(func_tracer_index)
-    printf("%x %x\n\n", func_tracer_buf[func_tracer_index - 1]->func_start_addr, func_tracer_buf[func_tracer_index - 1]->func_end_addr);
-    getchar();
 
 
-    if(func_tracer_index != 0 && target_addr > func_tracer_buf[func_tracer_index - 1]->func_start_addr && target_addr <= func_tracer_buf[func_tracer_index - 1]->func_end_addr) {
+    if(func_tracer_index > 1 && target_addr > func_tracer_buf[func_tracer_index - 2]->func_start_addr && target_addr <= func_tracer_buf[func_tracer_index - 2]->func_end_addr) {
         for(int i = 0; i < func_tracer_index; i++)
            fprintf(fp, "  ");
         fprintf(fp, "ret  [%s]\n", func_tracer_buf[func_tracer_index - 1]->func_name);
