@@ -183,17 +183,22 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
 
     //printf("%x %x\n", curr_addr, target_addr);
     for(int i = func_tracer_index - 1; i >= 0; i--) 
-    if(target_addr > func_tracer_buf[i]->func_start_addr && target_addr < func_tracer_buf[i]->func_end_addr) {
-        fprintf(fp, "            ");
-        for(int k = 0; k < func_tracer_index; k++)
-           fprintf(fp, "   ");
-        fprintf(fp, "ret  [%s]\n", func_tracer_buf[func_tracer_index - 1]->func_name);
-        func_tracer_index = i;
-        return;
-    }
+        if(target_addr > func_tracer_buf[i]->func_start_addr && target_addr < func_tracer_buf[i]->func_end_addr) {
+            fprintf(fp, "            ");
+            for(int k = 0; k < func_tracer_index; k++)
+                fprintf(fp, "   ");
+            
+            for(int k = 0; k < func_table_size; k++) {
+                if(curr_addr >= func_table[k].func_start_addr && curr_addr < func_table[k].func_end_addr) {
+                    fprintf(fp, "ret  [%s]\n", func_tracer_buf[k]->func_name);
+                    break;
+                }
+            }
+            func_tracer_index = i;
+            return;
+        }
 
     for(int i = 0; i < func_table_size; i++) {
-
         if(target_addr == func_table[i].func_start_addr) {
             func_tracer_buf[func_tracer_index++] = &func_table[i];
             fprintf(fp, "0x%08x:", curr_addr);
