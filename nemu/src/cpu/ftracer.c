@@ -65,6 +65,7 @@ void load_string_from_elf(unsigned int offset, char *pointer) {
 
 void load_elf_header() {
     elf_header = (ElfHeader *)malloc(sizeof(ElfHeader));
+    memset(elf_header, 0, sizeof(ElfHeader));
     load_data_from_elf(32, 4, &elf_header->e_shoff);
     load_data_from_elf(46, 2, &elf_header->e_shentsize);
     load_data_from_elf(48, 2, &elf_header->e_shnum);
