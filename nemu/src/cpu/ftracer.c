@@ -2,7 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<common.h>
-#define FTRACER_SIZE 200
+#define FTRACER_SIZE 2000
 
 char elf_path[150];
 FILE *fp = NULL;
