@@ -175,6 +175,9 @@ void init_func_table(char *bin_path, char *nemu_log_path) {
 }
 
 void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
+    #ifndef CONFIG_FTRACE
+        return;
+    #endif
     if(func_tracer_index != 0 && target_addr > func_tracer_buf[func_tracer_index - 1]->func_start_addr && target_addr <= func_tracer_buf[func_tracer_index - 1]->func_end_addr) {
         for(int i = 0; i < func_tracer_index; i++)
            fprintf(fp, "  ");

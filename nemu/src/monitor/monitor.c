@@ -70,7 +70,9 @@ static long load_img() {
 }
 
 static int parse_args(int argc, char *argv[]) {
-  init_func_table(argv[argc - 1], argv[argc - 2]);
+  #ifdef CONFIG_FTRACE
+    init_func_table(argv[argc - 1], argv[argc - 2]);
+  #endif
 
   const struct option table[] = {
     {"batch"    , no_argument      , NULL, 'b'},
