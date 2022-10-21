@@ -165,10 +165,10 @@ void init_func_table(char *bin_path, char *nemu_log_path) {
     free(elf_header);
     free(sh_data); 
 
-    /*for(int i = 0; i < func_table_size; i++)
+    for(int i = 0; i < func_table_size; i++)
       printf("%d  %x %x %s\n", i, func_table[i].func_start_addr, func_table[i].func_end_addr, func_table[i].func_name);
     printf("%d\n", func_table_size);
-    */
+    
 
     strcpy(elf_path, nemu_log_path);
     strcpy(&elf_path[strlen(elf_path) - 12], "ftracer-log.txt");
