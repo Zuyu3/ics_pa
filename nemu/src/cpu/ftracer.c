@@ -136,7 +136,7 @@ void init_func_table(char *bin_path) {
 
     fp = fopen(elf_path, "r");
     reset_fp_offset();
-    //printf("%s\n", elf_path);
+    printf("%s\n", elf_path);
     load_elf_header(elf_header);
     printf("%u\n%u\n%u\n%u\n", elf_header->e_shoff, elf_header->e_shentsize, elf_header->e_shnum, elf_header->e_shstrndx);
 
