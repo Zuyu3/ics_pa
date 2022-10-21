@@ -195,9 +195,10 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
     }
 
     for(int i = 0; i < func_table_size; i++) {
-                printf("call");
-        getchar();
+
         if(target_addr == func_table[i].func_start_addr) {
+            printf("call");
+            getchar();
             func_tracer_buf[func_tracer_index++] = &func_table[i];
             fprintf(fp, "0x%08x:", curr_addr);
             for(int i = 0; i < func_tracer_index; i++)
