@@ -193,10 +193,13 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
             for(int k = 0; k < func_table_size; k++) {
                 if(curr_addr >= func_table[k].func_start_addr && curr_addr < func_table[k].func_end_addr) {
                     fprintf(fp, " ret  [%s]\n", func_table[k].func_name);
+                    //printf("ret  [%s]\n", func_table[k].func_name);
                 }
             }
 
             func_tracer_index = i + 1;
+            //getchar();
+
             return;
         }
 
@@ -204,9 +207,11 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
         if(target_addr == func_table[i].func_start_addr) {
             func_tracer_buf[func_tracer_index++] = &func_table[i];
             fprintf(fp, "0x%08x:", curr_addr);
-            for(int i = 0; i < func_tracer_index; i++)
+            for(int j = 0; j < func_tracer_index; j++)
                 fprintf(fp, "   ");
             fprintf(fp, " call [%s @0x%08x]\n", func_table[i].func_name, target_addr);
+
+            //printf("call [%s @0x%08x]\n", func_table[i].func_name, target_addr)
             return;
         }
 
