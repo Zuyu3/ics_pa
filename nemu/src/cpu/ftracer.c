@@ -136,7 +136,7 @@ void load_func_strtab_name(unsigned int strtab_start_addr) {
     }
 }
 
-void init_func_table(char *bin_path, char *ftracer_log_path) {
+void init_func_table(char *bin_path, char *nemu_log_path) {
     if(strlen(bin_path) >= 150) {
         printf("elf_path_name_overflow\n");
         exit(1);
@@ -170,8 +170,9 @@ void init_func_table(char *bin_path, char *ftracer_log_path) {
     //  printf("%d  %x %s\n", i, func_table[i].func_start_addr, func_table[i].func_name);
     //printf("%d\n", func_table_size);
 
-    strcpy(&ftracer_log_path[strlen(ftracer_log_path) - 12], "ftracer-log.txt");
-    fp = fopen(ftracer_log_path, "w");
+    strcpy(elf_path, nemu_log_path);
+    strcpy(&elf_path[strlen(elf_path) - 12], "ftracer-log.txt");
+    fp = fopen(elf_path, "w");
 }
 
 void check_func_log(__uint32_t addr) {
