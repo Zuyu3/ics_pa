@@ -190,13 +190,13 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
                 fprintf(fp, "   ");
                     
 
-            //fprintf(fp, " ret  [%s] --->  [%s]\n", func_tracer_buf[func_tracer_index - 1]->func_name, func_tracer_buf[i]->func_name);
-            for(int k = 0; k < func_table_size; k++) {
+            fprintf(fp, " ret  [%s] --->  [%s]\n", func_tracer_buf[func_tracer_index - 1]->func_name, func_tracer_buf[i]->func_name);
+            /*for(int k = 0; k < func_table_size; k++) {
                 if(curr_addr >= func_table[k].func_start_addr && curr_addr < func_table[k].func_end_addr) {
                     fprintf(fp, " ret  [%s]\n", func_table[k].func_name);
                     printf("ret  [%s] to [%s]\n", func_table[k].func_name, func_tracer_buf[i]->func_name);
                 }
-            }
+            }*/
 
             func_tracer_index = i + 1;
             //getchar();
