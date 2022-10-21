@@ -186,15 +186,16 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
         if(target_addr > func_tracer_buf[i]->func_start_addr && target_addr < func_tracer_buf[i]->func_end_addr) {
             fprintf(fp, "0x%08x: ", curr_addr);
 
+            for(int k = 0; k < func_tracer_index; k++)
+                fprintf(fp, "   ");
+                    
             
-            for(int j = func_tracer_index - 1; j >= 0; j--) {
-                if(curr_addr >= func_tracer_buf[j]->func_start_addr && curr_addr < func_tracer_buf[j]->func_end_addr) {
-                    for(int k = 0; k < j; k++)
-                        fprintf(fp, "   ");
-                    fprintf(fp, "ret  [%s]\n", func_tracer_buf[j]->func_name);
-                    break;
+            for(int k = 0; k < func_table_size; k++) {
+                if(curr_addr > func_table[k].func_start_addr && curr_addr < func_table[k].func_end_addr) {
+                    fprintf(fp, "ret  [%s]\n", func_table[k].func_name);
                 }
             }
+
             func_tracer_index = i;
             return;
         }
