@@ -164,9 +164,11 @@ void init_func_table(char *bin_path, char *nemu_log_path) {
 
     free(elf_header);
     free(sh_data); 
-    for(int i = 0; i < func_table_size; i++)
+
+    /*for(int i = 0; i < func_table_size; i++)
       printf("%d  %x %x %s\n", i, func_table[i].func_start_addr, func_table[i].func_end_addr, func_table[i].func_name);
     printf("%d\n", func_table_size);
+    */
 
     strcpy(elf_path, nemu_log_path);
     strcpy(&elf_path[strlen(elf_path) - 12], "ftracer-log.txt");
@@ -179,8 +181,10 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
         return;
     #endif
 
-
+    printf("%x %x",curr_addr, target_addr);
     if(func_tracer_index > 1 && target_addr > func_tracer_buf[func_tracer_index - 2]->func_start_addr && target_addr < func_tracer_buf[func_tracer_index - 2]->func_end_addr) {
+        printf("ret");
+        getchar();
         fprintf(fp, "            ");
         for(int i = 0; i < func_tracer_index; i++)
            fprintf(fp, "   ");
@@ -191,6 +195,8 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
     }
 
     for(int i = 0; i < func_table_size; i++) {
+                printf("call");
+        getchar();
         if(target_addr == func_table[i].func_start_addr) {
             func_tracer_buf[func_tracer_index++] = &func_table[i];
             fprintf(fp, "0x%08x:", curr_addr);
@@ -201,5 +207,7 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
         }
 
     }
+            printf("???");
+        getchar();
 
 }
