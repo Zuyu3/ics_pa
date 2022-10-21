@@ -174,8 +174,8 @@ void init_func_table(char *bin_path, char *nemu_log_path) {
     fflush(fp);
 }
 
-void check_func_log(vaddr_t addr) {
-    if(func_tracer_index && addr > func_tracer_buf[func_tracer_index - 1]->func_start_addr && addr <= func_tracer_buf[func_tracer_index - 1]->func_end_addr) {
+void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
+    if(func_tracer_index && target_addr > func_tracer_buf[func_tracer_index - 1]->func_start_addr && target_addr <= func_tracer_buf[func_tracer_index - 1]->func_end_addr) {
         for(int i = 0; i < func_tracer_index; i++)
            fprintf(fp, "  ");
         fprintf(fp, "ret  [%s]\n", func_tracer_buf[func_tracer_index - 1]->func_name);
@@ -185,12 +185,12 @@ void check_func_log(vaddr_t addr) {
     }
 
     for(int i = 0; i < func_table_size; i++) {
-        if(addr == func_table[i].func_start_addr) {
+        if(target_addr == func_table[i].func_start_addr) {
             func_tracer_buf[func_tracer_index++] = &func_table[i];
-            fprintf(fp, "0x%08x:", addr);
+            fprintf(fp, "0x%08x:", curr_addr);
             for(int i = 0; i < func_tracer_index; i++)
                 fprintf(fp, "  ");
-            fprintf(fp, " call [%s@0x%08x]", func_table[i].func_name, addr);
+            fprintf(fp, " call [%s@0x%08x]", func_table[i].func_name, target_addr);
             return;
         }
 
