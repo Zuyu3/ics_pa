@@ -170,9 +170,8 @@ void init_func_table(char *bin_path, char *nemu_log_path) {
 
     strcpy(elf_path, nemu_log_path);
     strcpy(&elf_path[strlen(elf_path) - 12], "ftracer-log.txt");
-    printf("%s\n", elf_path);
-    getchar();
     fp = fopen(elf_path, "w");
+    fflush(fp);
 }
 
 void check_func_log(__uint32_t addr) {
