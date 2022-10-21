@@ -2,7 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 
-char elf_path[] = "/home/zuyu/code/ics2022/am-kernels/tests/am-tests/build/amtest-riscv32-nemu.elf";
+char elf_path[150];
 FILE *fp = NULL;
 unsigned int current_offset = 0;
 
