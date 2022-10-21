@@ -129,6 +129,7 @@ void load_func_strtab_name(unsigned int strtab_start_addr) {
 }
 
 void init_func_table(char *bin_path) {
+    printf("%s\n", bin_path);
     strcpy(elf_path, bin_path);
     elf_path[strlen(elf_path) - 3] = 'e';
     elf_path[strlen(elf_path) - 2] = 'l';
