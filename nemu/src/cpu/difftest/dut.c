@@ -125,9 +125,8 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
   ref_difftest_exec(1);
   ref_difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);
 
-printf("get in true\n");
-getchar();
-  checkregs(&ref_r, pc);
+  //TODO:pc or npc?(originally pc)
+  checkregs(&ref_r, npc);
 }
 #else
 void init_difftest(char *ref_so_file, long img_size, int port) { }
