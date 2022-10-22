@@ -34,7 +34,45 @@ int format_helper_int2str(char *out, int d) {
 }
 
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  //panic("Not implemented");
+  va_list ap;
+  va_start(ap, fmt);
+  int res = 0;
+  char temp[100], *chp;
+
+
+  while(*fmt != '\0') {
+      if(*fmt == '%') {
+          switch (*(++fmt))
+          {
+          case 'd':
+              res += format_helper_int2str(temp, va_arg(ap, int));
+              printf("%s", temp);
+              break;
+          case 's':
+              chp = va_arg(ap, char*);
+              while(*chp != '\0') {
+                putch(*chp);
+                chp++;
+                res++;
+              }
+              break;
+          case 'c':
+              putch(va_arg(ap, int));
+              res++;
+              break;
+          default:
+              break;
+          }
+      }
+      else {
+          putch(*fmt);
+          res++;
+      }
+      fmt++;
+  }
+  va_end(ap);
+  return res;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
@@ -42,7 +80,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  //panic("Not implemented");
   int res = 0;
   va_list ap;
   va_start(ap, fmt);
