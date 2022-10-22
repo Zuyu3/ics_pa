@@ -206,7 +206,6 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr) {
                 fprintf(fp, "   ");
             fprintf(fp, " call [%s @0x%08x]\n", func_table[i].func_name, target_addr);
 
-            printf("call [%s @0x%08x]\n", func_table[i].func_name, target_addr);
             return;
         }
 
