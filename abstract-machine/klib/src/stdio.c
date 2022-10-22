@@ -43,8 +43,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
 int sprintf(char *out, const char *fmt, ...) {
   //panic("Not implemented");
-  if(strcmp(fmt, "%s"))
-  panic("wrong input");
   int res = 0;
   va_list ap;
   va_start(ap, fmt);
