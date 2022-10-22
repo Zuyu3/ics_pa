@@ -20,7 +20,7 @@ char *strcpy(char *dst, const char *src) {
     end_of_dst++;
     src++;
   }
-  end_of_dst = '\0';
+  *end_of_dst = '\0';
   return dst;
 }
 
