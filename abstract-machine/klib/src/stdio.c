@@ -56,7 +56,7 @@ int sprintf(char *out, const char *fmt, ...) {
               break;
           case 's':
               strcpy(out + res, va_arg(ap, char*));
-              if(*(out + 1) != 's')
+              if(*(out) != 's')
                 panic("3");
               res += strlen(out + res);
               break;
