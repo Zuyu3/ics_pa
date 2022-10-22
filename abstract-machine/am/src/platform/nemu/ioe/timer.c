@@ -9,7 +9,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   printf("%d  ", uptime->us);
   printf("%d   ",   inl(RTC_ADDR));
   //ioe_write(uptime->us, (void *)RTC_ADDR);
-  printf("%d  ", uptime->us);
+  //printf("%d  \n", uptime->us);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
