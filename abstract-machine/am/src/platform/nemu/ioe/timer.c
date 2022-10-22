@@ -6,10 +6,10 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  printf("%lx   ", uptime->us);
+  printf("%ld   ", uptime->us);
   printf("%d   ",inl(RTC_ADDR));
   //ioe_read(uptime->us, (RTC_ADDR));
-  printf("%lx\n", uptime->us);
+  printf("%ld\n", uptime->us);
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
