@@ -55,10 +55,9 @@ int sprintf(char *out, const char *fmt, ...) {
               res += format_helper_int2str(out + res, va_arg(ap, int));
               break;
           case 's':
-            
+              if(strcmp(va_arg(ap, char*), "as"))
+              panic("ew");
               strcpy(out + res, va_arg(ap, char*));
-              if(*(out) != '3')
-                assert(0);
               res += strlen(out + res);
               break;
           case 'c':
