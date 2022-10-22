@@ -56,7 +56,7 @@ int sprintf(char *out, const char *fmt, ...) {
               break;
           case 's':
               strcpy(out + res, va_arg(ap, char*));
-              if(strcmp(out + res, "asfdwef"))
+              if(strlen(out + res) != 7)
               panic("wre");
               res += strlen(out + res);
               break;
