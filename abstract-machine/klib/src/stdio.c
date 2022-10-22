@@ -56,8 +56,6 @@ int sprintf(char *out, const char *fmt, ...) {
               break;
           case 's':
               strcpy(out + res, va_arg(ap, char*));
-              if(strcmp(out + res, "asfdwef"))
-              panic("copy wrong");
               res += strlen(out + res);
               break;
           case 'c':
