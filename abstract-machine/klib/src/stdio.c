@@ -43,7 +43,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
 int sprintf(char *out, const char *fmt, ...) {
   //panic("Not implemented");
-  int sprintf_index = 0;
+  int res = 0;
   va_list ap;
   va_start(ap, fmt);
 
@@ -52,31 +52,31 @@ int sprintf(char *out, const char *fmt, ...) {
           switch (*(++fmt))
           {
           case 'd':
-              sprintf_index += format_helper_int2str(out + sprintf_index, va_arg(ap, int));
+              res += format_helper_int2str(out + res, va_arg(ap, int));
               break;
           case 's':
-              strcpy(out + sprintf_index, va_arg(ap, char*));
-              sprintf_index += strlen(out + sprintf_index);
-              if(strlen(out + sprintf_index) != 7)
+              strcpy(out + res, va_arg(ap, char*));
+              res += strlen(out + res);
+              if(strlen(out + res) != 6)
               panic("wrong index");
               break;
           case 'c':
-              *(out + sprintf_index) = va_arg(ap, int);
-              sprintf_index++;
+              *(out + res) = va_arg(ap, int);
+              res++;
               break;
           default:
               break;
           }
       }
       else {
-          *(out + sprintf_index) = *fmt;
-          sprintf_index++;
+          *(out + res) = *fmt;
+          res++;
       }
       fmt++;
   }
   va_end(ap);
-  *(out + sprintf_index) = '\0';
-  return sprintf_index;
+  *(out + res) = '\0';
+  return res;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
