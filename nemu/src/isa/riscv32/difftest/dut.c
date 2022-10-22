@@ -23,7 +23,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
     printf("%-3d:  %x   %x\n", i, gpr(i), ref_r->gpr[i]);
   }
   printf("\n\n\n");
-  getchar();
+
   if(pc != ref_r->pc){
     printf("pc Error: DUT is %x, while REF is %x\n", pc, ref_r->pc);
     return false;
