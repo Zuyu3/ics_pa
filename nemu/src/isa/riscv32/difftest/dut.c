@@ -19,8 +19,7 @@
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   printf("pc is: %x   %x\n", ref_r->pc, cpu.pc);
-  getchar();
-  if(pc != ref_r->pc)
+  if(cpu.pc != ref_r->pc)
     return false;
   for(int i = 0; i < 32; i++) {
     printf("reg at %d: %x\n", i, gpr(i));
