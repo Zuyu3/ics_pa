@@ -71,7 +71,7 @@ static long load_img() {
 
 static int parse_args(int argc, char *argv[]) {
   #ifdef CONFIG_FTRACE
-    init_func_table(argv[argc - 1], argv[argc - 2]);
+    init_func_table(argv[argc - 1], argv[2]);
   #endif
 
   const struct option table[] = {
