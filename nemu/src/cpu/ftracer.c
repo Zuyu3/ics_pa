@@ -137,9 +137,6 @@ void load_func_strtab_name(unsigned int strtab_start_addr) {
 }
 
 void init_func_table(char *bin_path, char *nemu_log_path) {
-    printf("init function tracer\n");
-    printf("%s\n%s\n", bin_path, nemu_log_path);
-    getchar();
     if(strlen(bin_path) >= 150) {
         printf("elf_path_name_overflow\n");
         exit(1);
