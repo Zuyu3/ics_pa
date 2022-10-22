@@ -59,8 +59,6 @@ int sprintf(char *out, const char *fmt, ...) {
               if(strcmp(out + res, "asfdwef"))
               panic("copy wrong");
               res += strlen(out + res);
-              if(strlen(out) != 7)
-                panic("wrong index");
               break;
           case 'c':
               *(out + res) = va_arg(ap, int);
