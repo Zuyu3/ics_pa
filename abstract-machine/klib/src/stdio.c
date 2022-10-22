@@ -57,7 +57,7 @@ int sprintf(char *out, const char *fmt, ...) {
           case 's':
               strcpy(out + res, va_arg(ap, char*));
               res += strlen(out + res);
-              if(res != 7)
+              if(res != 6)
               panic("wrong index");
               break;
           case 'c':
