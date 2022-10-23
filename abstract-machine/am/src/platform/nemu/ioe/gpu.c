@@ -4,7 +4,7 @@
 
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
-#define GPU_W inw(VGACTL_ADDR + 2)
+#define GPU_W io_read(AM_GPU_CONFIG).width
 #define GPU_H inw(VGACTL_ADDR)
 
 
