@@ -79,6 +79,9 @@ int printf(const char *fmt, ...) {
               res += format_helper_uint2str(temp, va_arg(ap, unsigned));
               putstr(temp);
               break;
+          case 'x':
+              res += format_helper_uint20xstr(temp, va_arg(ap, int));
+              putstr(temp);
           default:
               break;
           }
