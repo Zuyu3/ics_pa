@@ -13,7 +13,7 @@ void __am_gpu_init() {
   int h = GPU_H;  // TODO: get the correct height
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
-  outl(SYNC_ADDR, 1);
+  outb(SYNC_ADDR, 1);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
@@ -22,8 +22,6 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
     .width = GPU_W, .height = GPU_H,
     .vmemsz = GPU_W * GPU_H
   };
-  outl(SYNC_ADDR, 1);
-
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
@@ -32,7 +30,6 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   for(int i = ctl->y; i < ctl->y + ctl->h; i++)
     for(int j = ctl->x; j< ctl->x + ctl->w; j++)
        fb[i * GPU_W + j] = sr[i - ctl->y + j - ctl->x];
-  outl(SYNC_ADDR, 1);
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
