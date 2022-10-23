@@ -22,15 +22,16 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = GPU_W, .height = GPU_H,
-    .vmemsz = 0
+    .vmemsz = GPU_W * GPU_H
   };
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-
+  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
+  uint32_t *sr = (uint32_t *)(uintptr_t)FB_ADDR;
   for(int i = ctl->y; i < ctl->y + ctl->h; i++)
     for(int j = ctl->x; j< ctl->x + ctl->w; j++)
-       outl(FB_ADDR + i * GPU_W + j, (uintptr_t)ctl->pixels + (i + j- ctl->x - ctl->y));
+       fb[i * GPU_W + j] = sr[i - ctl->y + j - ctl->x];
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
