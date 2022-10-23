@@ -15,6 +15,7 @@
 
 #include <common.h>
 #include <device/map.h>
+#include<device/mmio.h>
 
 #define SCREEN_W (MUXDEF(CONFIG_VGA_SIZE_800x600, 800, 400))
 #define SCREEN_H (MUXDEF(CONFIG_VGA_SIZE_800x600, 600, 300))
@@ -71,6 +72,7 @@ static inline void update_screen() {
 #endif
 
 void vga_update_screen() {
+  printf("%d  %d\n", mmio_read(*vgactl_port_base, 4), mmio_read(*(vgactl_port_base + 4), 4));
   // TODO: call `update_screen()` when the sync register is non-zero,
   // then zero out the sync register
 }
