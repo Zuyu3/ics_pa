@@ -22,6 +22,8 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
     .width = GPU_W, .height = GPU_H,
     .vmemsz = GPU_W * GPU_H
   };
+  outl(SYNC_ADDR, 1);
+
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
