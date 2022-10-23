@@ -41,6 +41,9 @@ int format_helper_int2str(char *out, int d) {
   return res;
 }
 
+int format_helper_uint2str(char *out, int d) {
+    return format_helper_value2str(out, d, 10);
+}
 
 int printf(const char *fmt, ...) {
   //panic("Not implemented");
@@ -107,6 +110,9 @@ int sprintf(char *out, const char *fmt, ...) {
           case 'c':
               *(out + res) = va_arg(ap, int);
               res++;
+              break;
+          case 'u':
+              res += format_helper_uint2str(out + res, va_arg(ap, unsigned));
               break;
           default:
               break;
