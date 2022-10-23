@@ -41,7 +41,7 @@ int format_helper_int2str(char *out, int d) {
   return res;
 }
 
-int format_helper_uint2str(char *out, int d) {
+int format_helper_uint2str(char *out, unsigned d) {
     return format_helper_value2str(out, d, 10);
 }
 
