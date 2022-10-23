@@ -45,6 +45,11 @@ int format_helper_uint2str(char *out, unsigned int d) {
     return format_helper_value2str(out, d, 10);
 }
 
+int format_helper_uint20xstr(char *out, unsigned d) {
+    strcpy(out, "0x");
+    return format_helper_value2str(out + 2, d, 16) + 2;
+} 
+
 int printf(const char *fmt, ...) {
   //panic("Not implemented");
   va_list ap;
@@ -115,6 +120,8 @@ int sprintf(char *out, const char *fmt, ...) {
           case 'u':
               res += format_helper_uint2str(out + res, va_arg(ap, unsigned));
               break;
+          case 'x':
+              res += format_helper_uint20xstr(out + res, va_arg(ap, unsigned));
           default:
               break;
           }
