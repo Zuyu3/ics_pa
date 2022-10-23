@@ -70,6 +70,10 @@ int printf(const char *fmt, ...) {
               putch(va_arg(ap, int));
               res++;
               break;
+          case 'u':
+              res += format_helper_uint2str(temp, va_arg(ap, unsigned));
+              putstr(temp);
+              break;
           default:
               break;
           }
