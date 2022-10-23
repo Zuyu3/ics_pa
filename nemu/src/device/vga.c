@@ -21,7 +21,6 @@
 #define SCREEN_H (MUXDEF(CONFIG_VGA_SIZE_800x600, 600, 300))
 
 static uint32_t screen_width() {
-  printf("screen size is: %d\n\n", MUXDEF(CONFIG_TARGET_AM, io_read(AM_GPU_CONFIG).width, SCREEN_W));
   return MUXDEF(CONFIG_TARGET_AM, io_read(AM_GPU_CONFIG).width, SCREEN_W);
 }
 
@@ -30,6 +29,7 @@ static uint32_t screen_height() {
 }
 
 static uint32_t screen_size() {
+  printf("screen size is: %ld\n\n", screen_width() * screen_height() * sizeof(uint32_t));
   return screen_width() * screen_height() * sizeof(uint32_t);
 }
 
