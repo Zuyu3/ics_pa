@@ -59,15 +59,12 @@ int printf(const char *fmt, ...) {
           {
           case 'd':
               res += format_helper_int2str(temp, va_arg(ap, int));
-              printf("%s", temp);
+              putstr(temp);
               break;
           case 's':
               chp = va_arg(ap, char*);
-              while(*chp != '\0') {
-                putch(*chp);
-                chp++;
-                res++;
-              }
+              res += strlen(chp);
+              putstr(chp);
               break;
           case 'c':
               putch(va_arg(ap, int));
