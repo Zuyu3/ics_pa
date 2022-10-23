@@ -5,22 +5,13 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-int format_helper_int2str(char *out, int d) {
+int format_helper_value2str(char *out, uint64_t d, unsigned base_value) {
   int res = 0;
-  if(d < 0) {
-      *out = '-';
-      out++;
-      if(d == 0x80000000) {
-          strcpy(out, "2147483648");
-          return 11;
-      }
-      return 1 + format_helper_int2str(out, -d);
-  }
   char temp;
   do {
-      *(out + res) = d % 10  + '0';
+      *(out + res) = d % base_value > 9 ? d % base_value  + '0' : d % base_value + 'a' - 10;
       res++;
-      d /= 10;
+      d /= base_value;
   } while(d);
 
   *(out + res) = '\0';
@@ -32,6 +23,24 @@ int format_helper_int2str(char *out, int d) {
   }
   return res;
 }
+
+int format_helper_int2str(char *out, int d) {
+  int res = 0;
+  if(d < 0) {
+      *out = '-';
+      out++;
+      if(d == 0x80000000) {
+          strcpy(out, "2147483648");
+          return 11;
+      }
+      res++;
+      d = -d;
+  }
+
+  res += format_helper_value2str(out, d, 10);
+  return res;
+}
+
 
 int printf(const char *fmt, ...) {
   //panic("Not implemented");
