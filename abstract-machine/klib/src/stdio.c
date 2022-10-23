@@ -9,7 +9,7 @@ int format_helper_value2str(char *out, uint64_t d, unsigned base_value) {
   int res = 0;
   char temp;
   do {
-      *(out + res) = d % base_value > 9 ? d % base_value  + 'a' - 10 : d % base_value + '0';
+      *(out + res) = d % base_value + '0';
       res++;
       d /= base_value;
   } while(d);
