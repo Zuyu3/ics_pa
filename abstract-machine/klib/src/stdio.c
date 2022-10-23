@@ -75,7 +75,7 @@ int printf(const char *fmt, ...) {
           }
       }
       else {
-          putch(*fmt);
+          //putch(*fmt);
           res++;
       }
       fmt++;
