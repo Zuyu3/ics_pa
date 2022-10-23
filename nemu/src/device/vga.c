@@ -29,7 +29,6 @@ static uint32_t screen_height() {
 }
 
 static uint32_t screen_size() {
-  printf("screen size is: %ld\n\n", screen_width() * screen_height() * sizeof(uint32_t));
   return screen_width() * screen_height() * sizeof(uint32_t);
 }
 
@@ -75,7 +74,7 @@ static inline void update_screen() {
 void vga_update_screen() {
   //SYNC_ADDR defined as a bool at VGACTL_ADDR + 4 in am/src/platform/nemu/ioe/gpu.c
   printf("%d\n", *(vgactl_port_base + 4) & 0x1);
-  if((*(vgactl_port_base + 4) & 0x1) != 0) {
+  if((*(vgactl_port_base + 4) & 0xff) != 0) {
     update_screen();
     *(vgactl_port_base + 4) = 0;
   }
