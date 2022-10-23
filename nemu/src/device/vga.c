@@ -73,7 +73,7 @@ static inline void update_screen() {
 
 void vga_update_screen() {
   //SYNC_ADDR defined as a bool at VGACTL_ADDR + 4 in am/src/platform/nemu/ioe/gpu.c
-  printf("%d\n", *(vgactl_port_base + 4));
+  printf("%d  %d\n", *vgactl_port_base, *(vgactl_port_base + 4));
   if((*(vgactl_port_base + 4) & 0xff) != 0) {
     update_screen();
     *(vgactl_port_base + 4) = 0;
