@@ -124,7 +124,7 @@ int sprintf(char *out, const char *fmt, ...) {
               res += format_helper_uint2str(out + res, va_arg(ap, unsigned));
               break;
           case 'x':
-              res += format_helper_uint20xstr(out + res, va_arg(ap, unsigned));
+              res += format_helper_uint20xstr(out + res, va_arg(ap, int));
           default:
               break;
           }
