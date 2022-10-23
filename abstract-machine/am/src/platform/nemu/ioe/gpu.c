@@ -29,9 +29,9 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   uint32_t *sr = (uint32_t *)(uintptr_t)ctl->pixels;
-  for(int i = ctl->y; i < ctl->y + ctl->h; i++)
-    for(int j = ctl->x; j< ctl->x + ctl->w; j++)
-       fb[i * GPU_W + j] = sr[i - ctl->y + j - ctl->x];
+  for(int i = 0; i < ctl->h; i++)
+    for(int j = 0; j< ctl->w; j++)
+       fb[(ctl->y + i) * GPU_W + ctl->x + j] = sr[i + j];
   
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
