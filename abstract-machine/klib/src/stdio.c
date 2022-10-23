@@ -59,15 +59,15 @@ int printf(const char *fmt, ...) {
           {
           case 'd':
               res += format_helper_int2str(temp, va_arg(ap, int));
-              //putstr(temp);
+              putstr(temp);
               break;
           case 's':
               chp = va_arg(ap, char*);
               res += strlen(chp);
-              //putstr(chp);
+              putstr(chp);
               break;
           case 'c':
-              //putch(va_arg(ap, int));
+              putch(va_arg(ap, int));
               res++;
               break;
           default:
@@ -75,7 +75,7 @@ int printf(const char *fmt, ...) {
           }
       }
       else {
-          //putch(*fmt);
+          putch(*fmt);
           res++;
       }
       fmt++;
