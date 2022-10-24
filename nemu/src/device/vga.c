@@ -45,7 +45,6 @@ static void init_screen() {
   SDL_Window *window = NULL;
   char title[128];
   sprintf(title, "%s-NEMU", str(__GUEST_ISA__));
-  return;
 
   SDL_Init(SDL_INIT_VIDEO);
   SDL_CreateWindowAndRenderer(
