@@ -82,8 +82,9 @@ void vga_update_screen() {
 
 void init_vga() {
   vgactl_port_base = (uint32_t *)new_space(8);
-  return;
   vgactl_port_base[0] = (screen_width() << 16) | screen_height();
+  return;
+
 
 //CONFIG_VGA_CTL_MMIO matches VGACTL_ADDR in am
 #ifdef CONFIG_HAS_PORT_IO
