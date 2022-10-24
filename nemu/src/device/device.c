@@ -46,14 +46,10 @@ void device_update() {
   }
   last = now;
   #ifdef CONFIG_DTRACE
-    enable_device_trace = 1;
+    enable_device_trace = !enable_device_trace;
   #endif
 
   IFDEF(CONFIG_HAS_VGA, vga_update_screen());
-
-  #ifdef CONFIG_DTRACE
-    enable_device_trace = 0;
-  #endif
 
 #ifndef CONFIG_TARGET_AM
   SDL_Event event;
