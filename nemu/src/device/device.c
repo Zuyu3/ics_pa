@@ -14,16 +14,12 @@
 ***************************************************************************************/
 
 #include <common.h>
-#include<generated/autoconf.h>
 #include <utils.h>
 #include <device/alarm.h>
 #ifndef CONFIG_TARGET_AM
 #include <SDL2/SDL.h>
 #endif
 
-#ifdef CONFIG_DTRACE
-int enable_device_trace = 0;
-#endif
 
 void init_map();
 void init_serial();
@@ -45,9 +41,6 @@ void device_update() {
     return;
   }
   last = now;
-  #ifdef CONFIG_DTRACE
-    enable_device_trace = !enable_device_trace;
-  #endif
 
   IFDEF(CONFIG_HAS_VGA, vga_update_screen());
 
