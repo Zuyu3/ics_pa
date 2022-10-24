@@ -20,6 +20,10 @@
 #include <SDL2/SDL.h>
 #endif
 
+#ifdef CONFIG_DTRACE
+int enable_device_trace = 0;
+#endif
+
 void init_map();
 void init_serial();
 void init_timer();
@@ -40,8 +44,15 @@ void device_update() {
     return;
   }
   last = now;
-
+  #ifdef CONFIG_DTRACE
+    enable_device_trace = 1;
+  #endif
+  
   IFDEF(CONFIG_HAS_VGA, vga_update_screen());
+
+  #ifdef CONFIG_DTRACE
+    enable_device_trace = 0;
+  #endif
 
 #ifndef CONFIG_TARGET_AM
   SDL_Event event;
