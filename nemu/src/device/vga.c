@@ -83,7 +83,6 @@ void vga_update_screen() {
 void init_vga() {
   vgactl_port_base = (uint32_t *)new_space(8);
   vgactl_port_base[0] = (screen_width() << 16) | screen_height();
-  return;
 
 
 //CONFIG_VGA_CTL_MMIO matches VGACTL_ADDR in am
@@ -92,6 +91,7 @@ void init_vga() {
 #else
   add_mmio_map("vgactl", CONFIG_VGA_CTL_MMIO, vgactl_port_base, 8, NULL);
 #endif
+  return;
 
   vmem = new_space(screen_size());
   //CONFIG_FB_ADDR matches FB_ADDR in am
