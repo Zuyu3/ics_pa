@@ -29,7 +29,6 @@ int main(int argc, char *argv[]) {
   init_monitor(argc, argv);
 #endif
 
-return 0;
   /*Test Module
   FILE *fp = fopen("tools/gen-expr/input", "r");
   char toEvalExpr[50000];
