@@ -53,7 +53,7 @@ void init_map() {
 }
 
 word_t map_read(paddr_t addr, int len, IOMap *map) {
-  #ifdef DTRACE
+  #ifdef CONFIG_DTRACE
     Log("read data from address 0x%08x with length %d, device: %s\n", addr, len, map->name);
   #endif
   assert(len >= 1 && len <= 8);
