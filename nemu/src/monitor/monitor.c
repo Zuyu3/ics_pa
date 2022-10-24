@@ -125,10 +125,10 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Open the log file. */
   init_log(log_file);
-  return;
 
   /* Initialize memory. */
   init_mem();
+  return;
 
   /* Initialize devices. */
   IFDEF(CONFIG_DEVICE, init_device());
