@@ -93,10 +93,11 @@ void init_vga() {
 #endif
 
   vmem = new_space(screen_size());
-  return;
 
   //CONFIG_FB_ADDR matches FB_ADDR in am
   add_mmio_map("vmem", CONFIG_FB_ADDR, vmem, screen_size(), NULL);
+  return;
+
   IFDEF(CONFIG_VGA_SHOW_SCREEN, init_screen());
   IFDEF(CONFIG_VGA_SHOW_SCREEN, memset(vmem, 0, screen_size()));
 }
