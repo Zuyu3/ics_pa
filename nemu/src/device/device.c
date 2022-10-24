@@ -14,6 +14,7 @@
 ***************************************************************************************/
 
 #include <common.h>
+#include<generated/autoconf.h>
 #include <utils.h>
 #include <device/alarm.h>
 #ifndef CONFIG_TARGET_AM
@@ -47,7 +48,7 @@ void device_update() {
   #ifdef CONFIG_DTRACE
     enable_device_trace = 1;
   #endif
-  
+
   IFDEF(CONFIG_HAS_VGA, vga_update_screen());
 
   #ifdef CONFIG_DTRACE

@@ -22,6 +22,7 @@
 
 static uint8_t *io_space = NULL;
 static uint8_t *p_space = NULL;
+
 #ifdef CONFIG_DTRACE
 extern int enable_device_trace;
 #endif
