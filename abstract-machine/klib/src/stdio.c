@@ -57,6 +57,9 @@ int printf(const char *fmt, ...) {
   int res = 0;
   char temp[100], *chp;
 
+  putch('-');
+  return 0;
+
 
   while(*fmt != '\0') {
       if(*fmt == '%') {
