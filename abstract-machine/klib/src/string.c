@@ -19,6 +19,7 @@ char *strcpy(char *dst, const char *src) {
     dst[offset] = src[offset];
     offset++;
   }
+  dst[offset] = '\0';
   return dst;
 }
 
