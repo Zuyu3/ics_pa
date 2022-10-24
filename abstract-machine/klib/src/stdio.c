@@ -57,9 +57,6 @@ int printf(const char *fmt, ...) {
   int res = 0;
   char temp[100], *chp;
 
-  putch('-');
-  return 0;
-
 
   while(*fmt != '\0') {
       if(*fmt == '%') {
@@ -107,6 +104,9 @@ int sprintf(char *out, const char *fmt, ...) {
   int res = 0;
   va_list ap;
   va_start(ap, fmt);
+
+  *out = '-';
+  return 0;
 
   while(*fmt != '\0') {
       if(*fmt == '%') {
