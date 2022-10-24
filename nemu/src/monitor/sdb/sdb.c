@@ -175,8 +175,6 @@ void sdb_set_batch_mode() {
 
 void sdb_mainloop() {
   if (is_batch_mode) {
-    nemu_state.state = NEMU_QUIT;
-    return;
     cmd_c(NULL);
     return;
   }
