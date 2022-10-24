@@ -119,13 +119,13 @@ void init_monitor(int argc, char *argv[]) {
   */
   
   parse_args(argc, argv);
-  return;
 
   /* Set random seed. */
   init_rand();
 
   /* Open the log file. */
   init_log(log_file);
+  return;
 
   /* Initialize memory. */
   init_mem();
