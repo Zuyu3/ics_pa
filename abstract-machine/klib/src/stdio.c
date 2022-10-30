@@ -51,7 +51,7 @@ int format_helper_uint20xstr(char *out, unsigned d) {
 } 
 
 int printf(const char *fmt, ...) {
-  panic("Not implemented");
+  //panic("Not implemented");
   va_list ap;
   va_start(ap, fmt);
   int res = 0;
