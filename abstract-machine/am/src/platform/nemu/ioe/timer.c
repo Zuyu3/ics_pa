@@ -6,12 +6,6 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  static uint32_t ls = 0;
-  uint32_t uuu = inl(RTC_ADDR);
-  if(uuu / 1000000 > ls) {
-    ls = uuu / 1000000;
-    printf("%d, %d\n", inl(RTC_ADDR + 4), uuu);
-  }
   uptime->us = (uint64_t)inl(RTC_ADDR + 4) << 32 | (uint64_t)inl(RTC_ADDR);
 }
 
