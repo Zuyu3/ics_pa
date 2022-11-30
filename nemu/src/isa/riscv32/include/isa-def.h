@@ -24,16 +24,19 @@ typedef struct {
 } riscv32_CPU_state;
 
 //TODO:Add it when doing PA3. Not sure.
-typedef struct {
-  word_t mstatus;   //0x300
+typedef union {
+  struct 
+  {
+    word_t mstatus;   //0x300
 
+    word_t mtvec;     //0x305
 
-  word_t mtvec;     //0x305
+    word_t mepc;      //0x341
+    word_t mcause;    //0x342
+  };
+  word_t as_array[4];
 
-  word_t mepc;      //0x341
-  word_t mcause;    //0x342
 } riscv32_CSR_state;
-
 
 // decode
 typedef struct {
