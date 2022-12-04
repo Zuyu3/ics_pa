@@ -27,6 +27,7 @@ void check_func_log(vaddr_t target_addr, vaddr_t curr_addr);
 enum {
   TYPE_I, TYPE_U, TYPE_S,
   TYPE_J, TYPE_B, TYPE_R,
+  TYPE_Z,
   TYPE_N, // none
 };
 
@@ -37,6 +38,8 @@ enum {
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
 #define immJ() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 20) | BITS(i, 30, 21) << 1 | BITS(i, 20, 20) << 11 | BITS(i, 19, 12) << 12; } while(0)
 #define immB() do { *imm = (SEXT(BITS(i, 31, 31), 1) << 12) | BITS(i, 30, 25) << 5 | BITS(i, 11, 8) << 1 | BITS(i, 7, 7) << 11; } while(0)
+#define immZ() do { *src1 = BITS(i, 19, 15)} while(0)
+
 
 
 static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, word_t *imm, int type) {
@@ -52,6 +55,7 @@ static void decode_operand(Decode *s, int *dest, word_t *src1, word_t *src2, wor
     case TYPE_J:                   immJ(); break;
     case TYPE_B: src1R(); src2R(); immB(); break;
     case TYPE_R: src1R(); src2R();         break;
+    case TYPE_Z: immZ();           immI(); break;
   }
 }
 
@@ -115,9 +119,9 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, R(dest) = CSR(imm); CSR(imm) = src1);//
   INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, R(dest) = CSR(imm); CSR(imm) |= src1);//
   //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , I, R(dest) = CSR(imm); CSR(imm) = CSR(imm) & ~src1);//
-  //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrwi , I, R(dest) = CSR(imm); CSR(imm) = ziim);//
-  //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrsi , I, R(dest) = CSR(imm); CSR(imm) |= ziim);//
-  //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrci , I, R(dest) = CSR(imm); CSR(imm) = CSR(imm) & ~ziim);//
+  //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrwi , Z, R(dest) = CSR(imm); CSR(imm) = src1);//
+  //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrsi , Z, R(dest) = CSR(imm); CSR(imm) |= src1);//
+  //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrci , Z, R(dest) = CSR(imm); CSR(imm) = CSR(imm) & ~ziim);//
 
 
 
