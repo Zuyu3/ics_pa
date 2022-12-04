@@ -25,10 +25,12 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
   //mtvec = 0x80000528 (from asm)
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
 
+  #ifdef CONFIG_DIFFTEST
   uint32_t temp = 0x1800u;
   asm volatile("csrw mstatus, %0" 
                : :"r"(temp));
-
+  #endif
+  
   // register event handler
   user_handler = handler;
 

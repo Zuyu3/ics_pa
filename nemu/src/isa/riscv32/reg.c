@@ -29,6 +29,13 @@ void isa_reg_display() {
   }
 }
 
+void isa_csr_display() {
+  for(int i = 0; i < 4; i++) {
+    printf("%-10s   0x%-15x  %-15d\n",regs[i], csr.as_array[i], csr.as_array[i]);
+  }
+
+}
+
 word_t isa_reg_str2val(const char *s, bool *success) {
   for(int i = 0; i < 32; i++){
     if (!strcmp(regs[i], s))

@@ -38,6 +38,7 @@ extern CPU_state cpu;
 extern CSR_state csr;
 
 void isa_reg_display();
+void isa_csr_display();
 word_t isa_reg_str2val(const char *name, bool *success);
 vaddr_t get_pc();
 

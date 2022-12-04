@@ -85,6 +85,9 @@ static int cmd_info(char *args){
   if(subcmd == 'w'){
     print_watchpoints();
   }
+  if(subcmd == 'c'){
+    isa_csr_display();
+  }
   return 0; 
 }
 
