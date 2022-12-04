@@ -29,9 +29,9 @@ typedef union {
   {
     word_t mstatus;   //0x300
 
-    word_t mtvec;     //0x305
+    vaddr_t mtvec;     //0x305
 
-    word_t mepc;      //0x341
+    vaddr_t mepc;      //0x341
     word_t mcause;    //0x342
   };
   word_t as_array[4];

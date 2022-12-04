@@ -38,6 +38,7 @@ void device_update();
 bool check_wp_change();
 void add_ibuf_log(char *ilog);
 void print_ibuf_log();
+void print_ebuf_log();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
@@ -125,6 +126,7 @@ void cpu_exec(uint64_t n) {
 
     case NEMU_ABORT:
       print_ibuf_log();
+      print_ebuf_log();
     case NEMU_END: 
       Log("nemu: %s at pc = " FMT_WORD,
           (nemu_state.state == NEMU_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :

@@ -14,11 +14,17 @@
 ***************************************************************************************/
 
 #include <isa.h>
+#include <generated/autoconf.h>
+
+void add_ebuf_log(word_t NO, vaddr_t epc);
 
 word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
+  #ifdef CONFIG_ETRACE
+    add_ebuf_log(NO, epc);
+  #endif
   csr.mcause = NO;
   csr.mepc = epc;
   return csr.mtvec;
