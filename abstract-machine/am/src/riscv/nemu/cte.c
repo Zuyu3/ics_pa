@@ -8,6 +8,7 @@ Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
+      case 8: ev.event = EVENT_YIELD; break;
       default: ev.event = EVENT_ERROR; break;
     }
 
@@ -23,6 +24,7 @@ extern void __am_asm_trap(void);
 bool cte_init(Context*(*handler)(Event, Context*)) {
   // initialize exception entry
   //mtvec = 0x80000528 (from asm)
+  //if DIFFTEST is enabled, mtvec = 0x80000538
   asm volatile("csrw mtvec, %0" : : "r"(__am_asm_trap));
 
   #ifdef CONFIG_DIFFTEST
