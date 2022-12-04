@@ -23,6 +23,13 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+const char *csrs[] = {
+    "mstatus",   //0x300
+    "mtvec",     //0x305
+    "mepc",      //0x341
+    "mcause",    //0x342
+};
+
 void isa_reg_display() {
   for(int i = 0; i < 32; i++){
     printf("%-10s   0x%-15x  %-15d\n",regs[i], cpu.gpr[i], cpu.gpr[i]);
@@ -31,7 +38,7 @@ void isa_reg_display() {
 
 void isa_csr_display() {
   for(int i = 0; i < 4; i++) {
-    printf("%-10s   0x%-15x  %-15d\n",regs[i], csr.as_array[i], csr.as_array[i]);
+    printf("%-10s   0x%-15x  %-15d\n",csrs[i], csr.as_array[i], csr.as_array[i]);
   }
 
 }
