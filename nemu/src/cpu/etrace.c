@@ -45,6 +45,7 @@ void print_ebuf_log(int state) {
   int id = etrace_index;
   do {
     printf("At mepc = 0x%08x,  mcause: 0x%08x\n", etrace_buf[id].mepc, etrace_buf[id].mcause);
+    id = (id + 1) % ETRACE_SIZE;
   } while(id != etrace_index);
   /*
   for(int i = (etrace_index + 1) % ETRACE_SIZE; i != etrace_index; i = (i + 1) % ETRACE_SIZE) {
