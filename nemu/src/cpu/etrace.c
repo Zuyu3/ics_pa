@@ -13,12 +13,10 @@ static etrace_log etrace_buf[ETRACE_SIZE];
 static int etrace_index = 0;
 
 void add_ebuf_log(word_t NO, vaddr_t epc) {
-  printf("\n\nTO Add ELOG here\n\n");
     #ifndef CONFIG_ETRACE
       return;
     #endif
 
-    printf("\n\nAdd ELOG here\n\n");
     etrace_buf[etrace_index].mcause = NO;
     etrace_buf[etrace_index].mepc = epc;
     etrace_index = (etrace_index + 1) % ETRACE_SIZE;
