@@ -26,22 +26,21 @@ void print_ebuf_log(int state) {
   #ifndef CONFIG_ETRACE
     return;
   #endif
-  
-  switch (state)
-  {
-  case NEMU_STOP:
-    #ifndef CONFIG_ETRACE
+
+  #ifdef CONFIG_ETRACE_ABORT
+    if(state != NEMU_ABORT)
       return;
-    #endif
-    break;
-  case NEMU_QUIT:
-    break;
-  case NEMU_END:
-    break;
-  
-  default:
-    break;
-  }
+  #elif defined CONFIG_ETRACE_END
+    if(state != NEMU_ABORT && state != NEMU_END)
+      return;
+  #elif defined CONFIG_ETRACE_QUIT
+    if(state < NEMU_END)
+      return;
+  #elif defined CONFIG_ETRACE_STOP
+    if(state == NEMU_RUNNING)
+      return;
+    
+  #endif
 
   printf("Here are the %d most recent Excepts.\n\n", ETRACE_SIZE);
   for(int i = (etrace_index + 1) % ETRACE_SIZE; i != etrace_index; i = (i + 1) % ETRACE_SIZE) {
