@@ -166,6 +166,21 @@ config ETRACE
   bool "Enable exception tracer"
   default y
 
+config ETTRACE_COND_END
+  depends on ETRACE
+  bool "Print etrace log when NEMU END"
+  default n
+
+config ETTRACE_COND_QUIT
+  depends on ETRACE
+  bool "Print etrace log when NEMU QUIT"
+  default n
+
+config ETTRACE_COND_STOP
+  depends on ETRACE
+  bool "Print etrace log when NEMU STOP"
+  default n
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"
