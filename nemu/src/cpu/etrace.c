@@ -17,6 +17,7 @@ void add_ebuf_log(word_t NO, vaddr_t epc) {
       return;
     #endif
 
+    printf("\n\nAdd ELOG here\n\n");
     etrace_buf[etrace_index].mcause = NO;
     etrace_buf[etrace_index].mepc = epc;
     etrace_index = (etrace_index + 1) % ETRACE_SIZE;
