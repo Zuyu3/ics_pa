@@ -166,20 +166,27 @@ config ETRACE
   bool "Enable exception tracer"
   default y
 
-config ETTRACE_COND_END
-  depends on ETRACE
-  bool "Print etrace log when NEMU END"
-  default n
 
-config ETTRACE_COND_QUIT
+choice
   depends on ETRACE
-  bool "Print etrace log when NEMU QUIT"
-  default n
+  prompt "print etrace log when nemu state gets to"
+  default ETRACE_ABORT
+  
+  config ETRACE_ABORT
+  bool "NEMU ABORT"
 
-config ETTRACE_COND_STOP
-  depends on ETRACE
-  bool "Print etrace log when NEMU STOP"
-  default n
+  config ETRACE_END
+  bool "NEMU END"
+
+  config ETRACE_PRINT_QUIT
+  bool "NEMU QUIT"
+
+  config ETRACE_PRINT_STOP
+  bool "NEMU STOP"
+endchoice
+
+
+
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF

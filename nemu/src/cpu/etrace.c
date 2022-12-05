@@ -22,10 +22,27 @@ void add_ebuf_log(word_t NO, vaddr_t epc) {
     etrace_index = (etrace_index + 1) % ETRACE_SIZE;
 }
 
-void print_ebuf_log() {
+void print_ebuf_log(int state) {
   #ifndef CONFIG_ETRACE
     return;
   #endif
+  
+  switch (state)
+  {
+  case NEMU_STOP:
+    #ifndef CONFIG_ETRACE
+      return;
+    #endif
+    break;
+  case NEMU_QUIT:
+    break;
+  case NEMU_END:
+    break;
+  
+  default:
+    break;
+  }
+
   printf("Here are the %d most recent Excepts.\n\n", ETRACE_SIZE);
   for(int i = (etrace_index + 1) % ETRACE_SIZE; i != etrace_index; i = (i + 1) % ETRACE_SIZE) {
     printf("At mepc = 0x%08x,  mcause: 0x%08x", etrace_buf[i].mepc, etrace_buf[i].mcause);
