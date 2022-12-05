@@ -42,6 +42,7 @@ void print_ebuf_log(int state) {
   #endif
 
   printf("Here are the %d most recent Excepts.\n\n", ETRACE_SIZE);
+  printf("State is %d\n", state);
   for(int i = (etrace_index + 1) % ETRACE_SIZE; i != etrace_index; i = (i + 1) % ETRACE_SIZE) {
     if(etrace_buf[etrace_index].mepc == 0 && etrace_buf[etrace_index].mcause == 0)
       return;
