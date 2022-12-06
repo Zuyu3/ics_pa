@@ -32,7 +32,7 @@ void add_strace_log(uintptr_t *ar, uintptr_t r) {
 }
 
 void print_sbuf_log() {
-    #if !(defined CONFIG_STRACE) || CONFIG_STRACE < 2
+    #if !(defined CONFIG_STRACE) || CONFIG_STRACE == 0
       return;
     #endif
 

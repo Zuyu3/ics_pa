@@ -10,7 +10,7 @@ uintptr_t sys_yield() {
 }
 
 uintptr_t sys_exit(int t) {
-  #if defined CONFIG_STRACE && CONFIG_STRACE == 2
+  #if defined CONFIG_STRACE && CONFIG_STRACE
     print_sbuf_log();
   #endif
 
