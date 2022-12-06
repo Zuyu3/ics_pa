@@ -20,7 +20,6 @@ uintptr_t sys_exit() {
 
 
 void do_syscall(Context *c) {
-  printf("config strace is: %d\n", CONFIG_STRACE);
   uintptr_t a[4];
   
   a[0] = c->GPR1;
@@ -40,6 +39,8 @@ void do_syscall(Context *c) {
       
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
+
+  printf("%d get here.");
 
   #ifdef CONFIG_STRACE
     add_strace_log(a, c->GPRx);
