@@ -16,9 +16,9 @@ size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elf_header;
-  ramdisk_read(&elf_header, 0, sizeof(elf_header.e_ident));
-  for(int i = 0; i < 16; i++) {
-    printf("%x ", elf_header.e_ident[i]);
+  ramdisk_read(&elf_header, 0, sizeof(elf_header));
+  for(int i = 0; i < sizeof(elf_header); i++) {
+    printf("%x %x %x %x %x\n", elf_header.e_machine, elf_header.e_entry, elf_header.e_phoff, elf_header.e_phentsize, elf_header.e_phnum);
   }
   printf("\n");
   return 0;
