@@ -185,7 +185,10 @@ choice
   bool "NEMU STOP"
 endchoice
 
-
+config STRACE
+  depends on TRACE && TARGET_NATIVE_ELF
+  bool "Enable syscall tracer"
+  default y
 
 
 config DIFFTEST
