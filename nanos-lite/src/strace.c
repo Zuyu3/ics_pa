@@ -40,7 +40,7 @@ void print_sbuf_log() {
   int id = strace_index;
   do {
     if(strace_buf[id].a[0] != 0)
-      printf("SYS_%s (%d, %d, %d, %d) : return %d\n", call_name[strace_buf[id].a[0]], strace_buf[id].a[0], strace_buf[id].a[1], strace_buf[id].a[2], strace_buf[id].a[3], strace_buf[id].res);
+      printf("SYSCALL %s (%d, %d, %d, %d) : return %d\n", call_name[strace_buf[id].a[0]], strace_buf[id].a[0], strace_buf[id].a[1], strace_buf[id].a[2], strace_buf[id].a[3], strace_buf[id].res);
 
     id = (id + 1) % STRACE_SIZE;
   } while(id != strace_index);
