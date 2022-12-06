@@ -20,7 +20,6 @@ void add_strace_log(uintptr_t *ar, uintptr_t r) {
       return;
     #endif
 
-    printf("Add buf at index: %d\n", strace_index);
     strace_buf[strace_index].not_empty_flag = true;
     strace_buf[strace_index].a[0] = ar[0];
     strace_buf[strace_index].a[1] = ar[1];
@@ -39,7 +38,7 @@ void print_sbuf_log() {
   printf("Here are the %d most recent SYSTEM CALLs.\n\n", STRACE_SIZE);
   int id = strace_index;
   do {
-    if(strace_buf[id].a[0] != 0)
+    if(strace_buf[id].not_empty_flag)
       printf("SYSCALL (%d, %d, %d, %d)  %s  : return %d\n", strace_buf[id].a[0], strace_buf[id].a[1], strace_buf[id].a[2], strace_buf[id].a[3], call_name[strace_buf[id].a[0]], strace_buf[id].res);
 
     id = (id + 1) % STRACE_SIZE;
