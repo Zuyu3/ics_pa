@@ -5,7 +5,6 @@ void add_strace_log(uintptr_t *ar, uintptr_t r);
 void print_sbuf_log();
 
 uintptr_t sys_yield() {
-  printf("do sys yield\n");
   yield();
   return 0;
 }
