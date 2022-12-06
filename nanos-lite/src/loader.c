@@ -32,7 +32,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   assert(*(uint32_t *)elf_header.e_ident == 0x464c457f);
   printf("%d  %d\n", elf_header.e_machine, EXPECT_TYPE);
-  assert(elf_header.e_machine == EXPECT_TYPE);
+  if(elf_header.e_machine != EXPECT_TYPE) {
+    panic("ISA error. File's ISA is different from OS.\n");
+  }
 
   for(int i = 0; i < elf_header.e_phnum; i++) {
     ramdisk_read(&prog_header, elf_header.e_phoff + elf_header.e_phentsize * i, elf_header.e_phentsize);
