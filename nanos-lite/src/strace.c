@@ -4,7 +4,7 @@
 
 #define STRACE_SIZE 100
 
-const char call_name[][20] = {"exit", "yield"};
+const char call_name[][20] = {"exit ", "yield"};
 typedef struct 
 {
     bool not_empty_flag;

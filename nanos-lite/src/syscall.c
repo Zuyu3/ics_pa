@@ -27,7 +27,7 @@ void do_syscall(Context *c) {
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;
-  printf("syscall arg is: %d  %d  %d  %d\n", a[0], a[1], a[2], a[3]);
+  //printf("syscall arg is: %d  %d  %d  %d\n", a[0], a[1], a[2], a[3]);
 
 
   switch (a[0]) {
