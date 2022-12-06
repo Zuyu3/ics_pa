@@ -46,7 +46,7 @@ int format_helper_uint2str(char *out, unsigned int d) {
 }
 
 int format_helper_uint20xstr(char *out, unsigned d) {
-    strcpy(out, "0x");
+    //strcpy(out, "0x");
     return format_helper_value2str(out + 2, d, 16) + 2;
 } 
 
