@@ -1,4 +1,6 @@
 #include <common.h>
+#include "syscall.h"
+
 
 #define STRACE_SIZE 100
 
