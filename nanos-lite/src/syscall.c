@@ -32,6 +32,7 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_yield:
       c->GPRx = sys_yield();
+      printf("%p\n", a);
       add_strace_log(a, c->GPRx);
       break;
     case SYS_exit:
