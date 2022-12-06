@@ -16,7 +16,7 @@ void do_syscall(Context *c) {
   uintptr_t a[4];
   
   a[0] = c->GPR1;
-  printf("syscall arg 0 is: %d\n", a[0]);
+  //printf("syscall arg 0 is: %d\n", a[0]);
   /*
   a[1] = c->GPR2;
   a[2] = c->GPR3;

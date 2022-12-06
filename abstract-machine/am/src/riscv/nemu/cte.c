@@ -9,7 +9,7 @@ Context* __am_irq_handle(Context *c) {
     Event ev = {0};
     switch (c->mcause) {
       case 8: 
-        printf("%d\n", c->GPR1);
+        //printf("%d\n", c->GPR1);
         if(c->GPR1 == 1) {
           ev.event = EVENT_YIELD;
         }
