@@ -18,7 +18,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elf_header;
   Elf_Phdr prog_header;
   ramdisk_read(&elf_header, 0, sizeof(elf_header));
-  printf("magic number: %x\n", *(uint32_t *)elf_header.e_ident);
+
   assert(*(uint32_t *)elf_header.e_ident == 0x464c457f);
 
   for(int i = 0; i < elf_header.e_phnum; i++) {
@@ -27,7 +27,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       continue;
     
     ramdisk_read((void *)prog_header.p_vaddr, prog_header.p_offset, prog_header.p_filesz);
-    if(prog_header.p_flags & 0x1) {
+    if(prog_header.p_flags & 0x2) {
       memset((void *)prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
     }
   }
