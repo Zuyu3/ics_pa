@@ -10,7 +10,7 @@ uintptr_t sys_yield() {
 }
 
 uintptr_t sys_exit(int t) {
-  #if defined CONFIG_STRACE && CONFIG_STRACE == 1
+  #if defined CONFIG_STRACE && CONFIG_STRACE == 2
     print_sbuf_log();
   #endif
 
@@ -32,13 +32,13 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_yield:
       c->GPRx = sys_yield();
-      #ifdef CONFIG_STRACE
+      #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
       break;
     
     case SYS_exit:
-      #ifdef CONFIG_STRACE
+      #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
       sys_exit(0);

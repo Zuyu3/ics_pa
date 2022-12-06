@@ -16,11 +16,11 @@ static strace_log strace_buf[STRACE_SIZE];
 static int strace_index = 0;
 
 void add_strace_log(uintptr_t *ar, uintptr_t r) {
-    #ifndef CONFIG_STRACE
+    #if !(defined CONFIG_STRACE) || CONFIG_STRACE == 0
       return;
     #endif
 
-    printf("Add STRACE Log at index %d\n", strace_index);
+    //printf("Add STRACE Log at index %d\n", strace_index);
 
     strace_buf[strace_index].not_empty_flag = true;
     strace_buf[strace_index].a[0] = ar[0];
@@ -32,7 +32,7 @@ void add_strace_log(uintptr_t *ar, uintptr_t r) {
 }
 
 void print_sbuf_log() {
-    #ifndef CONFIG_STRACE
+    #if !(defined CONFIG_STRACE) || CONFIG_STRACE < 2
       return;
     #endif
 
