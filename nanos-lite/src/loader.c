@@ -23,7 +23,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   for(int i = 0; i < elf_header.e_phnum; i++) {
     ramdisk_read(&elf_prog_header, elf_header.e_phoff + elf_header.e_phentsize * i, elf_header.e_phentsize);
-    printf("%u  %x  %x  %x  %u  %u\n\n", elf_prog_header.p_type, elf_prog_header.p_offset, elf_prog_header.p_vaddr, elf_prog_header.p_paddr, elf_prog_header.p_filesz, elf_prog_header.p_memsz);
+    printf("%-8u  %-09x  %-09x  %-09x  %-06x  %-06x\n\n", elf_prog_header.p_type, elf_prog_header.p_offset, elf_prog_header.p_vaddr, elf_prog_header.p_paddr, elf_prog_header.p_filesz, elf_prog_header.p_memsz);
 
   }  
 
