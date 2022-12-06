@@ -35,12 +35,12 @@ void do_syscall(Context *c) {
       c->GPRx = sys_yield();
       add_strace_log(a, c->GPRx);
       break;
-    /*
+    
     case SYS_exit:
       add_strace_log(a, c->GPRx);
       sys_exit(0);
       break;
-    */
+    
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
