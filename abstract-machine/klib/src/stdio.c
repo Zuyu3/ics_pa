@@ -82,6 +82,13 @@ int printf(const char *fmt, ...) {
           case 'x':
               res += format_helper_uint20xstr(temp, va_arg(ap, int));
               putstr(temp);
+          case 'p':
+              res += 4;
+              format_helper_uint20xstr(temp, va_arg(ap, int));
+              for(int i = 0; i < 8 - strlen(temp); i++) {
+                putch('0');
+              }
+              putstr(temp);
           default:
               break;
           }
