@@ -25,8 +25,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     ramdisk_read(&prog_header, elf_header.e_phoff + elf_header.e_phentsize * i, elf_header.e_phentsize);
     if(prog_header.p_type != PT_LOAD)
       continue;
-    printf("flag is: %x\n", prog_header.p_flags);
-  }  
+    
+    ramdisk_read((void *)prog_header.p_vaddr, prog_header.p_offset, prog_header.p_filesz);
+    if(prog_header.p_flags & 0x1) {
+      memset((void *)prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
+    }
+  }
 
   return 0;
 
