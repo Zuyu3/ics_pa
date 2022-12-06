@@ -20,6 +20,7 @@ uintptr_t sys_exit() {
 
 
 void do_syscall(Context *c) {
+  printf("config strace is: %d\n", CONFIG_STRACE);
   uintptr_t a[4];
   
   a[0] = c->GPR1;
