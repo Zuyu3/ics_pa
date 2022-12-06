@@ -6,6 +6,11 @@ uintptr_t sys_yield() {
   return 0;
 }
 
+uintptr_t sys_exit() {
+  yield();
+  return 0;
+}
+
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -21,6 +26,7 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case SYS_yield:
       c->GPRx = sys_yield();
+      break;
       
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
