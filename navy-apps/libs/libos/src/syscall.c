@@ -70,10 +70,11 @@ void *_sbrk(intptr_t increment) {
   //TODO:Maybe some bugs here.
   void *old_brk = _end;
 
+  /*
   char dbg[50];
   sprintf(dbg, "%p", old_brk);
   _write(1, dbg, 10);
-  return (void *)-1;
+  */
 
   _end += increment;
   if(_syscall_(SYS_brk, (intptr_t)_end, 0, 0)) {
