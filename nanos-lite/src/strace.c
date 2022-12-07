@@ -47,6 +47,8 @@ void add_strace_log(uintptr_t *ar, uintptr_t r) {
     #endif
 
     printf("Add strace log at index=%d\n", strace_index);
+    print_single_log(strace_index);
+
 
     strace_buf[strace_index].not_empty_flag = true;
     strace_buf[strace_index].a[0] = ar[0];
