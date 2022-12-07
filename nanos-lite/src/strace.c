@@ -3,7 +3,7 @@
 char *get_file_name(int file_id);
 
 
-#define STRACE_SIZE 100
+#define STRACE_SIZE 200
 
 const char call_name[][20] = {"exit ", "yield", "open", "read", "write", "kill", "getpid",
                               "close", "lseek", "brk"};
