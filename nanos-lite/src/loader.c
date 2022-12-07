@@ -21,11 +21,10 @@
 
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  #ifdef __ISA_
-  printf("%d", 1)
-  #endif
   
   int file_id = fs_open(filename, 0, 0);
+  printf("%d\n", file_id);
+  
   
   Elf_Ehdr elf_header;
   Elf_Phdr prog_header;
