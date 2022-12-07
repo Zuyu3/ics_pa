@@ -76,7 +76,7 @@ void do_syscall(Context *c) {
       #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
-      sys_exit(0);
+      sys_exit(a[1]);
       break;
 
     case SYS_yield:
