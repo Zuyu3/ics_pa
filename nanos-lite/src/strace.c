@@ -18,9 +18,11 @@ static int strace_index = 0;
 void add_strace_log(uintptr_t *ar, uintptr_t r) {
     #if !(defined CONFIG_STRACE) || CONFIG_STRACE == 0
       return;
+    #elif defined CONFIG_STRACE && CONFIG_STRACE == 2
+      printf("Add STRACE Log at index %d\n", strace_index);
     #endif
 
-    //printf("Add STRACE Log at index %d\n", strace_index);
+
 
     strace_buf[strace_index].not_empty_flag = true;
     strace_buf[strace_index].a[0] = ar[0];
