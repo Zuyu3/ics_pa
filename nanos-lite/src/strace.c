@@ -18,11 +18,11 @@ static strace_log strace_buf[STRACE_SIZE];
 static int strace_index = 0;
 
 void print_single_log(int index) {
-    printf("printing log[%d]\n", index);
     uintptr_t temp[4];
     for(int i = 0; i < 4; i++) {
       temp[i] = strace_buf[index].a[i];
     }
+
     if(strace_buf[index].not_empty_flag) {
       switch (temp[0])
       {
@@ -47,9 +47,7 @@ void add_strace_log(uintptr_t *ar, uintptr_t r) {
       return;
     #endif
 
-    printf("Add strace log at index=%d\n", strace_index);
-    print_single_log(strace_index);
-
+    //printf("Add strace log at index=%d\n", strace_index);
 
     strace_buf[strace_index].not_empty_flag = true;
     strace_buf[strace_index].a[0] = ar[0];
@@ -57,11 +55,15 @@ void add_strace_log(uintptr_t *ar, uintptr_t r) {
     strace_buf[strace_index].a[2] = ar[2];
     strace_buf[strace_index].a[3] = ar[3];
     strace_buf[strace_index].res = r;
-    strace_index = (strace_index + 1) % STRACE_SIZE;
+
 
     #if CONFIG_STRACE == 2
       print_single_log(strace_index);
     #endif
+
+    strace_index = (strace_index + 1) % STRACE_SIZE;
+
+
 }
 
 void print_sbuf_log() {
