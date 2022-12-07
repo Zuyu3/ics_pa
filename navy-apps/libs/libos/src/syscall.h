@@ -1,7 +1,7 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__
 
-#define CONFIG_STRACE 0
+#define CONFIG_STRACE 2
 
 enum {
   SYS_exit,
