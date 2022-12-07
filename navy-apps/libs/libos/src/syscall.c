@@ -72,8 +72,8 @@ void *_sbrk(intptr_t increment) {
 
   
   char dbg[50];
-  sprintf(dbg, "%p", old_brk);
-  _write(1, dbg, 10);
+  sprintf(dbg, "_end = %p\n", old_brk);
+  _write(1, dbg, 20);
   
 
   _end += increment;
