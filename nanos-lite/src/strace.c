@@ -21,7 +21,7 @@ void add_strace_log(uintptr_t *ar, uintptr_t r) {
     #endif
 
     //printf("Add STRACE Log at index %d\n", strace_index);
-    printf("SYSCALL (%d, %d, %d, %d)  %s  : return %d\n", strace_buf[strace_index].a[0], strace_buf[strace_index].a[1], strace_buf[strace_index].a[2], strace_buf[strace_index].a[3], call_name[strace_buf[strace_index].a[0]], strace_buf[strace_index].res);
+    //printf("SYSCALL (%d, %d, %d, %d)  %s  : return %d\n", strace_buf[strace_index].a[0], strace_buf[strace_index].a[1], strace_buf[strace_index].a[2], strace_buf[strace_index].a[3], call_name[strace_buf[strace_index].a[0]], strace_buf[strace_index].res);
 
     strace_buf[strace_index].not_empty_flag = true;
     strace_buf[strace_index].a[0] = ar[0];
