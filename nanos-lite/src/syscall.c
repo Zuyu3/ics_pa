@@ -1,13 +1,9 @@
 #include <common.h>
 #include "syscall.h"
+#include <fs.h>
 
 void add_strace_log(uintptr_t *ar, uintptr_t r);
 void print_sbuf_log();
-
-uintptr_t sys_yield() {
-  yield();
-  return 0;
-}
 
 uintptr_t sys_exit(int t) {
   #if defined CONFIG_STRACE && CONFIG_STRACE
@@ -18,14 +14,36 @@ uintptr_t sys_exit(int t) {
   return 0;
 }
 
-uintptr_t sys_write(int fd, const void * buf, size_t count) {
-  //TODO: implement (fd==stderr) and error return later.
-  if(fd < 1 || fd > 2) {
-    panic("ERROR in system write: fd == %d\n", fd);
-    return -1;
+uintptr_t sys_yield() {
+  yield();
+  return 0;
+}
+
+uintptr_t sys_open(const char *pathname, int flags, int mode) {
+  return fs_open(pathname, flags, mode);
+}
+
+uintptr_t sys_read(int fd, void *buf, size_t count) {
+  //ignore STDIN, STDOUT, STDERR here.
+  if(fd < 3) {
+    return 0;
   }
-  for(int i = 0; i < count; i++) {
-    putch(((char *)buf)[i]);
+  else {
+    count = fs_read(fd, buf, count);
+  }
+  return count;
+}
+
+uintptr_t sys_write(int fd, void *buf, size_t count) {
+  //ignore STDIN here.
+  if(fd == 0)
+   return 0;
+  else if(fd == 1 || fd == 2) {
+    for(int i = 0; i < count; i++)
+      putch(((char *)buf)[i]);
+  }
+  else {
+    count = fs_write(fd, buf, count);
   }
   return count;
 }
@@ -55,6 +73,20 @@ void do_syscall(Context *c) {
 
     case SYS_yield:
       c->GPRx = sys_yield();
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+
+    case SYS_open:
+      c->GPRx = sys_open((const char *)a[1], a[2], a[3]);
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+
+    case SYS_read:
+      c->GPRx = sys_read(a[1], (void *)a[2], a[3]);
       #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif

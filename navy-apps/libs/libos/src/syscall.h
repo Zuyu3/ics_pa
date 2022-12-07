@@ -24,6 +24,4 @@ enum {
   SYS_gettimeofday
 };
 
-extern char _end;
-void *prog_break_point = NULL;
 #endif

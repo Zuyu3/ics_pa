@@ -6,6 +6,9 @@
 #include "syscall.h"
 #include <stdio.h>
 
+extern char _end;
+static void *prog_break_point = NULL;
+
 // helper macros
 #define _concat(x, y) x ## y
 #define concat(x, y) _concat(x, y)
