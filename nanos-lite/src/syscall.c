@@ -30,6 +30,10 @@ uintptr_t sys_write(int fd, const void * buf, size_t count) {
   return count;
 }
 
+int sys_brk(void *new_brk) {
+  return 0;
+}
+
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -64,6 +68,13 @@ void do_syscall(Context *c) {
       #endif
       break;
 
+    
+    case SYS_brk:
+      c->GPRx = sys_brk((void *)a[1]);
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
 
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
