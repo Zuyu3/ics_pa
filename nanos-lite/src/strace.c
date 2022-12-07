@@ -31,7 +31,7 @@ void print_single_log(int index) {
       case 4:
       case 7:
       case 8:
-        printf("SYSCALL (%d, %d, %d, %d)  %s  \"%s\": return %d\n", temp[0], temp[1], temp[2], temp[3], call_name[temp[0]], get_file_name(temp[1]), strace_buf[index].res);
+        printf("SYSCALL (%d, %d, %p, %d)  %s  \"%s\": return %d\n", temp[0], temp[1], temp[2], temp[3], call_name[temp[0]], get_file_name(temp[1]), strace_buf[index].res);
         break;
       
       default:
