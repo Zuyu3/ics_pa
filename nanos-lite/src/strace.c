@@ -18,6 +18,7 @@ static strace_log strace_buf[STRACE_SIZE];
 static int strace_index = 0;
 
 void print_single_log(int index) {
+    printf("printing log[%d]\n", index);
     uintptr_t temp[4];
     for(int i = 0; i < 4; i++) {
       temp[i] = strace_buf[index].a[i];
