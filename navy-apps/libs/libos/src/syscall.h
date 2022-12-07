@@ -24,6 +24,6 @@ enum {
   SYS_gettimeofday
 };
 
-extern char* _end;
+extern void* _end;
 
 #endif
