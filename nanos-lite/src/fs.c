@@ -47,7 +47,7 @@ int fs_open(const char *pathname, int flags, int mode) {
       return i;
     }
   }
-  panic("Error when opening a file. File < %s > does not exist.\n", pathname);
+  panic("Error when opening a file. File \"%s\" does not exist.\n", pathname);
 }
 
 size_t fs_read(int fd, void *buf, size_t len) {
