@@ -48,7 +48,15 @@ uintptr_t sys_write(int fd, void *buf, size_t count) {
   return count;
 }
 
-int sys_brk(void *new_brk) {
+uintptr_t sys_close(int fd) {
+  return fs_close(fd);
+}
+
+uintptr_t sys_lseek(int fd, size_t offset, int whence) {
+  return fs_lseek(fd, offset, whence);
+}
+
+uintptr_t sys_brk(void *new_brk) {
   return 0;
 }
 
@@ -95,6 +103,20 @@ void do_syscall(Context *c) {
 
     case SYS_write:
       c->GPRx = sys_write(a[1], (void *)a[2], a[3]);
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+
+    case SYS_close:
+      c->GPRx = sys_close(a[1]);
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+    
+    case SYS_lseek:
+      c->GPRx = sys_lseek(a[1], a[2], a[3]);
       #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
