@@ -18,6 +18,18 @@ uintptr_t sys_exit(int t) {
   return 0;
 }
 
+uintptr_t sys_write(int fd, const void * buf, size_t count) {
+  //TODO: implement (fd==stderr) and error return later.
+  if(fd < 1 || fd > 2) {
+    panic("ERROR in system write: fd == %d\n", fd);
+    return -1;
+  }
+  for(int i = 0; i < count; i++) {
+    putch(((char *)buf)[i]);
+  }
+  return count;
+}
+
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -30,20 +42,29 @@ void do_syscall(Context *c) {
 
 
   switch (a[0]) {
-    case SYS_yield:
-      c->GPRx = sys_yield();
-      #if defined CONFIG_STRACE && CONFIG_STRACE
-        add_strace_log(a, c->GPRx);
-      #endif
-      break;
-    
     case SYS_exit:
       #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
       sys_exit(0);
       break;
-    
+
+    case SYS_yield:
+      c->GPRx = sys_yield();
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+
+
+    case SYS_write:
+      c->GPRx = sys_write(a[1], (void *)a[2], a[3]);
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+
+
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
