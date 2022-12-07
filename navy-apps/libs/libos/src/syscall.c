@@ -69,9 +69,9 @@ void *_sbrk(intptr_t increment) {
   //TODO:Maybe some bugs here.
   intptr_t old_brk = _end;
   _end += increment;
-  if(syscall(SYS_brk, _end, 0, 0)) {
+  if(_syscall_(SYS_brk, _end, 0, 0)) {
     _end = old_brk;
-    return -1;
+    return (void *)-1;
   }
   return (void *)old_brk;
 }
