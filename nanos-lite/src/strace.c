@@ -27,6 +27,8 @@ void print_single_log(int index) {
       switch (temp[0])
       {
       case 2:
+        printf("SYSCALL (%d, %d, %p, %d)  %s  \"%s\": return %d\n", temp[0], temp[1], temp[2], temp[3], call_name[temp[0]], get_file_name(strace_buf[index].res), strace_buf[index].res);
+        break;
       case 3:
       case 4:
       case 7:
