@@ -23,8 +23,7 @@
 static uintptr_t loader(PCB *pcb, const char *filename) {
   
   int file_id = fs_open(filename, 0, 0);
-  printf("load file: %s\n", filename);
-  printf("file id is %d\n", file_id);
+  //printf("Load file: %s\nFile id is %d\n", filename, file_id);
   
   
   Elf_Ehdr elf_header;
