@@ -74,10 +74,11 @@ void *_sbrk(intptr_t increment) {
 
   void* new_brk = prog_break_point;
   
+  /*
   char dbg[50];
   sprintf(dbg, "_end = %p\n", new_brk);
   _write(1, dbg, 20);
-  return (void *)-1;
+  */
 
   new_brk += increment;
   if(_syscall_(SYS_brk, (intptr_t)new_brk, 0, 0) == 0) {
