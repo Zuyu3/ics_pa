@@ -68,20 +68,23 @@ int _write(int fd, void *buf, size_t count) {
 
 void *_sbrk(intptr_t increment) {
   //TODO:Maybe some bugs here.
-  void *old_brk = _end;
+  if(prog_break_point == NULL) {
+    prog_break_point = &_end;
+  }
 
+  void* new_brk = prog_break_point;
   
   char dbg[50];
-  sprintf(dbg, "_end = %p\n", old_brk);
+  sprintf(dbg, "_end = %p\n", new_brk);
   _write(1, dbg, 20);
   
 
-  _end += increment;
-  if(_syscall_(SYS_brk, (intptr_t)_end, 0, 0)) {
-    _end = old_brk;
-    return (void *)-1;
+  new_brk += increment;
+  if(_syscall_(SYS_brk, (intptr_t)new_brk, 0, 0) == 0) {
+    prog_break_point = new_brk;
+    return new_brk - increment;
   }
-  return old_brk;
+  return (void *)-1;
 }
 
 int _read(int fd, void *buf, size_t count) {
