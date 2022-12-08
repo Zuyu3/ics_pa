@@ -10,15 +10,13 @@ int main() {
 
   int count = 0;
 
-  printf("%d  %p  %p  %d\n", sizeof(struct timeval), &last_time, &current_time, &last_time - &current_time);
-  
   gettimeofday(&last_time, NULL);
 
   while(1) {
     gettimeofday(&current_time, NULL);
-    printf("current: %ld  last: %ld\n", current_time.tv_sec, last_time.tv_sec);
+    printf("current: %ld  %ld\n", current_time.tv_sec, current_time.tv_usec);
 
-    if((current_time.tv_sec - last_time.tv_sec) > 0) {
+    if((current_time.tv_usec - last_time.tv_usec) > 500000) {
       last_time.tv_usec = current_time.tv_usec;
       last_time.tv_sec = current_time.tv_sec;
       count++;
