@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 #include <sys/time.h>
 
 #ifdef __ISA_NATIVE__
@@ -14,6 +15,7 @@ int main() {
   int count = 0;
   
   gettimeofday(&last_time, NULL);
+  printf("%ld  %ld\n", last_time.tv_sec, last_time.tv_usec);
 
   while(1) {
     gettimeofday(&current_time, NULL);
