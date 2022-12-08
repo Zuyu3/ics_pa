@@ -46,6 +46,7 @@ uintptr_t sys_brk(void *new_brk) {
 
 uintptr_t sys_gettimeofday(timeval *tv, timezone *tz) {
   uint64_t temp = io_read(AM_TIMER_UPTIME).us;
+  printf("%ld\n", temp);
   tv->tv_sec = temp / 1000000;
   tv->tv_usec = temp % 1000000;
   return 0;
