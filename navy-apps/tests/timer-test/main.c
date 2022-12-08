@@ -16,7 +16,7 @@ int main() {
 
     if(current_time - last_time > 5000) {
       last_time = current_time;
-      printf("last: %u  %u\n", last_time, current_time);
+      //printf("last: %u  %u\n", last_time, current_time);
 
       count++;
       printf("time output %d.\n", count);
