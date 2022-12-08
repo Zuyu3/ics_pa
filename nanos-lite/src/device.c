@@ -35,6 +35,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     strcpy(buf, "ku ");
 
   printf("before strcat: %s\n\n", buf);
+  for(int i = 0; i < 10; i++) {
+    printf("index %d: %x(%c)\n", i, ((char *)buf)[i], ((char *)buf)[i]);
+  }
   strcat(buf, keyname[kbd.keycode]);
 
   for(int i = 0; i < 10; i++) {
