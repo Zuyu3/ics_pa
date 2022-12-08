@@ -13,9 +13,9 @@ int main() {
 
   while(1) {
     current_time = NDL_GetTicks();
-    printf("current: %u\n", current_time);
+    //printf("current: %u\n", current_time);
 
-    if(current_time - last_time > 5000) {
+    if(current_time - last_time > 500) {
       last_time = current_time;
       printf("last: %u  %u\n", last_time, current_time);
 
