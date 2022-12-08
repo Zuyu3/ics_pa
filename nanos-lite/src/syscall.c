@@ -1,6 +1,7 @@
 #include <common.h>
 #include "syscall.h"
 #include <fs.h>
+#include<timer.h>
 
 void add_strace_log(uintptr_t *ar, uintptr_t r);
 void print_sbuf_log();
@@ -40,6 +41,13 @@ uintptr_t sys_lseek(int fd, size_t offset, int whence) {
 }
 
 uintptr_t sys_brk(void *new_brk) {
+  return 0;
+}
+
+uintptr_t sys_gettimeofday(timeval *tv, timezone *tz) {
+  uint64_t temp = io_read(AM_TIMER_UPTIME).us;
+  tv->tv_sec = temp / 1000000;
+  tv->tv_usec = temp % 1000000;
   return 0;
 }
 
@@ -108,6 +116,13 @@ void do_syscall(Context *c) {
     
     case SYS_brk:
       c->GPRx = sys_brk((void *)a[1]);
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+    
+    case SYS_gettimeofday:
+      c->GPRx = sys_gettimeofday((timeval *)a[1], (timezone *)a[2]);
       #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
