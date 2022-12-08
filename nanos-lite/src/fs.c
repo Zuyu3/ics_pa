@@ -36,13 +36,11 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
   {"/dev/events", 0, 0, events_read, invalid_write},
-  {"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
+  {"/dev/fb", 0, 0, invalid_read, invalid_write},
+  [FD_FB] = {"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
 #include "files.h"
 };
 
-void init_fs() {
-  // TODO: initialize the size of /dev/fb
-}
 
 int fs_open(const char *pathname, int flags, int mode) {
   //printf("%d\n", sizeof(file_table) / sizeof(Finfo));
@@ -104,6 +102,12 @@ size_t fs_lseek(int fd, size_t offset, int whence) {
 
 int fs_close(int fd) {
   return 0;
+}
+
+void init_fs() {
+  AM_GPU_CONFIG_T gpu_info = io_read(AM_GPU_CONFIG);
+  file_table[FD_FB].size = gpu_info.width * gpu_info.height * 4;
+  printf("%d\n", file_table[FD_FB].size);
 }
 
 char *get_file_name(int file_id) {
