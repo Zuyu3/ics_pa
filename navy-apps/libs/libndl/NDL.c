@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/time.h>
 
 static int evtdev = -1;
@@ -16,8 +17,8 @@ uint32_t NDL_GetTicks() {
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  int fd = open("/dev/events", "r");
-  int res = read(fp, buf, len);
+  int fd = open("/dev/events", 0);
+  int res = read(fd, buf, len);
   return res? 1 : 0;
 }
 
