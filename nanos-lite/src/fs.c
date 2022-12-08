@@ -107,7 +107,6 @@ int fs_close(int fd) {
 void init_fs() {
   AM_GPU_CONFIG_T gpu_info = io_read(AM_GPU_CONFIG);
   file_table[FD_FB].size = gpu_info.width * gpu_info.height * 4;
-  printf("%d\n", file_table[FD_FB].size);
 }
 
 char *get_file_name(int file_id) {
