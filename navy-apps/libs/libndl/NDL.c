@@ -85,7 +85,7 @@ int NDL_Init(uint32_t flags) {
   fscanf(fp, "%s", buf);
 
   printf("%s\n", buf);
-  printf("%s\n", buf + 9);
+  printf("%s\n", buf + 10);
   int config_len =  strlen(buf);
   printf("%d\n", config_len);
 
