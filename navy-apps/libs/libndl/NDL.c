@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <assert.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -79,9 +80,46 @@ int NDL_Init(uint32_t flags) {
   }
 
   char buf[64];
+  char tokens[32];
   FILE *fp = fopen("/proc/dispinfo", "r");
   int config_len =  fscanf(fp, "%s", buf);
-  printf("gpu config is: %s\n\n\n", buf);
+
+  int id = 0, temp, temp_w = -1, temp_h = -1;
+  while(id < config_len) {
+      if(strcmp(buf + id, "WIDTH") == 0) {
+        temp_w = 0;
+        for(temp = id + 5; temp < config_len; temp++) {
+          if(buf[temp] >= '0' && buf[temp] <= '9')
+            temp_w = temp * 10 + buf[temp] - '0';
+          if(buf[temp] == '\n'){
+            id = temp;
+            break;
+          }
+        }
+      }
+      else if(strcmp(buf + id, "HEIGHT") == 0) {
+        temp_h = 0;
+        for(temp = id + 6; temp < config_len; temp++) {
+          if(buf[temp] >= '0' && buf[temp] <= '9')
+            temp_h = temp * 10 + buf[temp] - '0';
+          if(buf[temp] == '\n'){
+            id = temp;
+            break;
+          }
+        }
+      }
+      id++;
+  }
+
+  if(temp_w == -1 || temp_h == -1)
+    assert(0);
+  else {
+    screen_h = temp_h;
+    screen_w = temp_w;
+  }
+
+  printf("width is %d, height is %d\n", screen_w, screen_h);
+
 
   return 0;
 }
