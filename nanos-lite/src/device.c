@@ -22,7 +22,26 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  int res = 0;
+  
+  AM_INPUT_KEYBRD_T kbd = io_read(AM_INPUT_KEYBRD);
+
+  if(kbd.keycode == AM_KEY_NONE)
+    return 0;
+
+  if(kbd.keydown)
+    strcpy(buf, "kd ");
+  else
+    strcpy(buf, "ku ");
+
+  strcat(buf, keyname[kbd.keycode]);
+  
+  res = strlen(buf);
+  if(res > len) {
+    ((char *)buf)[0] = '\0';
+    return 0;
+  }
+  return res;
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
