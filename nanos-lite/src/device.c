@@ -14,6 +14,7 @@ static const char *keyname[256] __attribute__((used)) = {
   AM_KEYS(NAME)
 };
 
+
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   //ignore offset.
     for(int i = 0; i < len; i++)
@@ -46,6 +47,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   AM_GPU_CONFIG_T gpu_info = io_read(AM_GPU_CONFIG);
+
   int res;
 
   res = sprintf(buf, "WIDTH:%d\nHEIGHT:%d\n", gpu_info.width, gpu_info.height);
@@ -56,7 +58,17 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  io_write(AM_GPU_FBDRAW);
+  AM_GPU_CONFIG_T gpu_info = io_read(AM_GPU_CONFIG);
+  int screen_w = gpu_info.width;
+  //int screen_h = gpu_info.height;
+
+  int x, y;
+  //int width, height;
+  x = offset % screen_w;
+  y = offset / screen_w;
+
+  //TODO:Maybe bugs here.
+  io_write(AM_GPU_FBDRAW, x, y, (void *)buf, 0, len, true);
   return 0;
 }
 
