@@ -84,7 +84,6 @@ size_t fs_write(int fd, const void *buf, size_t len) {
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence) {
-  printf("os use lseek, fd=%d, offset=%d\n", fd, offset);
   switch (whence)
   {
   case SEEK_SET:
