@@ -66,11 +66,11 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   //int width, height;
   x = (offset / 4) % screen_w;
   y = (offset / 4) / screen_w;
-  printf("os write: (%d, %d), offset = %d, len=%d\n\n", x, y, offset, len);
+  printf("os write: (%d, %d), len=%d\n\n", x, y, offset, len);
   
 
   //TODO:Maybe bugs here.
-  io_write(AM_GPU_FBDRAW, x, y, (void *)buf, 0, len, true);
+  io_write(AM_GPU_FBDRAW, x, y, (void *)buf, 0, len / 4, true);
   return 0;
 }
 
