@@ -27,7 +27,7 @@ int main() {
     gettimeofday(&current_time, NULL);
     printf("current time: %ld  %ld\n\n\n", current_time.tv_sec, current_time.tv_usec);
 
-    if((current_time.tv_usec - last_time.tv_usec) > 500000) {
+    if((current_time.tv_sec - last_time.tv_sec) > 0) {
       last_time.tv_usec = current_time.tv_usec;
       last_time.tv_sec = current_time.tv_sec;
       count++;
