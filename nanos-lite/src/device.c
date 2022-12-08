@@ -36,6 +36,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 
   strcat(buf, keyname[kbd.keycode]);
   
+  printf("%s\n", buf);
   res = strlen(buf);
   if(res > len) {
     ((char *)buf)[0] = '\0';
