@@ -18,10 +18,21 @@ uint32_t NDL_GetTicks() {
 int NDL_PollEvent(char *buf, int len) {
   FILE *fp = fopen("/dev/events", "r");
   int res = fread(buf, len, 1, fp);
+  fclose(fp);
   return res? 1 : 0;
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
+  if(*w == 0 && *h == 0) {
+    *w == screen_w;
+    *h == screen_h;
+    return;
+  }
+  else if(*w > screen_w || *h > screen_h) {
+    printf("Error. Canvas larger than screen.\n");
+  }
+  
+
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
@@ -39,6 +50,9 @@ void NDL_OpenCanvas(int *w, int *h) {
     }
     close(fbctl);
   }
+
+
+  
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
@@ -59,9 +73,17 @@ int NDL_QueryAudio() {
 }
 
 int NDL_Init(uint32_t flags) {
+
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+
+  char buf[64];
+  FILE *fp = fopen("/proc/dispinfo", "r");
+  int config_len = fread(buf, 64, 1, fp);
+  fclose(fp);
+  printf("gpu config is: %s\n", buf);
+
   return 0;
 }
 
