@@ -83,6 +83,7 @@ int NDL_Init(uint32_t flags) {
   char tokens[32];
   FILE *fp = fopen("/proc/dispinfo", "r");
   int config_len =  fscanf(fp, "%s", buf);
+  printf("%d\n",config_len);
 
   int id = 0, temp, temp_w = -1, temp_h = -1;
   while(id < config_len) {
