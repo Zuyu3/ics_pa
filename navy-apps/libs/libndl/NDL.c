@@ -85,6 +85,7 @@ int NDL_Init(uint32_t flags) {
 
   int config_len =  fread(buf, 64, 1, fp);
   printf("%d\n", config_len);
+  printf("%s\n", buf);
 
   int id = 0, temp, temp_w = -1, temp_h = -1;
   while(id < config_len) {

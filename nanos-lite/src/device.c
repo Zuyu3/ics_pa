@@ -50,7 +50,6 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
   res = sprintf(buf, "WIDTH:%d\nHEIGHT:%d ", gpu_info.width, gpu_info.height);
   ((char *)buf)[res - 1] = -1;
-  printf("from os:\n%s\n\n\n", (char *)buf);
   if(res > len)
     panic("Error. Buf too small to read dispinfo\n");
   
