@@ -33,6 +33,8 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     strcpy(buf, "kd ");
   else
     strcpy(buf, "ku ");
+  
+  printf("%s\n", keyname[kbd.keycode]);
 
   strcat(buf, keyname[kbd.keycode]);
   
