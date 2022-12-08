@@ -72,7 +72,7 @@ size_t fs_write(int fd, const void *buf, size_t len) {
   assert(fd >=0 && fd < sizeof(file_table) / sizeof(Finfo));
 
   if(file_table[fd].write != NULL) {
-    len = file_table[fd].write(buf, 0, len);
+    len = file_table[fd].write(buf, file_table[fd].open_offset, len);
   }
   else {
     len = (len <= file_table[fd].size - file_table[fd].open_offset) ? len: file_table[fd].size - file_table[fd].open_offset;
