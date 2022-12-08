@@ -10,6 +10,8 @@ int main() {
 
   int count = 0;
 
+  printf("%d\n", sizeof(struct timeval));
+
   printf("%p  %p\n", &last_time, &current_time);
   
   gettimeofday(&last_time, NULL);
