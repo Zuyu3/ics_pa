@@ -89,7 +89,7 @@ int NDL_Init(uint32_t flags) {
 
   int id = 0, temp, temp_w = -1, temp_h = -1;
   while(id < 64) {
-    printf("id:%d\n", id);
+    printf("id:%d  %c\n", id, buf[id]);
       if(strcmp(buf + id, "WIDTH") == 0) {
         printf("hit width at %d\n", id);
         temp_w = 0;
