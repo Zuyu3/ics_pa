@@ -14,7 +14,7 @@ int main() {
 
   while(1) {
     gettimeofday(&current_time, NULL);
-    printf("current: %ld  %ld\n", current_time.tv_sec, current_time.tv_usec);
+    //printf("current: %ld  %ld\n", current_time.tv_sec, current_time.tv_usec);
 
     if((current_time.tv_usec - last_time.tv_usec) > 500000) {
       last_time.tv_usec = current_time.tv_usec;
