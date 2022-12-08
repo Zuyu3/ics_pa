@@ -81,9 +81,6 @@ int NDL_Init(uint32_t flags) {
   char buf[64];
   FILE *fp = fopen("/proc/dispinfo", "r");
   int config_len =  fscanf(fp, "%s", buf);
-  //int config_len = fread(buf, 64, 1, fp);
-  printf("%d   %d\n", config_len, strlen(buf));
-  fclose(fp);
   printf("gpu config is: %s\n\n\n", buf);
 
   return 0;
