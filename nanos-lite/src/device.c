@@ -70,7 +70,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   
 
   //TODO:Maybe bugs here.
-  io_write(AM_GPU_FBDRAW, x, y, (void *)buf, 0, len / 4, true);
+  io_write(AM_GPU_FBDRAW, x, y, (void *)buf, 1, len / 4, true);
   return 0;
 }
 
