@@ -1,6 +1,15 @@
 #include <stdint.h>
 #include <stdio.h>
-#include <sys/time.h>
+
+
+typedef struct
+{
+    uint64_t tv_sec;     /* seconds */
+    uint64_t tv_usec;    /* microseconds */
+} timeval;
+
+int gettimeofday(struct timeval *tv, struct timeval *tz);
+
 
 #ifdef __ISA_NATIVE__
 #error can not support ISA=native
