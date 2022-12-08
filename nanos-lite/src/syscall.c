@@ -24,28 +24,11 @@ uintptr_t sys_open(const char *pathname, int flags, int mode) {
 }
 
 uintptr_t sys_read(int fd, void *buf, size_t count) {
-  //ignore STDIN, STDOUT, STDERR here.
-  if(fd < 3) {
-    return 0;
-  }
-  else {
-    count = fs_read(fd, buf, count);
-  }
-  return count;
+  return fs_read(fd, buf, count);
 }
 
 uintptr_t sys_write(int fd, void *buf, size_t count) {
-  //ignore STDIN here.
-  if(fd == 0)
-   return 0;
-  else if(fd == 1 || fd == 2) {
-    for(int i = 0; i < count; i++)
-      putch(((char *)buf)[i]);
-  }
-  else {
-    count = fs_write(fd, buf, count);
-  }
-  return count;
+  return fs_write(fd, buf, count);
 }
 
 uintptr_t sys_close(int fd) {
