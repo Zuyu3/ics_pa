@@ -1,7 +1,7 @@
 typedef struct
 {
-    uint64_t tv_sec;     /* seconds */
-    uint64_t tv_usec;    /* microseconds */
+    uint32_t tv_sec;     /* seconds */
+    uint32_t tv_usec;    /* microseconds */
 } timeval;
 
 typedef struct
