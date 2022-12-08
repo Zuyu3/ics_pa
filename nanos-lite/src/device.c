@@ -38,7 +38,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 
   printf("before strcat: %s\n\n", buf);
   for(int i = 0; i < 10; i++) {
-    printf("index %d: %x(%c)\n", keyname[kbd.keycode][i]);
+    printf("index %d: %x(%c)\n", i, keyname[kbd.keycode][i], keyname[kbd.keycode][i]);
   }
   strcat(buf, keyname[kbd.keycode]);
   printf("after  strcat: %s\n\n", buf);
