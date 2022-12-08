@@ -34,13 +34,12 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   else
     strcpy(buf, "ku ");
 
-  printf("argument len is %d\nkey is: %s, length is %d\n",len, keyname[kbd.keycode], strlen(keyname[kbd.keycode]));
-
   printf("before strcat: %s\n\n", buf);
-  for(int i = 0; i < 10; i++) {
-    printf("index %d: %x(%c)\n", i, keyname[kbd.keycode][i], keyname[kbd.keycode][i]);
-  }
   strcat(buf, keyname[kbd.keycode]);
+
+  for(int i = 0; i < 10; i++) {
+    printf("index %d: %x(%c)\n", i, ((char *)buf)[i], ((char *)buf)[i]);
+  }
   printf("after  strcat: %s\n\n", (char *)buf);
 
   res = strlen(buf);
