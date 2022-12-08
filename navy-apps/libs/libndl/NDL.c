@@ -114,6 +114,8 @@ int NDL_Init(uint32_t flags) {
           }
         }
       }
+      if(temp_w != -1 && temp_h != -1)
+        break;
       id++;
   }
 
