@@ -25,7 +25,7 @@ int main() {
 
   while(1) {
     gettimeofday(&current_time, NULL);
-    printf("current time: %ld  %ld\n\n\n", current_time.tv_sec, current_time.tv_usec);
+    //printf("current time: %ld  %ld\n\n\n", current_time.tv_sec, current_time.tv_usec);
 
     if((current_time.tv_sec - last_time.tv_sec) > 0) {
       last_time.tv_usec = current_time.tv_usec;
