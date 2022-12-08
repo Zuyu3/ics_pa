@@ -124,7 +124,6 @@ void do_syscall(Context *c) {
     
     case SYS_gettimeofday:
       c->GPRx = sys_gettimeofday((timeval *)a[1], (timezone *)a[2]);
-      printf("%x  %x\n\n\n", ((timeval *)a[1])->tv_sec, ((timeval *)a[1])->tv_usec);
       #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
