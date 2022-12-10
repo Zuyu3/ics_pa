@@ -21,7 +21,7 @@ int SDL_WaitEvent(SDL_Event *event) {
   char buf[50];
   while(!NDL_PollEvent(buf, 50)) {
   }
-  printf("%s\n", buf);
+  //printf("%s\n", buf);
   event->key.type = strncmp(buf, "ku", 2) ? SDL_KEYDOWN: SDL_KEYUP;
   for(int i = 0; i < sizeof(keyname) / sizeof(char *); i++) {
     if(!strcmp(keyname[i], buf + 3)) {
