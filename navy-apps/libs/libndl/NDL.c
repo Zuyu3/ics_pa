@@ -93,14 +93,13 @@ int NDL_Init(uint32_t flags) {
 
   int len = read(fd, buf, 64);
   int id = 0, temp, temp_w = -1, temp_h = -1;
-  printf("len = %d\n", len);
 
-  while(id < 64) {
+  while(id < len) {
     //printf("id:%d \n", id );
       if(strncmp(buf + id, "WIDTH", 5) == 0) {
         //printf("hit width at %d\n", id);
         temp_w = 0;
-        for(temp = id + 5; temp < 64; temp++) {
+        for(temp = id + 5; temp < len; temp++) {
           if(buf[temp] >= '0' && buf[temp] <= '9')
             temp_w = temp_w * 10 + buf[temp] - '0';
           if(buf[temp] == '\n'){
@@ -112,7 +111,7 @@ int NDL_Init(uint32_t flags) {
       else if(strncmp(buf + id, "HEIGHT", 6) == 0) {
         //printf("hit height at %d\n", id);
         temp_h = 0;
-        for(temp = id + 6; temp < 64; temp++) {
+        for(temp = id + 6; temp < len; temp++) {
           if(buf[temp] >= '0' && buf[temp] <= '9')
             temp_h = temp_h * 10 + buf[temp] - '0';
           if(buf[temp] == '\n'){
