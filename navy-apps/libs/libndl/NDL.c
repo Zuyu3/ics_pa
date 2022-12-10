@@ -133,7 +133,7 @@ int NDL_Init(uint32_t flags) {
     screen_w = temp_w;
   }
 
-  printf("width is %d, height is %d\n", screen_w, screen_h);
+  //printf("width is %d, height is %d\n", screen_w, screen_h);
 
 
   return 0;
