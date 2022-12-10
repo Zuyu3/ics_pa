@@ -20,7 +20,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   src_x = srcrect == NULL ? 0 : srcrect->x;
   src_y = srcrect == NULL ? 0 : srcrect->y; 
   printf("\n%d %d %d %d %d %d\n\n", copy_w, copy_h, dst_x, dst_y, src_x, src_y);
-  printf("%d  %d\n", sizeof(src->pixels), sizeof(dst->pixels));
+  printf("%p  %p\n", src->pixels, dst->pixels);
 
   for(int i = 0; i < copy_w; i++) {
     printf("i = %d\n", i);
