@@ -9,6 +9,7 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
+static int canvas_x = 0, canvas_y = 0;
 int open(const char *path, int flags, mode_t mode);
 
 uint32_t NDL_GetTicks() {
@@ -61,7 +62,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   int fd = open("/dev/fb", 0, 0);
 
   for(int i = 0; i < h; i++) {
-    lseek(fd, ((y + i) * screen_w + x) * 4, SEEK_SET);
+    lseek(fd, ((canvas_y + y + i) * screen_w + x + canvas_x) * 4, SEEK_SET);
     write(fd, pixels + w * i, w * 4);
   }
   close(fd);
