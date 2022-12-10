@@ -16,7 +16,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(w == 0 && y == 0 && w == 0 && h == 0) {
     SDL_LockSurface(s);
     //uint32_t *new_pixels = s->pixels;
-    NDL_DrawRect((uint32_t *)s->pixels, 0, 0, s->w, w->h);
+    NDL_DrawRect((uint32_t *)s->pixels, 0, 0, s->w, s->h);
     return;
   }
   else {
