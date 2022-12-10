@@ -11,7 +11,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   //uint8_t *sp = src->pixels, *dp = dst->pixels;
   uint32_t *sp = (uint32_t *)src->pixels, *dp = (uint32_t *)dst->pixels;
-  printf("%p %p %p %p\n", dst, src, dstrect, srcrect);
+  //printf("%p %p %p %p\n", dst, src, dstrect, srcrect);
 
   uint16_t copy_w, copy_h;
   int16_t dst_x, dst_y, src_x, src_y;
@@ -21,12 +21,14 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   dst_y = dstrect == NULL ? 0 : dstrect->y;
   src_x = srcrect == NULL ? 0 : srcrect->x;
   src_y = srcrect == NULL ? 0 : srcrect->y;
+  /*
   printf("copy_w:%d, copy_h:%d\n", copy_w, copy_h);
   printf("dst_x:%d, dst_y:%d, dst->w:%d, dst->h:%d\n", dst_x, dst_y, dst->w, dst->h);
   printf("src_x:%d, src_y:%d, src->w:%d, src->h:%d\n", src_x, src_y, src->w, src->h);
+  */
 
   for(int j = 0; j < copy_h; j++) {
-    printf("bias = %d\n", (dst_y + j) * dst->w);
+    //printf("bias = %d\n", (dst_y + j) * dst->w);
     for(int i = 0; i < copy_w; i++) {
       dp[(dst_y + j) * dst->w + dst_x + i] = sp[(src_y + j) * src->w + src_x + i];
     }
@@ -40,9 +42,9 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
   uint32_t *p = (uint32_t *) dst->pixels;
   int bias = 0;
+  printf("h: %d  w: %d\n", dst->h, dst->w);
   if(!dstrect) {
     for(int i = 0; i < dst->h * dst->w; i++) {
-      printf("%x", p[i]);
       p[i] = color;
       printf("%x", p[i]);
     }
