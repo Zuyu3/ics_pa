@@ -90,7 +90,6 @@ int NDL_Init(uint32_t flags) {
 
   char buf[64];
   FILE *fp = fopen("/proc/dispinfo", "r");
-  fscanf(fp, "%s", buf);
 
   fread(buf, 64, 1, fp);
 
