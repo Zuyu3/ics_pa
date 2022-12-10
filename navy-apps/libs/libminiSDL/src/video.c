@@ -3,8 +3,10 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
+  printf("Call SDL BlitSurface\n");
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   uint32_t *sp = (uint32_t *)src->pixels, *dp = (uint32_t *)dst->pixels;
@@ -25,6 +27,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+  printf("Call SDL FillRect\n");
+
   uint32_t *p = (uint32_t *) dst->pixels;
   int bias = 0;
   if(!dstrect) {
