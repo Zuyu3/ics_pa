@@ -92,8 +92,9 @@ int NDL_Init(uint32_t flags) {
   int fd = open("/proc/dispinfo", 0, 0);
 
   int len = read(fd, buf, 64);
-  printf("%s\n", buf);
   int id = 0, temp, temp_w = -1, temp_h = -1;
+  printf("len = %d\n", len);
+
   while(id < 64) {
     //printf("id:%d \n", id );
       if(strncmp(buf + id, "WIDTH", 5) == 0) {
