@@ -27,6 +27,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       dp[(dst_y + j) * dst->w + dst_x + i] = sp[(src_y + j) * src->w + src_x + i];
     }
   }
+  printf("Leave SDL BlitSurface\n");
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -46,6 +47,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
       }
     }
   }
+  printf("Leave SDL FillRect\n");
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
