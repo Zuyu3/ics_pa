@@ -7,9 +7,7 @@
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   printf("Call SDL BlitSurface\n");
-  printf("\n---------\n\n");
   assert(dst && src);
-
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   uint8_t *sp = src->pixels, *dp = dst->pixels;
   //uint32_t *sp = (uint32_t *)src->pixels, *dp = (uint32_t *)dst->pixels;
@@ -21,6 +19,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   dst_y = dstrect == NULL ? 0 : dstrect->y;
   src_x = srcrect == NULL ? 0 : srcrect->x;
   src_y = srcrect == NULL ? 0 : srcrect->y; 
+  printf("\n---------\n\n");
 
   for(int i = 0; i < copy_w; i++) {
     for(int j = 0; j < copy_h; j++) {
