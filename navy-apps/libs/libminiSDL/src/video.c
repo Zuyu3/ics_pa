@@ -23,6 +23,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 
   for(int i = 0; i < copy_w; i++) {
     for(int j = 0; j < copy_h; j++) {
+      printf("i = %d  j = %d\n", i, j);
       dp[(dst_y + j) * dst->w + dst_x + i] = sp[(src_y + j) * src->w + src_x + i];
     }
   }
