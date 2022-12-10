@@ -7,8 +7,8 @@
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   printf("Call SDL BlitSurface\n");
+  printf("\n---------\n\n");
   assert(dst && src);
-  printf("---------");
 
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
   uint8_t *sp = src->pixels, *dp = dst->pixels;
