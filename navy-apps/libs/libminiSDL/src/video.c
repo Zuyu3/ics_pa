@@ -9,8 +9,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   printf("Call SDL BlitSurface\n");
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-  //uint8_t *sp = src->pixels, *dp = dst->pixels;
-  uint32_t *sp = (uint32_t *)src->pixels, *dp = (uint32_t *)dst->pixels;
+  uint8_t *sp = src->pixels, *dp = dst->pixels;
+  //uint32_t *sp = (uint32_t *)src->pixels, *dp = (uint32_t *)dst->pixels;
 
   int copy_w, copy_h, dst_x, dst_y, src_x, src_y;
   copy_w = srcrect == NULL ? src->w : srcrect->w;
@@ -20,10 +20,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   src_x = srcrect == NULL ? 0 : srcrect->x;
   src_y = srcrect == NULL ? 0 : srcrect->y; 
   printf("\n%d %d %d %d %d %d\n\n", copy_w, copy_h, dst_x, dst_y, src_x, src_y);
+  printf("%d  %d", sizeof(src->pixels), sizeof(dst->pixels));
 
   for(int i = 0; i < copy_w; i++) {
+    printf("i = %d\n", i);
     for(int j = 0; j < copy_h; j++) {
-      printf("i = %d  j = %d\n", i, j);
       dp[(dst_y + j) * dst->w + dst_x + i] = sp[(src_y + j) * src->w + src_x + i];
     }
   }
