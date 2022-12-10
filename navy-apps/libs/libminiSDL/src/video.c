@@ -19,7 +19,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   dst_y = dstrect == NULL ? 0 : dstrect->y;
   src_x = srcrect == NULL ? 0 : srcrect->x;
   src_y = srcrect == NULL ? 0 : srcrect->y; 
-  printf("\n%d %d %d %d %d %d\n\n", copy_w, copy_h, dst_x, dst_y, src_x, src_y);
+  printf("\n%d %d %d %d %d %d %d %d %d %d\n\n", copy_w, copy_h, dst_x, dst_y, dst->w, dst->h, src_x, src_y, src->w, src->h);
   printf("%p  %p\n", src->pixels, dst->pixels);
 
   for(int i = 0; i < copy_w; i++) {
@@ -28,6 +28,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       dp[(dst_y + j) * dst->w + dst_x + i] = sp[(src_y + j) * src->w + src_x + i];
     }
   }
+
   printf("Leave SDL BlitSurface\n");
 }
 
