@@ -89,10 +89,10 @@ int NDL_Init(uint32_t flags) {
   }
 
   char buf[64];
-  FILE *fp = fopen("/proc/dispinfo", "r");
+  int fd = open("/proc/dispinfo", 0, 0);
 
-  fread(buf, 64, 1, fp);
-
+  int len = read(fd, buf, 64);
+  printf("%s\n", buf);
   int id = 0, temp, temp_w = -1, temp_h = -1;
   while(id < 64) {
     //printf("id:%d \n", id );
@@ -131,7 +131,7 @@ int NDL_Init(uint32_t flags) {
     screen_h = temp_h;
     screen_w = temp_w;
   }
-
+  close(fd);
   //printf("width is %d, height is %d\n", screen_w, screen_h);
 
 
