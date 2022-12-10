@@ -9,8 +9,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   printf("Call SDL BlitSurface\n");
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-  uint8_t *sp = src->pixels, *dp = dst->pixels;
-  //uint32_t *sp = (uint32_t *)src->pixels, *dp = (uint32_t *)dst->pixels;
+  //uint8_t *sp = src->pixels, *dp = dst->pixels;
+  uint32_t *sp = (uint32_t *)src->pixels, *dp = (uint32_t *)dst->pixels;
 
   int copy_w, copy_h, dst_x, dst_y, src_x, src_y;
   copy_w = srcrect == NULL ? src->w : srcrect->w;
@@ -43,7 +43,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
     for(int i = 0; i < dstrect->w; i++) {
       for(int j = 0; j < dstrect->h; j++) {
         bias = (dstrect->y + j) * dst->w + dstrect->x + i;
-        p[i] = color;
+        p[bias] = color;
       }
     }
   }
