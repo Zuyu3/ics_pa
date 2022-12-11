@@ -197,13 +197,17 @@ int load_snapshoot(char *filename) {
     word_t temp;
     int count = 0;
     printf("sp is: %x\n", cpu.gpr[2]);
+
     for(word_t i = cpu.gpr[2]; i <= 0x80000900u; i+=4) {
       count++;
-      if(!fscanf(fp, "%d", &temp))
+      if(!fscanf(fp, "%d", &temp)){
+        printf("fail\n");
         assert(0);
+      }
       printf("address(%x): %d\n", i, temp);
       vaddr_write(i, 4, temp);
     }
+
     printf("total count: %d\n", count);
   }
 
