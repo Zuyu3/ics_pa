@@ -147,6 +147,7 @@ void cpu_exec(uint64_t n) {
 int save_snapshoot(char *filename) {
   FILE *fp = fopen(filename, "w");
   if(!fp) {
+    printf("No such file.\n");
     return 1;
   }
   fflush(fp);
@@ -165,6 +166,7 @@ int save_snapshoot(char *filename) {
 int load_snapshoot(char *filename) {
   FILE *fp = fopen(filename, "r");
   if(!fp) {
+    printf("No such file.\n");
     return 1;
   }
 
