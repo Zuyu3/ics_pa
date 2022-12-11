@@ -203,6 +203,7 @@ int load_snapshoot(char *filename) {
       printf("address(%x): %d\n", i, temp);
       vaddr_write(i, 4, temp);
     }
+    printf("End load memory\n");
   }
 
   fclose(fp);
