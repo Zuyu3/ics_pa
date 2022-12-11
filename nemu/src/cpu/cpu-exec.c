@@ -196,8 +196,9 @@ int load_snapshoot(char *filename) {
   if(cpu.gpr[2] >= CONFIG_MBASE) {
     word_t temp;
     for(uint32_t i = cpu.gpr[2]; i <= 0x80000900; i+=4) {
-      temp = fscanf(fp, "%d", &temp);
-      printf("%d\n", temp);
+      if(!fscanf(fp, "%d", &temp))
+        assert(0);
+      printf("address(%x): %d\n", i, temp);
       vaddr_write(i, 4, temp);
     }
   }
