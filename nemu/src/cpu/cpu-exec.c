@@ -195,9 +195,9 @@ int load_snapshoot(char *filename) {
   
   if(cpu.gpr[2] >= CONFIG_MBASE) {
     word_t temp;
-    int count;
+    int count = 0;
+    printf("sp is: %x\n", cpu.gpr[2]);
     for(word_t i = cpu.gpr[2]; i <= 0x80000900; i+=4) {
-      printf("i is: %d\n", i);
       count++;
       if(!fscanf(fp, "%d", &temp))
         assert(0);
