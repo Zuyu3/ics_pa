@@ -1,6 +1,7 @@
 #include <NDL.h>
 #include <SDL.h>
 #include <string.h>
+#include<assert.h>
 
 #define keyname(k) #k,
 
@@ -8,6 +9,8 @@ static const char *keyname[] = {
   "NONE",
   _KEYS(keyname)
 };
+
+static uint8_t key_state[sizeof(keyname) / sizeof(char *)] = {};
 
 int SDL_PushEvent(SDL_Event *ev) {
   return 0;
@@ -45,5 +48,7 @@ int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
 }
 
 uint8_t* SDL_GetKeyState(int *numkeys) {
-  return NULL;
+  assert(numkeys != NULL);
+  *numkeys = sizeof(key_state);
+  return key_state;
 }
