@@ -26,8 +26,9 @@ static void sh_handle_cmd(const char *cmd) {
   printf("%s\n", cmd);
   char buf[100];
   sscanf(cmd, "%s", buf);
-  execve(buf, NULL, NULL);
   execvp(buf, NULL);
+  execve(buf, NULL, NULL);
+
 }
 
 void builtin_sh_run() {
