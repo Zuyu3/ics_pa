@@ -194,6 +194,7 @@ int load_snapshoot(char *filename) {
   }
   
   if(cpu.gpr[2] >= CONFIG_MBASE) {
+    printf("Get into memory load\n");
     word_t temp;
     for(uint32_t i = cpu.gpr[2]; i <= 0x80000900; i+=4) {
       printf("i is: %d\n", i);
