@@ -1,18 +1,20 @@
 #include <common.h>
 #include "syscall.h"
 #include <fs.h>
-#include<timer.h>
+#include <timer.h>
+#include <proc.h>
 
 void add_strace_log(uintptr_t *ar, uintptr_t r);
 void print_sbuf_log();
+void naive_uload(PCB *pcb, const char *filename);
 
 uintptr_t sys_exit(int t) {
   #if defined CONFIG_STRACE && CONFIG_STRACE
     print_sbuf_log();
   #endif
 
-  halt(t);
-  return 0;
+  naive_uload(NULL, "bin/menu");
+  return t;
 }
 
 uintptr_t sys_yield() {
@@ -41,6 +43,11 @@ uintptr_t sys_lseek(int fd, size_t offset, int whence) {
 }
 
 uintptr_t sys_brk(void *new_brk) {
+  return 0;
+}
+
+uintptr_t sys_execve(const char *pathname, char *const argv[], char *const envp[]) {
+  naive_uload(NULL, pathname);
   return 0;
 }
 
@@ -117,6 +124,13 @@ void do_syscall(Context *c) {
     
     case SYS_brk:
       c->GPRx = sys_brk((void *)a[1]);
+      #if defined CONFIG_STRACE && CONFIG_STRACE
+        add_strace_log(a, c->GPRx);
+      #endif
+      break;
+    
+    case SYS_execve:
+      c->GPRx = sys_execve((char *)a[1], (char **)a[2], (char **)a[3]);
       #if defined CONFIG_STRACE && CONFIG_STRACE
         add_strace_log(a, c->GPRx);
       #endif
