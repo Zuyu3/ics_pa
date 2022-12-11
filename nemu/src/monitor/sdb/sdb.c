@@ -78,9 +78,7 @@ static int cmd_si(char *args) {
 
 static int cmd_save(char *args) {
   char buf[100];
-  printf("%s\n", args);
-  int res = sscanf(args, "%s", buf);
-  if(!res){
+  if(!args || !sscanf(args, "%s", buf)) {
     strcpy(buf, "/home/zuyu/code/ics2022/nemu/snapshoot/default.txt");
   }
   return save_snapshoot(buf);
@@ -88,8 +86,7 @@ static int cmd_save(char *args) {
 
 static int cmd_load(char *args) {
   char buf[100];
-  int res = sscanf(args, "%s", buf);
-  if(!res) {
+  if(!args || !sscanf(args, "%s", buf)) {
     strcpy(buf, "/home/zuyu/code/ics2022/nemu/snapshoot/default.txt");
   }
   return load_snapshoot(buf);
