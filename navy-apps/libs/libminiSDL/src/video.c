@@ -64,10 +64,10 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   }
   uint32_t *new_pixels = (uint32_t *)malloc(rect_w * rect_h * 4);
   if(s->format->BitsPerPixel == 8) {
-    printf("w = %d, h = %d\n", rect_w, rect_h);
     SDL_Color *colours = s->format->palette->colors;
     for(int j = 0; j < rect_h; j++) {
       for(int i = 0; i < rect_w; i++) {
+        printf("id= %u, colours: %-8x\n", s->pixels[(y + j) * s->w + x + i], colours[s->pixels[(y + j) * s->w + x + i]].val);
         new_pixels[j * rect_w + i] = colours[s->pixels[(y + j) * s->w + x + i]].val;
       }
     }
@@ -77,7 +77,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   }
   else if(s->format->BitsPerPixel == 32){
     for(int i = 0; i < rect_h; i++) 
-      memcpy(new_pixels + i * rect_w, (uint32_t *)s->pixels + (y + i)* s->w + x, 4 * rect_w);
+      memcpy(new_pixels + i * rect_w, (uint32_t *)s->pixels + (y + i) * s->w + x, 4 * rect_w);
     NDL_DrawRect((uint32_t *)s->pixels, x, y, rect_w, rect_h);
   }
   else
