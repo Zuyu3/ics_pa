@@ -195,15 +195,16 @@ int load_snapshoot(char *filename) {
   
   if(cpu.gpr[2] >= CONFIG_MBASE) {
     word_t temp;
-
+    int count;
     for(word_t i = cpu.gpr[2]; i <= 0x80000900; i+=4) {
       printf("i is: %d\n", i);
+      count++;
       if(!fscanf(fp, "%d", &temp))
         assert(0);
       printf("address(%x): %d\n", i, temp);
       vaddr_write(i, 4, temp);
     }
-    printf("End load memory\n");
+    printf("total count: %d\n", count);
   }
 
   fclose(fp);
