@@ -66,7 +66,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     uint32_t *new_pixels = (uint32_t *)malloc(rect_w * rect_h * 4);
     for(int i = 0; i < rect_w * rect_h; i++) {
       new_pixels[i] = s->format->palette->colors[s->pixels[i]].val;
-      new_pixels[i] = new_pixels[i] << 24 | ((new_pixels[i] >> 8) & 0xff);
+      new_pixels[i] = new_pixels[i] << 24 | ((new_pixels[i] >> 8) & 0xffffff);
     }
     NDL_DrawRect(new_pixels, x, y, rect_w, rect_h);
     free(new_pixels);
