@@ -163,7 +163,7 @@ int save_snapshoot(char *filename) {
 
   word_t temp;
   if(cpu.gpr[2] >= CONFIG_MBASE) {
-    printf("\n");
+    fprintf(fp, "\n");
     for(uint32_t i = cpu.gpr[2]; i <= 0x80009000; i+=4) {
       temp = vaddr_read(i, 4);
       fprintf(fp, "%x\n", temp);
