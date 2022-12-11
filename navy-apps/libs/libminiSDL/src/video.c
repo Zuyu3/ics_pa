@@ -66,11 +66,13 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if(s->format->BitsPerPixel == 8) {
     printf("call SDL UpdateRect 8 bits\n");
     SDL_Color *colours = s->format->palette->colors;
+    SDL_Color *cur_color;
     for(int j = 0; j < rect_h; j++) {
       printf("line %d: colours is %-8x, r=%x, g=%x, b=%x, a=%x\n", j, colours[s->pixels[(y + j) * s->w + x]].val, colours[s->pixels[(y + j) * s->w + x]].r, colours[s->pixels[(y + j) * s->w + x]].g, colours[s->pixels[(y + j) * s->w + x]].b, colours[s->pixels[(y + j) * s->w + x]].a);
       for(int i = 0; i < rect_w; i++) {
         //printf("(%d, %d): id= %u, colours: %-8x\n", j, i, s->pixels[(y + j) * s->w + x + i], colours[s->pixels[(y + j) * s->w + x + i]].val);
-        new_pixels[j * rect_w + i] = colours[s->pixels[(y + j) * s->w + x + i]].val;
+         cur_color = &colours[s->pixels[(y + j) * s->w + x + i]];
+         new_pixels[j * rect_w + i] = cur_color->a << 24 | cur_color->r << 16 | cur_color->g << 8 | cur_color->b;
       }
     }
     NDL_DrawRect(new_pixels, x, y, rect_w, rect_h);
