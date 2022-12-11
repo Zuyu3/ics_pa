@@ -163,7 +163,7 @@ int save_snapshoot(char *filename) {
 
   word_t temp;
   if(cpu.gpr[2] >= CONFIG_MBASE) {
-    for(uint32_t i = cpu.gpr[2]; i <= 0x80009000; i++) {
+    for(uint32_t i = cpu.gpr[2]; i <= 0x80009000; i+=4) {
       temp = vaddr_read(i, 4);
       fprintf(fp, "%x\n", temp);
     }
@@ -194,7 +194,7 @@ int load_snapshoot(char *filename) {
   
   if(cpu.gpr[2] >= CONFIG_MBASE) {
     word_t temp;
-    for(uint32_t i = cpu.gpr[2]; i <= 0x80000900; i++) {
+    for(uint32_t i = cpu.gpr[2]; i <= 0x80000900; i+=4) {
       temp = fscanf(fp, "%x", &temp);
       vaddr_write(i, 4, temp);
     }
