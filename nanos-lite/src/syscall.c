@@ -14,7 +14,7 @@ uintptr_t sys_exit(int t) {
   #endif
 
   naive_uload(NULL, "/bin/menu");
-  return t;
+  return 0;
 }
 
 uintptr_t sys_yield() {
