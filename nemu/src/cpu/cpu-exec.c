@@ -146,6 +146,7 @@ void cpu_exec(uint64_t n) {
 
 int save_snapshoot(char *filename) {
   FILE *fp = fopen(filename, "w");
+  printf("open file: %s\n", filename);
   if(!fp) {
     printf("No such file.\n");
     return 1;
