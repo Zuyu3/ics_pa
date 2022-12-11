@@ -191,11 +191,13 @@ int load_snapshoot(char *filename) {
     if(!fscanf(fp, "%d", &csr.as_array[i]))
       return 1;
   }
-
-  word_t temp;
-  for(uint32_t i = 0x80009000; i <= cpu.gpr[2]; i++) {
-    temp = fscanf(fp, "%x", &temp);
-    vaddr_write(i, 4, temp);
+  
+  if(cpu.gpr[2] >= CONFIG_MBASE) {
+    word_t temp;
+    for(uint32_t i = cpu.gpr[2]; i <= 0x80000900; i++) {
+      temp = fscanf(fp, "%x", &temp);
+      vaddr_write(i, 4, temp);
+    }
   }
 
   fclose(fp);
