@@ -47,6 +47,7 @@ uintptr_t sys_brk(void *new_brk) {
 }
 
 uintptr_t sys_execve(const char *pathname, char *const argv[], char *const envp[]) {
+  printf("execve file: %s\n", pathname);
   naive_uload(NULL, pathname);
   return 0;
 }
