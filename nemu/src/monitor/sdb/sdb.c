@@ -78,7 +78,7 @@ static int cmd_si(char *args) {
 
 static int cmd_save(char *args) {
   char buf[100];
-  int res = sscanf(buf, "%s", args);
+  int res = sscanf(args, "%s", buf);
   if(!res)
     return 1;
   return save_snapshoot(buf);
@@ -86,7 +86,7 @@ static int cmd_save(char *args) {
 
 static int cmd_load(char *args) {
   char buf[100];
-  int res = sscanf(buf, "%s", args);
+  int res = sscanf(args, "%s", buf);
   if(!res)
     return 1;
   return load_snapshoot(buf);
