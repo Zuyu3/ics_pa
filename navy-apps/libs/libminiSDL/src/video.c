@@ -67,7 +67,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     printf("call SDL UpdateRect 8 bits\n");
     SDL_Color *colours = s->format->palette->colors;
     for(int j = 0; j < rect_h; j++) {
-      printf("line %d: colours is %-8x\n", j, colours[s->pixels[(y + j) * s->w + x]].val);
+      printf("line %d: colours is %-8x, r=%x, g=%x, b=%x, a=%x\n", j, colours[s->pixels[(y + j) * s->w + x]].val, colours[s->pixels[(y + j) * s->w + x]].r, colours[s->pixels[(y + j) * s->w + x]].g, colours[s->pixels[(y + j) * s->w + x]].b, colours[s->pixels[(y + j) * s->w + x]].a);
       for(int i = 0; i < rect_w; i++) {
         //printf("(%d, %d): id= %u, colours: %-8x\n", j, i, s->pixels[(y + j) * s->w + x + i], colours[s->pixels[(y + j) * s->w + x + i]].val);
         new_pixels[j * rect_w + i] = colours[s->pixels[(y + j) * s->w + x + i]].val;
