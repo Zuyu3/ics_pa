@@ -17,6 +17,7 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
+#include <cpu/ifetch.h>
 
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -159,6 +160,13 @@ int save_snapshoot(char *filename) {
   for(int i = 0; i < 4; i++) {
     fprintf(fp, "%-15d\n", csr.as_array[i]);
   }
+
+  word_t temp;
+  for(uint32_t i = 0x80009000; i <= cpu.gpr[2]; i++) {
+    temp = vaddr_read(i, 4);
+    fprintf(fp, "%x\n", temp);
+  }
+
   fclose(fp);
   return 0;
 }
@@ -182,6 +190,13 @@ int load_snapshoot(char *filename) {
     if(!fscanf(fp, "%d", &csr.as_array[i]))
       return 1;
   }
+
+  word_t temp;
+  for(uint32_t i = 0x80009000; i <= cpu.gpr[2]; i++) {
+    temp = fscanf(fp, "%x", &temp);
+    vaddr_write(i, 4, temp);
+  }
+
   fclose(fp);
   return 0;
 }
