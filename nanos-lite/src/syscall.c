@@ -13,7 +13,7 @@ uintptr_t sys_exit(int t) {
     print_sbuf_log();
   #endif
 
-  naive_uload(NULL, "/bin/menu");
+  naive_uload(NULL, "/bin/nterm");
   return 0;
 }
 
