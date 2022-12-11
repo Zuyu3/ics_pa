@@ -8,7 +8,7 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-  printf("call blit surface\n");
+  //printf("call blit surface\n");
   uint16_t copy_w, copy_h;
   int16_t dst_x, dst_y, src_x, src_y;
   copy_w = srcrect == NULL ? src->w : srcrect->w;
@@ -39,7 +39,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   int bias = 0;
   uint32_t *p = (uint32_t *)dst->pixels;
-  printf("h: %d  w: %d\n", dst->h, dst->w);
+  //printf("h: %d  w: %d\n", dst->h, dst->w);
   if(!dstrect) {
     for(int i = 0; i < dst->h * dst->w; i++) {
       p[i] = color;
@@ -64,7 +64,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 
   uint32_t *new_pixels = (uint32_t *)malloc(rect_w * rect_h * 4);
   if(s->format->BitsPerPixel == 8) {
-    printf("call SDL UpdateRect 8 bits\n");
+    //printf("call SDL UpdateRect 8 bits\n");
     SDL_Color *colours = s->format->palette->colors;
     SDL_Color *cur_color;
     for(int j = 0; j < rect_h; j++) {
@@ -77,10 +77,10 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     }
     NDL_DrawRect(new_pixels, x, y, rect_w, rect_h);
     free(new_pixels);
-    printf("Leave SDL Update\n");
+    //printf("Leave SDL Update\n");
   }
   else if(s->format->BitsPerPixel == 32){
-    printf("call SDL UpdateRect 32 bits\n");
+    //printf("call SDL UpdateRect 32 bits\n");
     for(int i = 0; i < rect_h; i++) 
       memcpy(new_pixels + i * rect_w, (uint32_t *)s->pixels + (y + i) * s->w + x, 4 * rect_w);
     NDL_DrawRect(new_pixels, x, y, rect_w, rect_h);
