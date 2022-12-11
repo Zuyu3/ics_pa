@@ -146,6 +146,9 @@ void cpu_exec(uint64_t n) {
 
 int save_snapshoot(char *filename) {
   FILE *fp = fopen(filename, "w");
+  if(!fp) {
+    return 1;
+  }
   fflush(fp);
   
   fprintf(fp, "%-15u\n", cpu.pc);
@@ -161,6 +164,9 @@ int save_snapshoot(char *filename) {
 
 int load_snapshoot(char *filename) {
   FILE *fp = fopen(filename, "r");
+  if(!fp) {
+    return 1;
+  }
 
   if(!fscanf(fp, "%d", &cpu.pc))
     return 1;
