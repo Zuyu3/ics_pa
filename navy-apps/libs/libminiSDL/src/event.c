@@ -48,7 +48,7 @@ int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
 }
 
 uint8_t* SDL_GetKeyState(int *numkeys) {
-  assert(numkeys != NULL);
-  *numkeys = sizeof(key_state);
+  if(numkeys)
+    *numkeys = sizeof(key_state);
   return key_state;
 }
