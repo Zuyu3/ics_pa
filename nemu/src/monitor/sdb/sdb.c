@@ -76,6 +76,23 @@ static int cmd_si(char *args) {
   return 0;
 }
 
+static int cmd_save(char *args) {
+  char buf[100];
+  int res = sscanf(buf, "%s", args);
+  if(!res)
+    return 1;
+  return save_snapshoot(buf);
+}
+
+static int cmd_load(char *args) {
+  char buf[100];
+  int res = sscanf(buf, "%s", args);
+  if(!res)
+    return 1;
+  return load_snapshoot(buf);
+  return 0;
+}
+
 static int cmd_info(char *args){ 
   char subcmd;
   sscanf(args, "%c", &subcmd);
@@ -142,6 +159,8 @@ static struct {
   {"p", "Get the answer of expression and print it out.", cmd_p},
   {"w", "Add a watchpoint.", cmd_w},
   {"d", "delete a watchpoint", cmd_d},
+  {"save", "Save a snapshoot of state", cmd_save},
+  {"load", "Load a snapshoot of state", cmd_load},
 
   /* TODO: Add more commands */
 

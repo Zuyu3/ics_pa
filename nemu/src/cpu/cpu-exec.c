@@ -142,3 +142,38 @@ void cpu_exec(uint64_t n) {
       statistic();
   }
 }
+
+
+int save_snapshoot(char *filename) {
+  FILE *fp = fopen(filename, "w");
+  fflush(fp);
+  
+  fprintf(fp, "%-15u\n", cpu.pc);
+  for(int i = 0; i < 32; i++)
+    fprintf(fp, "%-15d\n", cpu.gpr[i]);
+  
+  for(int i = 0; i < 4; i++) {
+    fprintf(fp, "%-15d\n", csr.as_array[i]);
+  }
+  fclose(fp);
+  return 0;
+}
+
+int load_snapshoot(char *filename) {
+  FILE *fp = fopen(filename, "r");
+
+  if(!fscanf(fp, "%d", &cpu.pc))
+    return 1;
+
+  for(int i = 0; i < 32; i++){
+    if(!fscanf(fp, "%d", &cpu.gpr[i]))
+      return 1;
+  }
+
+  for(int i = 0; i < 4; i++) {
+    if(!fscanf(fp, "%d", &csr.as_array[i]))
+      return 1;
+  }
+  fclose(fp);
+  return 0;
+}
