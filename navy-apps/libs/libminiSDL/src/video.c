@@ -58,11 +58,11 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   int rect_w = w, rect_h = h;
   if(w == 0 && y == 0 && w == 0 && h == 0) {
-    //uint32_t *new_pixels = s->pixels;
     rect_w = s->w;
     rect_h = s->h;
   }
   if(s->format->BitsPerPixel == 8) {
+    printf("w = %d, h = %d\n", rect_w, rect_h);
     uint32_t *new_pixels = (uint32_t *)malloc(rect_w * rect_h * 4);
     for(int i = 0; i < rect_w * rect_h; i++) {
       new_pixels[i] = s->format->palette->colors[s->pixels[i]].val;
