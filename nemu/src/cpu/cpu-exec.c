@@ -195,20 +195,12 @@ int load_snapshoot(char *filename) {
   
   if(cpu.gpr[2] >= CONFIG_MBASE) {
     word_t temp;
-    int count = 0;
-    printf("sp is: %x, flag is: %d\n", cpu.gpr[2], cpu.gpr[2] <= 0x80000900);
 
     for(word_t i = cpu.gpr[2]; i <= 0x80009000u; i+=4) {
-      count++;
-      if(!fscanf(fp, "%d", &temp)){
-        printf("fail\n");
+      if(!fscanf(fp, "%d", &temp))
         assert(0);
-      }
-      printf("address(%x): %d\n", i, temp);
       vaddr_write(i, 4, temp);
     }
-
-    printf("total count: %d\n", count);
   }
 
   fclose(fp);
