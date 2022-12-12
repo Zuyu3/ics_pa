@@ -72,8 +72,6 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
          cur_color = &colours[s->pixels[(y + j) * s->w + x + i]];
          //new_pixels[j * rect_w + i] = cur_color->a << 24 | cur_color->r << 16 | cur_color->g << 8 | cur_color->b;
          new_pixels[j * rect_w + i] = cur_color->val;
-         //if(cur_color->r != cur_color->g || cur_color->a != 0)
-         //printf("(%d, %d): colours: %-8x, r:%x g:%x b:%x\n", j, i, new_pixels[j * rect_w + i], cur_color->r, cur_color->g, cur_color->b);
       }
     }
     NDL_DrawRect(new_pixels, x, y, rect_w, rect_h);
