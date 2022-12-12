@@ -34,6 +34,9 @@ void NDL_OpenCanvas(int *w, int *h) {
   else if(*w > screen_w || *h > screen_h) {
     printf("Error. Canvas larger than screen.\n");
   }
+
+  canvas_x = (screen_w - *w) / 2;
+  canvas_y = (screen_h - *h) / 2;
   
 
   if (getenv("NWM_APP")) {
