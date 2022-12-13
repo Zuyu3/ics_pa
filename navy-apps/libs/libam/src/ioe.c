@@ -51,6 +51,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   struct timeval tv;
   gettimeofday(&tv, NULL);
   uptime->us = tv.tv_usec + tv.tv_sec * 1000000;
+  printf("call for time: %d\n", uptime->us);
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
