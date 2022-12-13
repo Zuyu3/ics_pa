@@ -27,7 +27,6 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
     kbd->keydown = strncmp(buf, "ku", 2)? true: false;
     for(int i = 0; i < 256; i++) {
       if(!strcmp(keyname[i], buf+3)) {
-        printf("ioe get: %d\n", i);
         kbd->keycode = i;
         break;
       }
@@ -56,6 +55,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   int w = 0, h = 0;
+  NDL_Init(0);
   NDL_OpenCanvas(&w, &h);
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
@@ -69,7 +69,8 @@ void __am_gpu_status(AM_GPU_STATUS_T *status) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  NDL_DrawRect(ctl->pixels, ctl->x, ctl->y, ctl->w, ctl->h);
+  printf("x = %d, y = %d, w = %d, h = %d\n", ctl->x, ctl->y, ctl->w, ctl->h);
+  NDL_DrawRect((uint32_t *)ctl->pixels, ctl->x, ctl->y, ctl->w, ctl->h);
 }
 
 static void __am_timer_config(AM_TIMER_CONFIG_T *cfg) { cfg->present = true; cfg->has_rtc = true; }
