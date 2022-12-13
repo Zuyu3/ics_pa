@@ -21,15 +21,30 @@ void __am_gpu_init() {
 
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   char buf[100];
+
   if(NDL_PollEvent(buf, 100)) {
-    kbd->keydown = buf[1] == 'd'? true: false;
-    for(int i = 0; i < 256; i++)
+    if(buf[4] == '\n')
+      buf[4] = 'n';
+    if(buf[4] == '\0')
+      buf[4] = '0';
+    buf[5] = '\0';
+    printf("buf is: %s", buf); 
+
+    kbd->keydown = strncmp(buf, "ku", 2)? true: false;
+    for(int i = 0; i < 256; i++) {
+      printf("index: %d, std is: %s, buf is: %s\n", i, keyname[i], buf+3);
       if(!strcmp(keyname[i], buf+3)) {
+        printf("hit it at code: %d\n", i);
         kbd->keycode = i;
         break;
       }
+    }
+    printf("%d  %d\n", kbd->keydown, kbd->keycode);
   }
-
+  else {
+    kbd->keycode = AM_KEY_NONE;
+    kbd->keydown = false;
+  }
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
@@ -48,7 +63,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-  int w, h;
+  int w = 0, h = 0;
   NDL_OpenCanvas(&w, &h);
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
@@ -94,5 +109,5 @@ bool ioe_init() {
   return true;
 }
 
-void ioe_read (int reg, void *buf) {((handler_t)lut[reg])(buf); }
-void ioe_write(int reg, void *buf) {((handler_t)lut[reg])(buf); }
+void ioe_read (int reg, void *buf) {/*printf("ioe read: %d\n", reg);*/ ((handler_t)lut[reg])(buf); }
+void ioe_write(int reg, void *buf) {/*printf("ioe write: %d\n", reg);*/ ((handler_t)lut[reg])(buf); }
