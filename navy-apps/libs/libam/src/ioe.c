@@ -13,9 +13,15 @@ static const char *keyname[256] __attribute__((used)) = {
   AM_KEYS(NAME)
 };
 
+static uint64_t machine_start_time = 0;
+
 
 void __am_timer_init() {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  machine_start_time = tv.tv_sec * 1000000 + tv.tv_usec;
 }
+
 void __am_gpu_init() {
 }
 
@@ -50,7 +56,7 @@ void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   struct timeval tv;
   gettimeofday(&tv, NULL);
-  uptime->us = tv.tv_usec + tv.tv_sec * 1000000;
+  uptime->us = tv.tv_usec + tv.tv_sec * 1000000 - machine_start_time;
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
@@ -69,7 +75,7 @@ void __am_gpu_status(AM_GPU_STATUS_T *status) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  printf("x = %d, y = %d, w = %d, h = %d\n", ctl->x, ctl->y, ctl->w, ctl->h);
+  //printf("navy gpu: x = %d, y = %d, w = %d, h = %d\n", ctl->x, ctl->y, ctl->w, ctl->h);
   NDL_DrawRect((uint32_t *)ctl->pixels, ctl->x, ctl->y, ctl->w, ctl->h);
 }
 
