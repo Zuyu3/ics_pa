@@ -20,7 +20,7 @@
 #include <memory/paddr.h>
 #include <utils.h>
 #include <difftest-def.h>
-extern int difftest_flag;
+int difftest_flag = 1;
 
 void (*ref_difftest_memcpy)(paddr_t addr, void *buf, size_t n, bool direction) = NULL;
 void (*ref_difftest_regcpy)(void *dut, bool direction) = NULL;

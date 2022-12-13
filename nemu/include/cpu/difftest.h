@@ -26,7 +26,6 @@ void difftest_set_patch(void (*fn)(void *arg), void *arg);
 void difftest_step(vaddr_t pc, vaddr_t npc);
 void difftest_detach();
 void difftest_attach();
-int difftest_flag = 1;
 
 #else
 static inline void difftest_skip_ref() {}
