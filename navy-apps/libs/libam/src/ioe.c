@@ -23,23 +23,15 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   char buf[100];
 
   if(NDL_PollEvent(buf, 100)) {
-    if(buf[4] == '\n')
-      buf[4] = 'n';
-    if(buf[4] == '\0')
-      buf[4] = '0';
-    buf[5] = '\0';
-    printf("buf is: %s", buf); 
 
     kbd->keydown = strncmp(buf, "ku", 2)? true: false;
     for(int i = 0; i < 256; i++) {
-      printf("index: %d, std is: %s, buf is: %s\n", i, keyname[i], buf+3);
       if(!strcmp(keyname[i], buf+3)) {
-        printf("hit it at code: %d\n", i);
+        printf("ioe get: %d\n", i);
         kbd->keycode = i;
         break;
       }
     }
-    printf("%d  %d\n", kbd->keydown, kbd->keycode);
   }
   else {
     kbd->keycode = AM_KEY_NONE;
