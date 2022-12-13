@@ -21,6 +21,8 @@
 #include "watchpoint.h"
 #include <memory/vaddr.h>
 
+extern int difftest_flag;
+void monitor_init_difftest();
 static int is_batch_mode = false;
 
 void init_regex();
@@ -144,6 +146,17 @@ static int cmd_d(char *args){
   return 0;
 }
 
+static int cmd_detach(char *args) {
+  difftest_flag = 0;
+  return 0; 
+}
+
+static int cmd_attach(char *args) {
+  difftest_flag = 1;
+  monitor_init_difftest();
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -160,6 +173,8 @@ static struct {
   {"d", "delete a watchpoint", cmd_d},
   {"save", "Save a snapshoot of state", cmd_save},
   {"load", "Load a snapshoot of state", cmd_load},
+  {"detach", "close difftest", cmd_detach},
+  {"attach", "start difftest", cmd_attach},
 
   /* TODO: Add more commands */
 
