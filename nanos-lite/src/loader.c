@@ -107,8 +107,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   //stack align
   int align_const = (EXPECT_TYPE == EM_RISCV ? 4: 8);
   align_const = (uintptr_t)pointer_stack % align_const;
-  printf("%d\n", align_const);
-  //(uintptr_t)pointer_stack = (uintptr_t)pointer_stack - align_const;
+  pointer_stack = (char **)((uintptr_t)pointer_stack - align_const);
   printf("%p\n", pointer_stack);
   pointer_stack--;
   *pointer_stack = NULL;
