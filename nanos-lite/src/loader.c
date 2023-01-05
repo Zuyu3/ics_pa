@@ -141,6 +141,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   printf("%d %p %p\n", *(int *)pointer_stack, *(pointer_stack + 1), *(pointer_stack + 2));
   assert(0);
 
+  int test_argc = *(int *)pointer_stack;
+  void *test_argv = *(void **)pointer_stack, *test_envp = *(void **)pointer_stack;
+  printf("%d  %p  %p\n", test_argc, test_argv, test_envp);
+
+
 
   uintptr_t entry = loader(pcb, filename);
   Area karea;
@@ -148,5 +153,5 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   karea.end = &pcb->cp + STACK_SIZE;
   pcb->cp = ucontext(NULL, karea, (void *)entry);
 
-  pcb->cp->GPRx = (uintptr_t)heap.end;
+  pcb->cp->GPRx = (uintptr_t) pointer_stack;
 }
