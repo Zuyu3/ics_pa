@@ -7,7 +7,7 @@ Context* schedule(Context *prev);
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
-      printf("Triggered YIELD.\n");
+      //printf("Triggered YIELD.\n");
       return schedule(c);
       break;
     case EVENT_SYSCALL:
