@@ -75,7 +75,6 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   int argc = 0, envc = 0;
   void *stack_start = heap.end;
-  printf("stack start at %p\n", stack_start);
 
   if(argv) {
     while(argv[argc])
@@ -104,6 +103,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
 
   char **pointer_stack = (char **)stack_start;
+  printf("%p\n", pointer_stack);
+  //stack align
+  int align_const = (EXPECT_TYPE == EM_RISCV ? 4: 8);
+  align_const = (uintptr_t)pointer_stack % align_const;
+  printf("%d\n", align_const);
+  //(uintptr_t)pointer_stack = (uintptr_t)pointer_stack - align_const;
   printf("%p\n", pointer_stack);
   pointer_stack--;
   *pointer_stack = NULL;
