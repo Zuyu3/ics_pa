@@ -87,6 +87,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
 
   char *arg_pointer[argc], *env_pointer[envc];
+  void *arg_start, *env_start;
 
   for(int i = envc - 1; i >= 0; i--) {
     stack_start -= (strlen(envp[i]) + 1);
@@ -103,6 +104,34 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
   assert(0);
 
+  char **pointer_stack = (char **)stack_start;
+  pointer_stack--;
+  *pointer_stack = NULL;
+  for(int i = envc - 1; i >= 0; i--) {
+    pointer_stack--;
+    *pointer_stack = env_pointer[i];
+  }
+  env_start = (void *)pointer_stack;
+
+
+  for(int i = 0; i < envc; i++) {
+    printf("%d: %p\n", i, pointer_stack[i]);
+  }
+
+  pointer_stack--;
+  *pointer_stack = NULL;
+  for(int i = argc - 1; i >= 0; i--) {
+    --pointer_stack;
+    *pointer_stack = arg_pointer[i];
+  }
+  arg_start = stack_start;
+
+  --pointer_stack;
+  *pointer_stack = env_start;
+  --pointer_stack;
+  *pointer_stack = arg_start;
+  --pointer_stack;
+  *(int *)pointer_stack = argc;
 
 
   uintptr_t entry = loader(pcb, filename);
