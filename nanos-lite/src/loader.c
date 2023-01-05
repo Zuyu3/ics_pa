@@ -103,12 +103,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
 
   char **pointer_stack = (char **)stack_start;
-  printf("%p\n", pointer_stack);
+
   //stack align
   int align_const = (EXPECT_TYPE == EM_RISCV ? 4: 8);
   align_const = (uintptr_t)pointer_stack % align_const;
   pointer_stack = (char **)((uintptr_t)pointer_stack - align_const);
-  printf("%p\n", pointer_stack);
+
   pointer_stack--;
   *pointer_stack = NULL;
   for(int i = envc - 1; i >= 0; i--) {
@@ -138,6 +138,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *pointer_stack = env_start;
   --pointer_stack;
   *pointer_stack = arg_start;
+  *pointer_stack = (void *)(pointer_stack + 2);
   --pointer_stack;
   *(int *)pointer_stack = argc;
   printf("%d %p %p\n", *(int *)pointer_stack, *(pointer_stack + 1), *(pointer_stack + 2));
