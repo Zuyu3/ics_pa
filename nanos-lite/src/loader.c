@@ -95,13 +95,14 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     printf("env[%d] at %p: %s, len=%d\n", i, env_pointer[i], env_pointer[i], strlen(envp[i]) + 1);
   }
 
-  assert(0);
   for(int i = argc - 1; i >= 0; i--) {
     stack_start -= (strlen(argv[i]) + 1);
     arg_pointer[i] = stack_start;
     strcpy(stack_start, argv[i]);
-    printf("env[%d] at %p: %s\n", i, arg_pointer[i], arg_pointer[i]);
+    printf("arg[%d] at %p: %s\n", i, arg_pointer[i], arg_pointer[i]);
   }
+  assert(0);
+
 
 
   uintptr_t entry = loader(pcb, filename);

@@ -29,7 +29,7 @@ void init_proc() {
   context_kload(&pcb[0], hello_fun, (void *)0);
 
 
-  context_uload(&pcb[1], "/bin/pal", NULL, test_env);
+  context_uload(&pcb[1], "/bin/pal", test_env, test_env);
 
   switch_boot_pcb();
 
