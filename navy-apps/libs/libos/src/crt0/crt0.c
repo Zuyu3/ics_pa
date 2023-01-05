@@ -11,6 +11,9 @@ void call_main(uintptr_t *args) {
   argv = *((void **)args + 1);
   envp = *((void **)args + 2);
   printf("call main get: %d  %p  %p\n", argc, argv, envp);
+  for(int i = 0; i < argc; i++) {
+    printf("%s\n", argv[i]);
+  }
   assert(0);
   environ = envp;
   exit(main(argc, argv, envp));
