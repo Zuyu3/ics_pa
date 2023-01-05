@@ -113,7 +113,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   env_start = (void *)pointer_stack;
 
 
-  for(int i = 0; i < envc; i++) {
+  for(int i = 0; i <= envc; i++) {
     printf("env [%d]: %p\n", i, ((char **)env_start)[i]);
   }
 
@@ -125,7 +125,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
   arg_start = pointer_stack;
 
-  for(int i = 0; i < argc; i++) {
+  for(int i = 0; i <= argc; i++) {
     printf("arg [%d]: %p\n", i, ((char **)arg_start)[i]);
   }
 
