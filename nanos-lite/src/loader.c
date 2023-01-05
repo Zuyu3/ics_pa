@@ -74,7 +74,21 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   pcb->cp = kcontext(karea, entry, arg);
 }
 
-void context_uload(PCB *pcb, const char* filename) {
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
+  int argc = 0, envc = 0;
+  printf("heap: (%x, %x)\n", heap.start, heap.end);
+  if(argv) {
+    while(argv[argc])
+      argc++;
+  }
+  if(envp) {
+    while(envp[envc])
+      envc++;
+  }
+
+  
+
+
   uintptr_t entry = loader(pcb, filename);
   Area karea;
   karea.start = &pcb->cp;
