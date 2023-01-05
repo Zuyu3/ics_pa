@@ -139,11 +139,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   --pointer_stack;
   *(int *)pointer_stack = argc;
   printf("%d %p %p\n", *(int *)pointer_stack, *(pointer_stack + 1), *(pointer_stack + 2));
-  assert(0);
 
   int test_argc = *(int *)pointer_stack;
   void *test_argv = *(void **)pointer_stack, *test_envp = *(void **)pointer_stack;
   printf("%d  %p  %p\n", test_argc, test_argv, test_envp);
+  assert(0);
 
 
 
