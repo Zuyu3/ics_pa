@@ -76,6 +76,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int argc = 0, envc = 0;
   int arg_size = 0, env_size = 0;
   void *stack_start = heap.end;
+  printf("stack start at %p\n", stack_start);
 
   if(argv) {
     for(; argv[argc]; argc++) {
