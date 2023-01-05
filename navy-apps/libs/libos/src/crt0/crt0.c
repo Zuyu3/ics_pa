@@ -14,7 +14,6 @@ void call_main(uintptr_t *args) {
   for(int i = 0; i < argc; i++) {
     printf("%s\n", argv[i]);
   }
-  assert(0);
   environ = envp;
   exit(main(argc, argv, envp));
   assert(0);
