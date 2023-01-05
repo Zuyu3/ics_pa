@@ -17,13 +17,14 @@ static const char *keyname[256] __attribute__((used)) = {
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   //ignore offset.
-  yield();
+  //yield();
   for(int i = 0; i < len; i++)
     putch(((char *)buf)[i]);
   return len;
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {
+  yield();
   int res = 0;
   
   AM_INPUT_KEYBRD_T kbd = io_read(AM_INPUT_KEYBRD);
