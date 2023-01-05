@@ -95,7 +95,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     stack_start -= (strlen(envp[i]) + 1);
     env_pointer[i] = stack_start;
     strcpy(stack_start, envp[i]);
-    printf("env[%d] at %p: %s\n", i, env_pointer[i], env_pointer[i]);
+    printf("env[%d] at %p: %s, len=%d\n", i, env_pointer[i], env_pointer[i], strlen(envp[i]) + 1);
   }
 
   assert(0);
