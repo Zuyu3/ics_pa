@@ -19,6 +19,7 @@
 # error Unsupported ISA
 #endif
 
+Context *kcontext(Area kstack, void (*entry)(void *), void *arg);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   
@@ -61,4 +62,12 @@ void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
   Log("Jump to entry = %p", entry);
   ((void(*)())entry) ();
+}
+
+void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
+  Area karea;
+  karea.start = pcb->stack;
+  karea.end = karea.start + STACK_SIZE;
+  pcb->cp = kcontext(karea, entry, NULL);
+  return;
 }
