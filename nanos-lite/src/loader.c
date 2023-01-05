@@ -67,33 +67,50 @@ void naive_uload(PCB *pcb, const char *filename) {
 
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   Area karea;
-  printf("%x   %x\n", &pcb->cp, pcb);
   karea.start = &pcb->cp;
   karea.end = karea.start + STACK_SIZE;
-  printf("area is:(%x, %x)\nentry address: %x\n", karea.start, karea.end, entry);
   pcb->cp = kcontext(karea, entry, arg);
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   int argc = 0, envc = 0;
-  printf("heap: (%x, %x)\n", heap.start, heap.end);
+  int arg_size = 0, env_size = 0;
+  void *stack_start = heap.end;
+
   if(argv) {
-    while(argv[argc])
-      argc++;
+    for(; argv[argc]; argc++) {
+      arg_size += strlen(argv[argc]) + 1;
+    }
   }
   if(envp) {
-    while(envp[envc])
-      envc++;
+    for(; envp[envc]; envc++) {
+      env_size += strlen(envp[envc]) + 1;
+    }
   }
 
-  
+  char *arg_pointer[argc], *env_pointer[envc];
+
+  for(int i = envc - 1; i >= 0; i--) {
+    stack_start -= (strlen(envp[i]) + 1);
+    env_pointer[i] = stack_start;
+    strcpy(stack_start, envp[i]);
+    printf("env[%d] at %p: %s\n", i, env_pointer[i], env_pointer[i]);
+  }
+
+  assert(0);
+  for(int i = argc - 1; i >= 0; i--) {
+    stack_start -= (strlen(argv[i]) + 1);
+    arg_pointer[i] = stack_start;
+    strcpy(stack_start, argv[i]);
+    printf("env[%d] at %p: %s\n", i, arg_pointer[i], arg_pointer[i]);
+  }
 
 
   uintptr_t entry = loader(pcb, filename);
   Area karea;
   karea.start = &pcb->cp;
   karea.end = &pcb->cp + STACK_SIZE;
-
   pcb->cp = ucontext(NULL, karea, (void *)entry);
+
   pcb->cp->GPRx = (uintptr_t)heap.end;
 }

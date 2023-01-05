@@ -26,7 +26,9 @@ void hello_fun(void *arg) {
 void init_proc() {
   
   context_kload(&pcb[0], hello_fun, (void *)0);
-  context_uload(&pcb[1], "/bin/pal", NULL, NULL);
+
+  char *const test_env[] = {"first=1", "second=1221", "end=0s", "h1h2h33"};
+  context_uload(&pcb[1], "/bin/pal", NULL, test_env);
 
   switch_boot_pcb();
 
