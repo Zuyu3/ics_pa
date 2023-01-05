@@ -74,25 +74,22 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   int argc = 0, envc = 0;
-  int arg_size = 0, env_size = 0;
   void *stack_start = heap.end;
   printf("stack start at %p\n", stack_start);
 
   if(argv) {
-    for(; argv[argc]; argc++) {
-      arg_size += strlen(argv[argc]) + 1;
-    }
+    while(argv[argc])
+      argc++;
   }
   if(envp) {
-    for(; envp[envc]; envc++) {
-      env_size += strlen(envp[envc]) + 1;
-    }
+    while(envp[envc])
+      envc++;
   }
 
   char *arg_pointer[argc], *env_pointer[envc];
 
   for(int i = envc - 1; i >= 0; i--) {
-    stack_start -= (strlen(envp[i]));
+    stack_start -= (strlen(envp[i]) + 1);
     env_pointer[i] = stack_start;
     strcpy(stack_start, envp[i]);
     printf("env[%d] at %p: %s, len=%d\n", i, env_pointer[i], env_pointer[i], strlen(envp[i]) + 1);
