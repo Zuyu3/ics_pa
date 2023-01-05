@@ -9,7 +9,7 @@ PCB *current = NULL;
 void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
-char *const test_env[] = {"first=1", "second=1221", "end=0s", "h1h2h33"};
+char *const test_env[] = {"first=1", "second=1221", "end=0s", "h1h2h33", NULL};
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -27,6 +27,7 @@ void hello_fun(void *arg) {
 void init_proc() {
   
   context_kload(&pcb[0], hello_fun, (void *)0);
+
 
   context_uload(&pcb[1], "/bin/pal", NULL, test_env);
 
