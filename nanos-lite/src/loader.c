@@ -67,7 +67,7 @@ void naive_uload(PCB *pcb, const char *filename) {
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   Area karea;
   printf("%x   %x\n", &pcb->cp, pcb);
-  karea.start = pcb;
+  karea.start = &pcb->cp;
   karea.end = karea.start + STACK_SIZE;
   printf("area is:(%x, %x)\nentry address: %x\n", karea.start, karea.end, entry);
   pcb->cp = kcontext(karea, entry, arg);
