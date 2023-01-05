@@ -122,7 +122,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for(int i = argc - 1; i >= 0; i--) {
     pointer_stack--;
     *pointer_stack = arg_pointer[i];
-    printf("%p  %p\n", *pointer_stack, arg_pointer[i]);
   }
   arg_start = pointer_stack;
 
@@ -136,6 +135,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *pointer_stack = arg_start;
   --pointer_stack;
   *(int *)pointer_stack = argc;
+  printf("%d %p %p\n", pointer_stack, *(pointer_stack + 1), *(pointer_stack + 2));
+  assert(0);
 
 
   uintptr_t entry = loader(pcb, filename);
