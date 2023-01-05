@@ -68,6 +68,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   Area karea;
   karea.start = pcb->stack;
   karea.end = karea.start + STACK_SIZE;
+  printf("area is:(%x, %x)\nentry address: %x\n", karea.start, karea.end, entry);
   pcb->cp = kcontext(karea, entry, NULL);
   return;
 }
