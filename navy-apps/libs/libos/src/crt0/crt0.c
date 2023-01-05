@@ -7,8 +7,9 @@ int main(int argc, char *argv[], char *envp[]);
 extern char **environ;
 void call_main(uintptr_t *args) {
   int argc = *(int *)args;
-  char *argv[] = *((char **)args + 1);
-  char *envp[] = *((char **)args + 1);
+  char **argv, **envp;
+  argv = *((void **)args + 1);
+  envp = *((void **)args + 2);
   printf("call main get: %d  %p  %p\n", argc, argv, envp);
   assert(0);
   environ = envp;
