@@ -124,7 +124,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     *pointer_stack = arg_pointer[i];
     printf("%p  %p\n", *pointer_stack, arg_pointer[i]);
   }
-  arg_start = stack_start;
+  arg_start = pointer_stack;
 
   for(int i = 0; i < argc; i++) {
     printf("arg [%d]: %p\n", i, ((char **)arg_start)[i]);
