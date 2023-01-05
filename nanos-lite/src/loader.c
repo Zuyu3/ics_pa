@@ -116,6 +116,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     *pointer_stack = env_pointer[i];
   }
   env_start = (void *)pointer_stack;
+  stack_start = (void *)pointer_stack;
 
 
   for(int i = 0; i <= envc; i++) {
@@ -135,6 +136,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   --pointer_stack;
   *pointer_stack = env_start;
+  *pointer_stack = stack_start;
   --pointer_stack;
   *pointer_stack = (void *)(pointer_stack + 2);
   --pointer_stack;
