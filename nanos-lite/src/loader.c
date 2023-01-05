@@ -20,6 +20,7 @@
 #endif
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg);
+Context *ucontext(AddrSpace *as, Area kstack, void *entry);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   
@@ -71,4 +72,14 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   karea.end = karea.start + STACK_SIZE;
   printf("area is:(%x, %x)\nentry address: %x\n", karea.start, karea.end, entry);
   pcb->cp = kcontext(karea, entry, arg);
+}
+
+void context_uload(PCB *pcb, const char* filename) {
+  uintptr_t entry = loader(pcb, filename);
+  Area karea;
+  karea.start = &pcb->cp;
+  karea.end = &pcb->cp + STACK_SIZE;
+
+  pcb->cp = ucontext(NULL, karea, (void *)entry);
+  pcb->cp->GPRx = (uintptr_t)heap.end;
 }

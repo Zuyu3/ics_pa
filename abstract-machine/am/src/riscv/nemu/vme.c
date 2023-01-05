@@ -70,5 +70,10 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
-  return NULL;
+  Context *ctp = kstack.end - sizeof(Context);
+  ctp->mepc = (uintptr_t)entry;
+  ctp->mstatus = 0x1800;
+  ctp->gpr[0] = 0;
+  //set stack pointer sp when load in
+  return ctp;
 }
