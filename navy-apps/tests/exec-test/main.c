@@ -4,6 +4,10 @@
 #include <unistd.h>
 
 int main(int argc, char *argv[]) {
+  printf("exec test argc=%d", argc);
+  for(int i = 0; i < argc; i++) {
+    printf("exec test argv[i]: %s\n", argv[i]);
+  }
   int n = (argc >= 2 ? atoi(argv[1]) : 1);
   printf("%s: argv[1] = %d\n", argv[0], n);
 
