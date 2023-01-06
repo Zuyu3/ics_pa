@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <SDL.h>
+  char argvs[20][30];
 
 char handle_key(SDL_Event *ev);
 
@@ -25,7 +26,6 @@ static void sh_prompt() {
 static void sh_handle_cmd(const char *cmd) {
   printf("built-in cmd: %s\nlen=%d\n", cmd, strlen(cmd));
   char buf[100];
-  char argvs[20][30];
   int argcs = 0, index = 0;
   sscanf(cmd, "%s", buf);
   index = strlen(buf);
