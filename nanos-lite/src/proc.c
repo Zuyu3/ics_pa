@@ -10,7 +10,7 @@ void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
 char *const test_env[] = {"first=1", "second=1221", "end=0s", "h1h2h33", NULL};
-char *const test_arg[] = {"Unix", "zuyu", "/bin/pal", "--skip", "end of args", NULL};
+char *const test_arg[] = {"Unix", "zuyu", "/bin/pal", NULL, "--skip", "end of args", NULL};
 
 void switch_boot_pcb() {
   current = &pcb_boot;
