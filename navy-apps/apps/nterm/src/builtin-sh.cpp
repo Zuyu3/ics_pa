@@ -29,13 +29,12 @@ static void sh_handle_cmd(const char *cmd) {
   int argcs = 0, index = 0;
   sscanf(cmd, "%s", buf);
   index = strlen(buf);
-  while(sscanf(cmd + index, "%s", argvs[argcs])) {
-    printf("index=%d, argc=%d:  %s\n", index, argcs, argvs[argcs]);
+  while(index < strlen(cmd)) {
+    sscanf(cmd, "%s", argvs[argcs]);
     index += strlen(argvs[argcs]);
-
     argcs++;
   }
-  
+
   execvp(buf, NULL);
   execve(buf, NULL, NULL);
 
