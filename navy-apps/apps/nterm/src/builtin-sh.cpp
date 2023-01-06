@@ -2,7 +2,8 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <SDL.h>
-char argvs[20][30];
+char arg_buf[20][30];
+char *argvs[20];
 
 char handle_key(SDL_Event *ev);
 
@@ -24,7 +25,7 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  memset(argvs, 0, sizeof(argvs));
+  memset(arg_buf, 0, sizeof(arg_buf));
   char buf[100];
   int argcs = 0, index = 0;
   sscanf(cmd, "%s", buf);
@@ -34,16 +35,18 @@ static void sh_handle_cmd(const char *cmd) {
       index++;
       continue;
     }
-    sscanf(cmd + index, "%s", argvs[argcs]);
-    printf("term arg: %d  %s\n", argcs, argvs[argcs]);
-    index += strlen(argvs[argcs]);
+    sscanf(cmd + index, "%s", arg_buf[argcs]);
+    argvs[argcs] = arg_buf[argcs];
+    printf("term arg: %d  %s\n", argcs, arg_buf[argcs]);
+    index += strlen(arg_buf[argcs]);
     argcs++;
   }
-  ((char **)argvs)[argcs] = NULL;
+
+  argvs[argcs] = NULL;
   printf("%p\n", argvs[argcs]);
   printf("%d\n", argvs[argcs] == NULL);
 
-  execvp(buf, (char *const *)argvs);
+  execvp(buf, argvs);
   execve(buf, NULL, NULL);
 
 }
