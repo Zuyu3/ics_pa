@@ -2,7 +2,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <SDL.h>
-  char argvs[20][30];
+char argvs[20][30];
 
 char handle_key(SDL_Event *ev);
 
@@ -39,6 +39,7 @@ static void sh_handle_cmd(const char *cmd) {
     index += strlen(argvs[argcs]);
     argcs++;
   }
+  ((char **)argvs)[argcs++] = NULL;
 
   printf("%p\n", argvs);
   execvp(buf, (char *const *)argvs);
