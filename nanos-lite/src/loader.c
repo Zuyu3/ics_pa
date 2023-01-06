@@ -102,9 +102,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     stack_start -= (strlen(argv[i]) + 1);
     arg_pointer[i] = stack_start;
     strcpy(stack_start, argv[i]);
-    //printf("arg[%d] at %p: %s\n", i, arg_pointer[i], arg_pointer[i]);
+    printf("arg[%d] at %p: %s\n", i, arg_pointer[i], arg_pointer[i]);
   }
-  printf("-----------\n");
 
   char **pointer_stack = (char **)stack_start;
 
