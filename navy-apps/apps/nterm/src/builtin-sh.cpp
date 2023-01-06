@@ -39,6 +39,7 @@ static void sh_handle_cmd(const char *cmd) {
     index += strlen(argvs[argcs]);
     argcs++;
   }
+  printf("%s\n", buf);
 
   execvp(buf, NULL);
   printf("%s\n", buf);
