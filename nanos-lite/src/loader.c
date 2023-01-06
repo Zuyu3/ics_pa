@@ -74,7 +74,6 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
-  printf("get into context_uload\n");
   int argc = 0, envc = 0;
   
   void *stack_start = new_page(8) + 8 * 4096;
@@ -153,5 +152,4 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   pcb->cp = ucontext(NULL, karea, (void *)entry);
 
   pcb->cp->GPRx = (uintptr_t) pointer_stack;
-  printf("leave context_uload\n");
 }
