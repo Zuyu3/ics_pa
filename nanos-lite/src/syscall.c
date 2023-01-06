@@ -50,6 +50,7 @@ uintptr_t sys_brk(void *new_brk) {
 uintptr_t sys_execve(const char *pathname, char *const argv[], char *const envp[]) {
   printf("call sys_execve\n");
   printf("execve file: %s\n", pathname);
+  printf("--------\n");
   execve_load_ucontext(pathname, argv, envp);
   printf("leave sys_execve, call yield\n");
   yield();
