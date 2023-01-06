@@ -40,7 +40,7 @@ static void sh_handle_cmd(const char *cmd) {
     argcs++;
   }
 
-  execvp(buf, NULL);
+  execvp(buf, argvs);
   execve(buf, NULL, NULL);
 
 }
