@@ -35,10 +35,11 @@ static void sh_handle_cmd(const char *cmd) {
       continue;
     }
     sscanf(cmd + index, "%s", argvs[argcs]);
-    printf("%d  %d  %s\n", index, argcs, argvs[argcs]);
+    printf("term arg: %d  %s\n", argcs, argvs[argcs]);
     index += strlen(argvs[argcs]);
     argcs++;
   }
+  printf("%d\n", argvs[argcs] == NULL);
 
   execvp(buf, (char *const *)argvs);
   execve(buf, NULL, NULL);
