@@ -43,8 +43,7 @@ void init_proc() {
   
   context_kload(&pcb[0], hello_fun, (void *)0);
 
-
-  context_uload(&pcb[1], "/bin/pal", test_arg, NULL);
+  context_uload(new_pcb(), "/bin/exec-test", test_arg, NULL);
 
   switch_boot_pcb();
 
