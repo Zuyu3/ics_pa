@@ -41,6 +41,7 @@ static void sh_handle_cmd(const char *cmd) {
   }
 
   execvp(buf, NULL);
+  printf("%s\n", buf);
   execve(buf, NULL, NULL);
 
 }
