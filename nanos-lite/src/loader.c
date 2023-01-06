@@ -90,6 +90,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
 
   char *arg_pointer[argc], *env_pointer[envc];
+  printf("%d  %d\n",argc, envc);
 
   for(int i = envc - 1; i >= 0; i--) {
     stack_start -= (strlen(envp[i]) + 1);
