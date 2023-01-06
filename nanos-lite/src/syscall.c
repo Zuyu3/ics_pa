@@ -50,7 +50,6 @@ uintptr_t sys_brk(void *new_brk) {
 uintptr_t sys_execve(const char *pathname, char *const argv[], char *const envp[]) {
   printf("execve file: %s\n", pathname);
   execve_load_ucontext(pathname, argv, envp);
-  assert(0);
   yield();
   panic("should not get here.");
 }
