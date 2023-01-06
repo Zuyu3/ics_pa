@@ -74,6 +74,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
+  printf("%p %s %p %p\n", pcb, filename, argv, envp);
   int argc = 0, envc = 0;
   
   void *stack_start = new_page(8) + 8 * 4096;
