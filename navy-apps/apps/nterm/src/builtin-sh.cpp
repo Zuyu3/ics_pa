@@ -25,6 +25,7 @@ static void sh_prompt() {
 
 static void sh_handle_cmd(const char *cmd) {
   printf("built-in cmd: %s\nlen=%d\n", cmd, strlen(cmd));
+  memset(argvs, 0, sizeof(argvs));
   char buf[100];
   int argcs = 0, index = 0;
   sscanf(cmd, "%s", buf);
@@ -39,7 +40,6 @@ static void sh_handle_cmd(const char *cmd) {
     index += strlen(argvs[argcs]);
     argcs++;
   }
-  ((char **)argvs)[argcs++] = NULL;
 
   printf("%p\n", argvs);
   execvp(buf, (char *const *)argvs);
