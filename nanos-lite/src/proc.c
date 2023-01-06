@@ -1,6 +1,6 @@
 #include <proc.h>
 
-#define MAX_NR_PROC 40
+#define MAX_NR_PROC 10
 
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
