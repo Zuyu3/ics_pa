@@ -14,7 +14,7 @@ uintptr_t sys_exit(int t) {
     print_sbuf_log();
   #endif
 
-  execve_load_ucontext("bin/nterm", NULL, NULL);
+  execve_load_ucontext("/bin/nterm", NULL, NULL);
   //naive_uload(NULL, "/bin/nterm");
   return 0;
 }
