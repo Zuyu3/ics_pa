@@ -97,7 +97,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     strcpy(stack_start, envp[i]);
     //printf("env[%d] at %p: %s, len=%d\n", i, env_pointer[i], env_pointer[i], strlen(envp[i]) + 1);
   }
-  printf("-----------\n");
 
   for(int i = argc - 1; i >= 0; i--) {
     stack_start -= (strlen(argv[i]) + 1);
@@ -105,6 +104,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     strcpy(stack_start, argv[i]);
     //printf("arg[%d] at %p: %s\n", i, arg_pointer[i], arg_pointer[i]);
   }
+  printf("-----------\n");
 
   char **pointer_stack = (char **)stack_start;
 
