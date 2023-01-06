@@ -28,9 +28,10 @@ static void sh_handle_cmd(const char *cmd) {
   char argvs[20][30];
   int argcs = 0, index = 0;
   index = sscanf(cmd, "%s", buf);
-  while(strlen(cmd + index)) {
-    index += sscanf(cmd + index, "%s", argvs[argcs++]);
-    printf("%s\n", argvs[argcs - 1]);
+  while(sscanf(cmd + index, "%s", argvs[argcs])) {
+    index += strlen(argvs[argcs]);
+    printf("%s\n", argvs[argcs]);
+    argcs++;
   }
   
   execvp(buf, NULL);
