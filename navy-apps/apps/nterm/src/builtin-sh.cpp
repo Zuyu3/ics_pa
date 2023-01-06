@@ -27,10 +27,12 @@ static void sh_handle_cmd(const char *cmd) {
   char buf[100];
   char argvs[20][30];
   int argcs = 0, index = 0;
-  sscanf(cmd, "%s", buf);
-  printf("built-in buf: %s\n", buf);
-  sscanf(cmd + strlen(buf), "%s", argvs[0]);
-  printf("%s\n", argvs[0]);
+  index = sscanf(cmd, "%s", buf);
+  while(strlen(cmd + index)) {
+    index += sscanf(cmd + index, "%s", argvs[argcs++]);
+    printf("%s\n", argvs[argcs - 1]);
+  }
+  
   execvp(buf, NULL);
   execve(buf, NULL, NULL);
 
