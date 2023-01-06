@@ -25,7 +25,10 @@ static void sh_prompt() {
 static void sh_handle_cmd(const char *cmd) {
   printf("built-in cmd: %s\n", cmd);
   char buf[100];
+  char argvs[20][30];
+  int argcs = 0;
   sscanf(cmd, "%s", buf);
+  printf("built-in buf: %s\n", buf);
   execvp(buf, NULL);
   execve(buf, NULL, NULL);
 
