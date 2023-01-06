@@ -29,7 +29,7 @@ static void sh_handle_cmd(const char *cmd) {
   int argcs = 0, index = 0;
   sscanf(cmd, "%s", buf);
   index = strlen(buf);
-  while(index < strlen(cmd) - 1) {
+  while(index < strlen(cmd)) {
     if(cmd[index] == ' ') {
       index++;
       continue;
@@ -39,10 +39,8 @@ static void sh_handle_cmd(const char *cmd) {
     index += strlen(argvs[argcs]);
     argcs++;
   }
-  printf("%s\n", buf);
 
   execvp(buf, NULL);
-  printf("%s\n", buf);
   execve(buf, NULL, NULL);
 
 }
