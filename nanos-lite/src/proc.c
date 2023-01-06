@@ -5,15 +5,29 @@
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
+static int pcb_index = 1;
 
 void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
 char *const test_env[] = {"first=1", "second=1221", "end=0s", "h1h2h33", NULL};
-char *const test_arg[] = {"Unix", "zuyu", "/bin/pal", NULL, "--skip", "end of args", NULL};
+char *const test_arg[] = {"Unix", "zuyu", "/bin/pal", "--skip", "end of args", NULL};
+
+PCB *new_pcb() {
+  if(pcb_index >= MAX_NR_PROC)
+    panic("malloc too much pcb. out of bound\n");
+
+  pcb_index++;
+  return &pcb[pcb_index - 1];
+}
 
 void switch_boot_pcb() {
   current = &pcb_boot;
+}
+
+void execve_load_ucontext(const char *pathname, char *const argv[], char *const envp[]) {
+  context_uload(new_pcb(), pathname, argv, envp);
+  switch_boot_pcb();
 }
 
 void hello_fun(void *arg) {
@@ -44,7 +58,6 @@ Context* schedule(Context *prev) {
   // save the context pointer
   current->cp = prev;
 
-  // always select pcb[0] as the new process
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
   // then return the new context

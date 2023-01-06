@@ -1,6 +1,6 @@
 #include <proc.h>
 #include <elf.h>
-#include<fs.h>
+#include <fs.h>
 
 #ifdef __LP64__
 # define Elf_Ehdr Elf64_Ehdr
@@ -21,6 +21,7 @@
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg);
 Context *ucontext(AddrSpace *as, Area kstack, void *entry);
+void* new_page(size_t nr_page);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   
@@ -74,8 +75,10 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   int argc = 0, envc = 0;
-  void *stack_start = heap.end;
+  
+  void *stack_start = new_page(8) + 8 * 4096;
 
+  //copy args and envs to ustack
   if(argv) {
     while(argv[argc])
       argc++;
