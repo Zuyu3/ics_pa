@@ -27,6 +27,7 @@ void switch_boot_pcb() {
 
 void execve_load_ucontext(const char *pathname, char *const argv[], char *const envp[]) {
   context_uload(new_pcb(), pathname, argv, envp);
+  printf("------\n");
   switch_boot_pcb();
 }
 
