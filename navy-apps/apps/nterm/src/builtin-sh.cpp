@@ -31,6 +31,7 @@ static void sh_handle_cmd(const char *cmd) {
   index = strlen(buf);
   while(index < strlen(cmd)) {
     sscanf(cmd, "%s", argvs[argcs]);
+    printf("%d  %d  %s\n", index, argcs, argvs[argcs]);
     index += strlen(argvs[argcs]);
     argcs++;
   }
