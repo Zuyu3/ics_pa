@@ -100,7 +100,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
 
   for(int i = argc - 1; i >= 0; i--) {
-    printf("%p  %s\n", argv[i], argv[i]);
+    printf("argv[%d]: %p  %s\n", argv[i], argv[i]);
     stack_start -= (strlen(argv[i]) + 1);
     arg_pointer[i] = stack_start;
     strcpy(stack_start, argv[i]);
