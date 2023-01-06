@@ -23,7 +23,7 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  printf("built-in cmd: %s\n", cmd);
+  printf("built-in cmd: %s\nlen=%d\n", cmd, strlen(cmd));
   char buf[100];
   char argvs[20][30];
   int argcs = 0, index = 0;
