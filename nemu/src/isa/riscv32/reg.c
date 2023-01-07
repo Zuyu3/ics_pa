@@ -24,6 +24,7 @@ const char *regs[] = {
 };
 
 const char *csrs[] = {
+    "satp",      //0x180
     "mstatus",   //0x300
     "mtvec",     //0x305
     "mepc",      //0x341
@@ -37,7 +38,7 @@ void isa_reg_display() {
 }
 
 void isa_csr_display() {
-  for(int i = 0; i < 4; i++) {
+  for(int i = 0; i < 5; i++) {
     printf("%-10s   0x%-15x  %-15d\n",csrs[i], csr.as_array[i], csr.as_array[i]);
   }
 
