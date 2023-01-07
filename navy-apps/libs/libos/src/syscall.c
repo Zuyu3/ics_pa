@@ -111,6 +111,7 @@ int _execve(const char *fname, char * const argv[], char *const envp[]) {
   int res = _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
   if(res < 0) {
     errno = -res;
+    return -1;
   }
   return res;
 }
