@@ -27,14 +27,16 @@ typedef struct {
 typedef union {
   struct 
   {
+    word_t satp;      //0x180
+
     word_t mstatus;   //0x300
 
-    vaddr_t mtvec;     //0x305
+    vaddr_t mtvec;    //0x305
 
-    vaddr_t mepc;      //0x341
+    vaddr_t mepc;     //0x341
     word_t mcause;    //0x342
   };
-  word_t as_array[4];
+  word_t as_array[5];
 
 } riscv32_CSR_state;
 

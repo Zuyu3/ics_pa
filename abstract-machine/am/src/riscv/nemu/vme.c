@@ -1,6 +1,7 @@
 #include <am.h>
 #include <nemu.h>
 #include <klib.h>
+#include <riscv/riscv.h>
 
 static AddrSpace kas = {};
 static void* (*pgalloc_usr)(int) = NULL;
@@ -67,6 +68,24 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  // get_satp() has already let PPN multiple 4096( << 12)
+  // page_table1 = PPN * 4096 + va[31:22] * 4
+  // page_table0 = *page_table1.PPN * 4096 + va[21:12] * 4
+  uintptr_t vpn1 = (uintptr_t)va >> 22, vpn0 = ((uintptr_t)va >> 12) & 0x3ff, offset = (uintptr_t)va & 0xfff;
+  PTE *page_table1 = (PTE *)(get_satp() + vpn1 * 4);
+
+  if(!(*page_table1 & PTE_V)) {
+    // page_table0 map is not valid, alloc a page for it.
+    uintptr_t page_alloced = (uintptr_t)pgalloc_usr(PGSIZE);
+    *page_table1 = 0;
+    // page_alloced = 0x?????000, page_alloced >> 12 << 10 = page_alloced >> 2
+    *page_table1 = *page_table1 | page_alloced >> 2 | PTE_V;
+    assert(*page_table1 >> 10 << 12 == page_alloced);
+  }
+
+  PTE *page_table0 = (void *)((*page_table1 >> 10 << 12) + vpn0 * 4);
+  *page_table0 = ((uintptr_t)pa - offset) >> 12 << 10 | PTE_V | PTE_R | PTE_W | PTE_X;
+  assert((*page_table0 >> 10 << 12) + offset == (uintptr_t)pa);
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
