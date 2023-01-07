@@ -54,7 +54,6 @@ uintptr_t sys_execve(const char *pathname, char *const argv[], char *const envp[
   printf("execve file: %s\n", pathname);
   if(execve_load_ucontext(pathname, argv, envp) < 0)
     return -2;
-  printf("syscall execve successful\n");
   yield();
   panic("should not get here.");
 }
