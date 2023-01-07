@@ -16,7 +16,7 @@ char *const test_arg[] = {"/bin/exec-test", "0", "/bin/pal", "--skip", "end of a
 
 PCB *new_pcb() {
   if(pcb_index >= MAX_NR_PROC)
-    panic("malloc too much pcb. out of bound\n");
+    panic("Malloc too much pcb. No free PCB\n");
 
   pcb_index++;
   return &pcb[pcb_index - 1];
