@@ -77,12 +77,13 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   if(!(*page_table1 & PTE_V)) {
     // page_table0 map is not valid, alloc a page for it.
     uintptr_t page_alloced = (uintptr_t)pgalloc_usr(PGSIZE);
+    printf("page alloced at %p\n", page_alloced);
     *page_table1 = 0;
     // page_alloced = 0x?????000, page_alloced >> 12 << 10 = page_alloced >> 2
-    *page_table1 = *page_table1 | page_alloced >> 2 | PTE_V;
+    *page_table1 = *page_table1 | (page_alloced >> 2) | PTE_V;
+    printf("page table 1 is: %p\n", page_table1);
     assert(*page_table1 >> 10 << 12 == page_alloced);
   }
-  printf("-----\n");
 
   PTE *page_table0 = (void *)((*page_table1 >> 10 << 12) + vpn0 * 4);
   *page_table0 = ((uintptr_t)pa - offset) >> 12 << 10 | PTE_V | PTE_R | PTE_W | PTE_X;
