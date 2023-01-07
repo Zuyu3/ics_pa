@@ -39,7 +39,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
     }
   }
 
-  printf("set stap with: %p\n", kas.ptr);
   set_satp(kas.ptr);
   vme_enable = 1;
 
@@ -74,8 +73,8 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   // page_table0 = *page_table1.PPN * 4096 + va[21:12] * 4
   printf("va:%p, pa:%p\n", va, pa);
   uintptr_t vpn1 = (uintptr_t)va >> 22, vpn0 = ((uintptr_t)va >> 12) & 0x3ff, offset = (uintptr_t)va & 0xfff;
-  printf("get satp: %p\n", get_satp());
-  PTE *page_table1 = (PTE *)(get_satp() + vpn1 * 4);
+
+  PTE *page_table1 = (PTE *)(as->ptr + vpn1 * 4);
   printf("page table 1: %p\n", page_table1);
 
   if(!(*page_table1 & PTE_V)) {
