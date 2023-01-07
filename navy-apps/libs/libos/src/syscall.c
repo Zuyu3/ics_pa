@@ -5,6 +5,7 @@
 #include <time.h>
 #include "syscall.h"
 #include <stdio.h>
+#include <errno.h>
 
 extern char _end;
 static void *prog_break_point = NULL;
@@ -107,7 +108,11 @@ int _gettimeofday(struct timeval *tv, struct timezone *tz) {
 }
 
 int _execve(const char *fname, char * const argv[], char *const envp[]) {
-  return _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
+  int res = _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
+  if(res < 0) {
+    errno = -res;
+  }
+  return res;
 }
 
 // Syscalls below are not used in Nanos-lite.

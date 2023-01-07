@@ -1,4 +1,5 @@
 #include <proc.h>
+#include <fs.h>
 
 #define MAX_NR_PROC 4
 
@@ -25,9 +26,13 @@ void switch_boot_pcb() {
   current = &pcb_boot;
 }
 
-void execve_load_ucontext(const char *pathname, char *const argv[], char *const envp[]) {
+int execve_load_ucontext(const char *pathname, char *const argv[], char *const envp[]) {
+  if(fs_open(pathname, 0, 0)) 
+    return -2;
+
   context_uload(new_pcb(), pathname, argv, envp);
   switch_boot_pcb();
+  return 0;
 }
 
 void hello_fun(void *arg) {

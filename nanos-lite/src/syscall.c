@@ -7,7 +7,7 @@
 void add_strace_log(uintptr_t *ar, uintptr_t r);
 void print_sbuf_log();
 void naive_uload(PCB *pcb, const char *filename);
-void execve_load_ucontext(const char *pathname, char *const argv[], char *const envp[]);
+int execve_load_ucontext(const char *pathname, char *const argv[], char *const envp[]);
 
 uintptr_t sys_exit(int t) {
   #if defined CONFIG_STRACE && CONFIG_STRACE
@@ -52,7 +52,8 @@ uintptr_t sys_brk(void *new_brk) {
 
 uintptr_t sys_execve(const char *pathname, char *const argv[], char *const envp[]) {
   printf("execve file: %s\n", pathname);
-  execve_load_ucontext(pathname, argv, envp);
+  if(execve_load_ucontext(pathname, argv, envp) < 0)
+    return -2;
   yield();
   panic("should not get here.");
 }
