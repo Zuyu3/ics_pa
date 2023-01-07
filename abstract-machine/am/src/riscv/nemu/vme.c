@@ -71,20 +71,21 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   // get_satp() has already let PPN multiple 4096( << 12)
   // page_table1 = PPN * 4096 + va[31:22] * 4
   // page_table0 = *page_table1.PPN * 4096 + va[21:12] * 4
-  printf("va:%p, pa:%p\n", va, pa);
+  
+  //printf("va:%p, pa:%p\n", va, pa);
   uintptr_t vpn1 = (uintptr_t)va >> 22, vpn0 = ((uintptr_t)va >> 12) & 0x3ff, offset = (uintptr_t)va & 0xfff;
 
   PTE *page_table1 = (PTE *)(as->ptr + vpn1 * 4);
-  printf("page table 1: %p\n", page_table1);
+  //printf("page table 1: %p\n", page_table1);
 
   if(!(*page_table1 & PTE_V)) {
     // page_table0 map is not valid, alloc a page for it.
     uintptr_t page_alloced = (uintptr_t)pgalloc_usr(PGSIZE);
-    printf("page alloced at %p\n", page_alloced);
+    //printf("page alloced at %p\n", page_alloced);
     *page_table1 = 0;
     // page_alloced = 0x?????000, page_alloced >> 12 << 10 = page_alloced >> 2
     *page_table1 = *page_table1 | (page_alloced >> 2) | PTE_V;
-    printf("page table 1 is: %p\n", page_table1);
+    //printf("page table 1 is: %p\n", page_table1);
     assert(*page_table1 >> 10 << 12 == page_alloced);
   }
 
