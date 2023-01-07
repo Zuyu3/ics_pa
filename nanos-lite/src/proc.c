@@ -27,7 +27,7 @@ void switch_boot_pcb() {
 }
 
 int execve_load_ucontext(const char *pathname, char *const argv[], char *const envp[]) {
-  if(fs_open(pathname, 0, 0)) 
+  if(fs_open(pathname, 0, 0) == -1) 
     return -2;
 
   context_uload(new_pcb(), pathname, argv, envp);
