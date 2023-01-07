@@ -73,7 +73,6 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   // page_table0 = *page_table1.PPN * 4096 + va[21:12] * 4
   uintptr_t vpn1 = (uintptr_t)va >> 22, vpn0 = ((uintptr_t)va >> 12) & 0x3ff, offset = (uintptr_t)va & 0xfff;
   PTE *page_table1 = (PTE *)(get_satp() + vpn1 * 4);
-  printf("-----\n");
 
   if(!(*page_table1 & PTE_V)) {
     // page_table0 map is not valid, alloc a page for it.
@@ -83,6 +82,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     *page_table1 = *page_table1 | page_alloced >> 2 | PTE_V;
     assert(*page_table1 >> 10 << 12 == page_alloced);
   }
+  printf("-----\n");
 
   PTE *page_table0 = (void *)((*page_table1 >> 10 << 12) + vpn0 * 4);
   *page_table0 = ((uintptr_t)pa - offset) >> 12 << 10 | PTE_V | PTE_R | PTE_W | PTE_X;
