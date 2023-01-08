@@ -54,7 +54,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     // page_num = p_vaddr / 4096
     int page_num = (prog_header.p_vaddr + prog_header.p_memsz - 1) / 4096 - prog_header.p_vaddr / 4096 + 1;
     void *page_alloced = new_page(page_num);
-    printf("load %s, page_num = %d\n", filename, page_num);
+    printf("load %s, page_num = %d, vaddr (%p, %p)\n", filename, page_num, prog_header.p_vaddr, prog_header.p_vaddr + prog_header.p_memsz);
     for(int i = 0; i < page_num; i++) {
       printf("loader call map[%d]: %p %p\n", i, (prog_header.p_vaddr & ~0xfff) + 4096 * i, page_alloced + 4096 * i);
       map(&pcb->as, (void *)((prog_header.p_vaddr & ~0xfff) + 4096 * i), page_alloced + 4096 * i, MMAP_READ | MMAP_WRITE);
