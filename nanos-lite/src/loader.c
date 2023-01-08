@@ -109,7 +109,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *stack_start = new_page(8) + 8 * 4096;
 
   for(int i = 1; i <= 8; i++) {
-    printf("context uload call map: %p %p\n", pcb->as.area.end - 4096 * i, stack_start - 4096 * i);
+    printf("context uload set stack map: %p %p\n", pcb->as.area.end - 4096 * i, stack_start - 4096 * i);
     map(&pcb->as, pcb->as.area.end - 4096 * i, stack_start - 4096 * i, MMAP_READ | MMAP_WRITE);
   }
 
