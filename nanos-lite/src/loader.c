@@ -22,6 +22,7 @@
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg);
 Context *ucontext(AddrSpace *as, Area kstack, void *entry);
 void* new_page(size_t nr_page);
+void protect(AddrSpace *as);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   
@@ -148,10 +149,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
 
   uintptr_t entry = loader(pcb, filename);
-  Area karea;
-  karea.start = &pcb->cp;
-  karea.end = &pcb->cp + STACK_SIZE;
-  pcb->cp = ucontext(NULL, karea, (void *)entry);
+  Area uarea;
+  uarea.start = &pcb->cp;
+  uarea.end = &pcb->cp + STACK_SIZE;
+  pcb->cp = ucontext(NULL, uarea, (void *)entry);
 
   pcb->cp->GPRx = (uintptr_t) pointer_stack;
 }
