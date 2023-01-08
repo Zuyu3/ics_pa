@@ -47,7 +47,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
 void protect(AddrSpace *as) {
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
-  printf("function protect alloc page at %p\n", updir);
   as->ptr = updir;
   as->area = USER_SPACE;
   as->pgsize = PGSIZE;
@@ -82,7 +81,6 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   if(!(*page_table1 & PTE_V)) {
     // page_table0 map is not valid, alloc a page for it.
     uintptr_t page_alloced = (uintptr_t)pgalloc_usr(PGSIZE);
-    printf("page alloced at %p\n", page_alloced);
     *page_table1 = 0;
     // page_alloced = 0x?????000, page_alloced >> 12 << 10 = page_alloced >> 2
     *page_table1 = *page_table1 | (page_alloced >> 2) | PTE_V;
