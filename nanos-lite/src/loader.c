@@ -54,9 +54,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     // page_num = p_vaddr / 4096
     int page_num = (prog_header.p_vaddr + prog_header.p_memsz - 1) / 4096 - prog_header.p_vaddr / 4096 + 1;
     void *page_alloced = new_page(page_num);
-    printf("load %s, page_num = %d, vaddr (%p, %p)\n", filename, page_num, prog_header.p_vaddr, prog_header.p_vaddr + prog_header.p_memsz);
     for(int i = 0; i < page_num; i++) {
-      printf("loader call map[%d]: %p %p\n", i, (prog_header.p_vaddr & ~0xfff) + 4096 * i, page_alloced + 4096 * i);
       map(&pcb->as, (void *)((prog_header.p_vaddr & ~0xfff) + 4096 * i), page_alloced + 4096 * i, MMAP_READ | MMAP_WRITE);
     }
 
@@ -109,7 +107,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *stack_start = new_page(8) + 8 * 4096;
 
   for(int i = 1; i <= 8; i++) {
-    printf("context uload set stack map: %p %p\n", pcb->as.area.end - 4096 * i, stack_start - 4096 * i);
     map(&pcb->as, pcb->as.area.end - 4096 * i, stack_start - 4096 * i, MMAP_READ | MMAP_WRITE);
   }
 
