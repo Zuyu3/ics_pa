@@ -27,6 +27,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   assert(paddr_read(page_table0_addr, sizeof(paddr_t)) & 1);
   paddr_t paddr = (paddr_read(page_table0_addr, sizeof(paddr_t)) >> 10 << 12) + offset;
 
-  assert(vaddr == paddr);
+  //assert(vaddr == paddr);
   return paddr;
 }
