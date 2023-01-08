@@ -18,6 +18,7 @@
 #include <memory/vaddr.h>
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
+  printf("cpu pc: %x\n", get_pc());
   paddr_t vpn1 = vaddr >> 22, vpn0 = (vaddr >> 12) & 0x3ff, offset = vaddr & 0xfff;
   paddr_t page_table1_addr = (csr.satp << 12) + vpn1 * 4;
   
