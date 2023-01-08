@@ -54,8 +54,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     int page_num = (prog_header.p_memsz - 1) / 4096 + 1;
     void *page_alloced = new_page(page_num);
-    for(int i = 0; i < page_num; i++)
-      map(&pcb->as, (void *)(prog_header.p_vaddr + 4096 * i), page_alloced + 4096 * i, 0);
+    for(int i = 0; i < page_num; i++) {
+      printf("call map: %p %p\n", prog_header.p_vaddr + 4096 * i, page_alloced + 4096 * i);
+      map(&pcb->as, (void *)(prog_header.p_vaddr + 4096 * i), page_alloced + 4096 * i, MMAP_READ | MMAP_WRITE);
+    }
 
     fs_read(file_id, page_alloced, prog_header.p_filesz);
     if(prog_header.p_flags & 0x2)
@@ -65,7 +67,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     for(int i = 0; i < (prog_header.p_memsz - 1) / 4096 + 1; i++) {
       void *page_alloced = new_page(1);
       //TODO: change prot later to run on AM_native.
-      map(pcb->as, prog_header.p_vaddr + 4096 * i, page_alloced, 0);
+      map(pcb->as, prog_header.p_vaddr + 4096 * i, page_alloced, MMAP_READ | MMAP_WRITE);
       fs_read(file_id, page_alloced, 4096);
       if(prog_header.p_flags & 0x2 && prog_header.p_filesz - i * 4096 < 4096) {
         int s = (i + 1) * 4096 - prog_header.p_filesz;
@@ -106,7 +108,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *stack_start = new_page(8) + 8 * 4096;
 
   for(int i = 0; i < 8; i++) {
-    map(&pcb->as, pcb->as.area.end - 4096 * i, stack_start - 4096 * i, 0);
+    printf("call map: %p %p\n", pcb->as.area.end - 4096 * i, stack_start - 4096 * i);
+    map(&pcb->as, pcb->as.area.end - 4096 * i, stack_start - 4096 * i, MMAP_READ | MMAP_WRITE);
   }
 
   //copy args and envs to ustack

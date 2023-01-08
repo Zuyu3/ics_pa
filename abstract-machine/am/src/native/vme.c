@@ -83,6 +83,9 @@ end:
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  if(!IN_RANGE(va, USER_SPACE)) {
+    printf("va:%p out of bound\n", va);
+  }
   assert(IN_RANGE(va, USER_SPACE));
   assert((uintptr_t)va % __am_pgsize == 0);
   assert((uintptr_t)pa % __am_pgsize == 0);
