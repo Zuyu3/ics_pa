@@ -99,6 +99,7 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   ctp->mepc = (uintptr_t)entry;
   ctp->mstatus = 0x1800;
   ctp->gpr[0] = 0;
+  ctp->pdir = as->ptr;
   //set stack pointer sp when load in
   return ctp;
 }

@@ -47,13 +47,38 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     if(prog_header.p_type != PT_LOAD)
       continue;
+
+    //printf("f_size= %d, m_size= %d , clear_flag= %d\n", prog_header.p_filesz, prog_header.p_memsz, prog_header.p_flags & 2);
     
     fs_lseek(file_id, prog_header.p_offset, SEEK_SET);
-    fs_read(file_id, (void *)prog_header.p_vaddr, prog_header.p_filesz);
 
+    int page_num = (prog_header.p_memsz - 1) / 4096 + 1;
+    void *page_alloced = new_page(page_num);
+    for(int i = 0; i < page_num; i++)
+      map(&pcb->as, (void *)(prog_header.p_vaddr + 4096 * i), page_alloced + 4096 * i, 0);
+
+    fs_read(file_id, page_alloced, prog_header.p_filesz);
+    if(prog_header.p_flags & 0x2)
+      memset(page_alloced + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
+
+    /*
+    for(int i = 0; i < (prog_header.p_memsz - 1) / 4096 + 1; i++) {
+      void *page_alloced = new_page(1);
+      //TODO: change prot later to run on AM_native.
+      map(pcb->as, prog_header.p_vaddr + 4096 * i, page_alloced, 0);
+      fs_read(file_id, page_alloced, 4096);
+      if(prog_header.p_flags & 0x2 && prog_header.p_filesz - i * 4096 < 4096) {
+        int s = (i + 1) * 4096 - prog_header.p_filesz;
+        s = s > 4096 ? 4096, s; 
+        printf("set to 0 at (%d, s)", prog_header.p_filesz - i * 4096);
+
+        memset(page_alloced + prog_header.p_filesz - i * 4096, 0, s);
+      }
+    }
     if(prog_header.p_flags & 0x2) {
       memset((void *)prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
     }
+    */
   }
   
   fs_close(file_id);
@@ -75,9 +100,14 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
+  protect(&pcb->as);
+
   int argc = 0, envc = 0;
-  
   void *stack_start = new_page(8) + 8 * 4096;
+
+  for(int i = 0; i < 8; i++) {
+    map(&pcb->as, pcb->as.area.end - 4096 * i, stack_start - 4096 * i, 0);
+  }
 
   //copy args and envs to ustack
   if(argv) {
