@@ -51,12 +51,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     //printf("f_size= %d, m_size= %d , clear_flag= %d\n", prog_header.p_filesz, prog_header.p_memsz, prog_header.p_flags & 2);
     
     fs_lseek(file_id, prog_header.p_offset, SEEK_SET);
-
-    int page_num = (prog_header.p_memsz - 1) / 4096 + 1;
+    // page_num = p_vaddr / 4096
+    int page_num = (prog_header.p_vaddr + prog_header.p_memsz - 1) / 4096 - prog_header.p_vaddr / 4096 + 1;
     void *page_alloced = new_page(page_num);
+    printf("load %s, page_num = %d\n", filename, page_num);
     for(int i = 0; i < page_num; i++) {
-      printf("call map: %p %p\n", prog_header.p_vaddr + 4096 * i, page_alloced + 4096 * i);
-      map(&pcb->as, (void *)(prog_header.p_vaddr + 4096 * i), page_alloced + 4096 * i, MMAP_READ | MMAP_WRITE);
+      printf("loader call map[%d]: %p %p\n", i, (prog_header.p_vaddr & ~0xfff) + 4096 * i, page_alloced + 4096 * i);
+      map(&pcb->as, (void *)((prog_header.p_vaddr & ~0xfff) + 4096 * i), page_alloced + 4096 * i, MMAP_READ | MMAP_WRITE);
     }
 
     fs_read(file_id, page_alloced, prog_header.p_filesz);
@@ -107,8 +108,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int argc = 0, envc = 0;
   void *stack_start = new_page(8) + 8 * 4096;
 
-  for(int i = 0; i < 8; i++) {
-    printf("call map: %p %p\n", pcb->as.area.end - 4096 * i, stack_start - 4096 * i);
+  for(int i = 1; i <= 8; i++) {
+    printf("context uload call map: %p %p\n", pcb->as.area.end - 4096 * i, stack_start - 4096 * i);
     map(&pcb->as, pcb->as.area.end - 4096 * i, stack_start - 4096 * i, MMAP_READ | MMAP_WRITE);
   }
 
