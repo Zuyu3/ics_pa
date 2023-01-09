@@ -31,7 +31,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   isa_csr_display();
   csr.mcause = NO;
   csr.mepc = epc;
-  printf("%ld\n", sizeof(word_t) / sizeof(char));
+  printf("%ld, %ld, %ld\n", sizeof(word_t), sizeof(char), sizeof(word_t) / sizeof(char));
   csr.mstatus.m[7] = csr.mstatus.m[3];
   csr.mstatus.m[3] = 0;
   isa_csr_display();
