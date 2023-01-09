@@ -49,7 +49,6 @@ uintptr_t sys_lseek(int fd, size_t offset, int whence) {
 }
 
 uintptr_t sys_brk(void *new_brk) {
-  printf("call sys_brk: %p\n", new_brk);
   return mm_brk((uintptr_t)new_brk);
 }
 

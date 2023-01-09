@@ -61,8 +61,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     fs_read(file_id, page_alloced, prog_header.p_filesz);
     if(prog_header.p_flags & 0x2) {
       memset(page_alloced + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
-      printf("data section set maxbrk: %p\n", (prog_header.p_vaddr & ~0xfff) + 4096 * page_num);
-      //pcb->max_brk = (prog_header.p_vaddr & ~0xfff) + 4096 * page_num;
+      printf("loader set maxbrk: %p\n", (prog_header.p_vaddr & ~0xfff) + 4096 * page_num);
+      pcb->max_brk = (prog_header.p_vaddr & ~0xfff) + 4096 * page_num;
     }
 
     /*
@@ -83,8 +83,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset((void *)prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
     }
     */
-   pcb->max_brk = pcb->max_brk > (prog_header.p_vaddr & ~0xfff) + 4096 * page_num ? pcb->max_brk : (prog_header.p_vaddr & ~0xfff) + 4096 * page_num;
-   printf("set max_brk: %p\n", pcb->max_brk);
+
   }
   
   fs_close(file_id);
@@ -106,7 +105,6 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
-  printf("context uload %s, max_brk: %p\n", filename, pcb->max_brk);
   protect(&pcb->as);
 
   int argc = 0, envc = 0;
