@@ -80,6 +80,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset((void *)prog_header.p_vaddr + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
     }
     */
+   pcb->max_brk = pcb->max_brk > (prog_header.p_vaddr & ~0xfff) + 4096 * page_num ? pcb->max_brk : (prog_header.p_vaddr & ~0xfff) + 4096 * page_num;
+   printf("set max_brk: %p\n", pcb->max_brk);
   }
   
   fs_close(file_id);
