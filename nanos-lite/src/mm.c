@@ -35,7 +35,7 @@ int mm_brk(uintptr_t brk) {
   void *page_alloced = new_page(page_num);
   for(int i = 0; i < page_num; i++) {
     printf("map vaddr %p to paddr %p\n", (void *)((max_brk & ~0xfff) + 4096 * (i + 1)), (void *)(page_alloced + 4096 * i));
-    map(&current->as, (void *)((max_brk & ~0xfff) + 4096 * (i + 1)), (void *)(page_alloced + 4096 * i), MMAP_READ | MMAP_WRITE);
+    map(&current->as, (void *)((max_brk & ~0xfff) + 4096 * i), (void *)(page_alloced + 4096 * i), MMAP_READ | MMAP_WRITE);
   }
   current->max_brk = (brk & (~0xfff)) + 4096;
   return 0;
