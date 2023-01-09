@@ -71,7 +71,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   // page_table1 = PPN * 4096 + va[31:22] * 4
   // page_table0 = *page_table1.PPN * 4096 + va[21:12] * 4
   
-  printf("map va:%p, pa:%p\n", va, pa);
+  //printf("map va:%p, pa:%p\n", va, pa);
   uintptr_t vpn1 = (uintptr_t)va >> 22, vpn0 = ((uintptr_t)va >> 12) & 0x3ff, offset = (uintptr_t)va & 0xfff;
 
   PTE *page_table1 = (PTE *)(as->ptr + vpn1 * 4);
