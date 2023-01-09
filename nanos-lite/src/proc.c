@@ -15,6 +15,7 @@ char *const test_env[] = {"first=1", "second=1221", "end=0s", "h1h2h33", NULL};
 char *const test_arg[] = {"/bin/exec-test", "0", "/bin/pal", "--skip", "end of args", NULL};
 
 PCB *new_pcb() {
+  printf("alloc pcb[%d]\n", pcb[pcb_index]);
   if(pcb_index >= MAX_NR_PROC)
     panic("Malloc too much pcb. No free PCB\n");
 
@@ -46,10 +47,10 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   
-  //context_kload(&pcb[0], hello_fun, (void *)0);
+  context_kload(new_pcb(), hello_fun, (void *)0);
 
   context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
-  context_uload(new_pcb(), "/bin/hello", NULL, NULL);
+  //context_uload(new_pcb(), "/bin/hello", NULL, NULL);
   //context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
 
   switch_boot_pcb();
