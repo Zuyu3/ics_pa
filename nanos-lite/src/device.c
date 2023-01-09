@@ -60,7 +60,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  yield();
+  //yield();
   AM_GPU_CONFIG_T gpu_info = io_read(AM_GPU_CONFIG);
   int screen_w = gpu_info.width;
   //int screen_h = gpu_info.height;
