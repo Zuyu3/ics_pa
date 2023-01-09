@@ -23,6 +23,10 @@ Context* __am_irq_handle(Context *c) {
         }
         c->mepc += 4;
         break;
+      case 0x80000007:
+        printf("am switch to EVENT_IEQ_TIMER\n");
+        ev.event = EVENT_IRQ_TIMER;
+        break;
       default: ev.event = EVENT_ERROR; break;
     }
 
