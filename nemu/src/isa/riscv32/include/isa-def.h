@@ -29,8 +29,12 @@ typedef union {
   {
     word_t satp;      //0x180
 
-    word_t mstatus;   //0x300
-
+    union
+    {
+      word_t mstatus;
+      char m[sizeof(word_t)];
+    } mstatus;        //0x300
+    
     vaddr_t mtvec;    //0x305
 
     vaddr_t mepc;     //0x341
