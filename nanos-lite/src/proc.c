@@ -48,7 +48,7 @@ void init_proc() {
   
   context_kload(&pcb[0], hello_fun, (void *)0);
 
-  context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
+  context_uload(new_pcb(), "/bin/pal", test_arg, test_arg);
   //context_uload(new_pcb(), "/bin/dummy", NULL, NULL);
   //context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
 
