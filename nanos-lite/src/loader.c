@@ -188,7 +188,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   uintptr_t entry = loader(pcb, filename);
   Area uarea;
   uarea.start = &pcb->cp;
-  uarea.end = &pcb->cp + STACK_SIZE;
+  uarea.end = (void *)&pcb->cp + STACK_SIZE;
   pcb->cp = ucontext(&pcb->as, uarea, (void *)entry);
 
   pcb->cp->GPRx = (uintptr_t) pointer_stack;
