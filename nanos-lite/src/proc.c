@@ -15,7 +15,7 @@ char *const test_env[] = {"first=1", "second=1221", "end=0s", "h1h2h33", NULL};
 char *const test_arg[] = {"/bin/exec-test", "0", "/bin/pal", "--skip", "end of args", NULL};
 
 PCB *new_pcb() {
-  printf("alloc pcb[%d]\n", pcb_index);
+  //printf("alloc pcb[%d]\n", pcb_index);
   if(pcb_index >= MAX_NR_PROC)
     panic("Malloc too much pcb. No free PCB\n");
 
