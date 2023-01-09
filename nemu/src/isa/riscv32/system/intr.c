@@ -27,6 +27,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   #ifdef CONFIG_ETRACE
     add_ebuf_log(NO, epc);
   #endif
+  csr.mstatus.m[3] = 1;
   isa_csr_display();
   csr.mcause = NO;
   csr.mepc = epc;
