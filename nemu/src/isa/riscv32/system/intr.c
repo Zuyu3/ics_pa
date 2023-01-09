@@ -39,7 +39,6 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
 word_t isa_query_intr() {
   if(cpu.INTR && !csr.mstatus.m[3]) {
     printf("INTR but mstatus.MIE=0\n");
-    assert(0);
   }
   if(csr.mstatus.m[3] && cpu.INTR) {
     printf("isa_raise intr\n");
