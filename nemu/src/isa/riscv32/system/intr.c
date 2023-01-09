@@ -30,6 +30,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   csr.mepc = epc;
   csr.mstatus.m[7] = csr.mstatus.m[3];
   csr.mstatus.m[3] = 0;
+  isa_csr_display();
   return csr.mtvec;
 }
 
