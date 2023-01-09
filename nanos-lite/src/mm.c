@@ -25,6 +25,7 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
+  printf("call mmbrk\n");
   uintptr_t max_brk = current->max_brk;
   assert(~(max_brk & 0xfff));
   int page_num = (brk >> 12) - ((max_brk - 1) >> 12);
