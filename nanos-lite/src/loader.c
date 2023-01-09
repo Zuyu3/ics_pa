@@ -101,7 +101,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
-  printf("context uload %s, max_brk: %08x", filename, pcb->max_brk);
+  printf("context uload %s, max_brk: %p", filename, pcb->max_brk);
   protect(&pcb->as);
 
   int argc = 0, envc = 0;
