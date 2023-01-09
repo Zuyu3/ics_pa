@@ -48,11 +48,12 @@ void hello_fun(void *arg) {
 void init_proc() {
   
   context_kload(new_pcb(), hello_fun, (void *)0);
-  printf("finish load hello\n");
 
   //context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
   //context_uload(new_pcb(), "/bin/hello", NULL, NULL);
   context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
+  printf("finish load hello\n");
+
   switch_boot_pcb();
 
   Log("Initializing processes...");
