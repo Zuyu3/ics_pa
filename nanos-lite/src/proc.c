@@ -52,7 +52,6 @@ void init_proc() {
   //context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
   //context_uload(new_pcb(), "/bin/hello", NULL, NULL);
   context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
-  printf("finish load hello\n");
 
   switch_boot_pcb();
 
