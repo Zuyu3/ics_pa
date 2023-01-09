@@ -23,14 +23,14 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
-  printf("intr raise %x\n", NO);
+  printf("\nintr raise %x\n", NO);
   #ifdef CONFIG_ETRACE
     add_ebuf_log(NO, epc);
   #endif
   isa_csr_display();
   csr.mcause = NO;
   csr.mepc = epc;
-  csr.mstatus.m[1] = (csr.mstatus.m[1] & 0x8) | (csr.mstatus.m[0] & 0x8);
+  csr.mstatus.m[1] = (csr.mstatus.m[1] & ~0x8) | (csr.mstatus.m[0] & 0x8);
   csr.mstatus.m[0] &= 0x7;
   isa_csr_display();
   return csr.mtvec;
