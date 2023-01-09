@@ -27,13 +27,11 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   #ifdef CONFIG_ETRACE
     add_ebuf_log(NO, epc);
   #endif
-  csr.mstatus.m[3] = 1;
   isa_csr_display();
   csr.mcause = NO;
   csr.mepc = epc;
-  printf("%ld, %ld, %ld\n", sizeof(word_t), sizeof(char), sizeof(word_t) / sizeof(char));
-  csr.mstatus.m[7] = csr.mstatus.m[3];
-  csr.mstatus.m[3] = 0;
+  csr.mstatus.m[1] = (csr.mstatus.m[1] & 0x8) | (csr.mstatus.m[0] & 0x8);
+  csr.mstatus.m[0] &= 0x7;
   isa_csr_display();
   return csr.mtvec;
 }
