@@ -25,7 +25,6 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
-  printf("call mmbrk\n");
   uintptr_t max_brk = current->max_brk;
   assert(~(max_brk & 0xfff));
   int page_num = (brk >> 12) - ((max_brk - 1) >> 12);
@@ -35,7 +34,7 @@ int mm_brk(uintptr_t brk) {
   assert(page_num > 0);
   void *page_alloced = new_page(page_num);
   for(int i = 0; i < page_num; i++) {
-    printf("map vaddr %p to paddr %p\n", (void *)((max_brk & ~0xfff) + 4096 * (i + 1)), (void *)(page_alloced + 4096 * i));
+    printf("map vaddr %p to paddr %p\n", (void *)((max_brk & ~0xfff) + 4096 * i), (void *)(page_alloced + 4096 * i));
     map(&current->as, (void *)((max_brk & ~0xfff) + 4096 * i), (void *)(page_alloced + 4096 * i), MMAP_READ | MMAP_WRITE);
   }
   current->max_brk = (brk & (~0xfff)) + 4096;
