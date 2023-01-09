@@ -6,7 +6,7 @@
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
-static int pcb_index = 1;
+static int pcb_index = 0;
 
 void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
@@ -46,7 +46,7 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   
-  context_kload(&pcb[0], hello_fun, (void *)0);
+  //context_kload(&pcb[0], hello_fun, (void *)0);
 
   context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
   //context_uload(new_pcb(), "/bin/dummy", NULL, NULL);
