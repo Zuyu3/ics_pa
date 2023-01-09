@@ -27,7 +27,7 @@ void free_page(void *p) {
 int mm_brk(uintptr_t brk) {
   uintptr_t max_brk = current->max_brk;
   assert(~(max_brk & 0xfff));
-  int page_num = (brk >> 12) - (max_brk >> 12);
+  int page_num = (brk >> 12) - ((max_brk - 1) >> 12);
   printf("brk from %p to %p, alloc %d pages\n", max_brk, brk, page_num);
   if(brk < max_brk)
     return 0;
