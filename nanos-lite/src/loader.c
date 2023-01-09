@@ -59,8 +59,11 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     }
 
     fs_read(file_id, page_alloced, prog_header.p_filesz);
-    if(prog_header.p_flags & 0x2)
+    if(prog_header.p_flags & 0x2) {
       memset(page_alloced + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
+      printf("data section set maxbrk: %p\n", (prog_header.p_vaddr & ~0xfff) + 4096 * page_num);
+      //pcb->max_brk = (prog_header.p_vaddr & ~0xfff) + 4096 * page_num;
+    }
 
     /*
     for(int i = 0; i < (prog_header.p_memsz - 1) / 4096 + 1; i++) {
