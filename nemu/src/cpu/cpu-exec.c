@@ -78,6 +78,10 @@ static void exec_once(Decode *s, vaddr_t pc) {
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
 #endif
+  word_t intr = isa_query_intr();
+  if (intr != INTR_EMPTY) {
+  cpu.pc = isa_raise_intr(intr, cpu.pc);
+  }
 }
 
 static void execute(uint64_t n) {

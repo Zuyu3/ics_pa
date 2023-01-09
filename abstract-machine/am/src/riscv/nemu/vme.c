@@ -95,7 +95,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *ctp = kstack.end - sizeof(Context);
   ctp->mepc = (uintptr_t)entry;
-  ctp->mstatus = 0x1800;
+  ctp->mstatus = 0x1880;
   ctp->gpr[0] = 0;
   ctp->pdir = as->ptr;
   //set stack pointer sp when load in

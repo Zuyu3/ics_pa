@@ -21,6 +21,7 @@
 typedef struct {
   word_t gpr[32];
   vaddr_t pc;
+  bool INTR;
 } riscv32_CPU_state;
 
 //TODO:Add it when doing PA3. Not sure.

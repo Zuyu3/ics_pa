@@ -27,9 +27,15 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   #endif
   csr.mcause = NO;
   csr.mepc = epc;
+  csr.mstatus.m[7] = csr.mstatus.m[3];
+  csr.mstatus.m[3] = 0;
   return csr.mtvec;
 }
 
 word_t isa_query_intr() {
+  if(csr.mstatus.m[3] && cpu.INTR) {
+    cpu.INTR = false;
+    return IRQ_TIMER;
+  }
   return INTR_EMPTY;
 }
