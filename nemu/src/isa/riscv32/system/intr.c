@@ -27,18 +27,15 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   #ifdef CONFIG_ETRACE
     add_ebuf_log(NO, epc);
   #endif
-  isa_csr_display();
   csr.mcause = NO;
   csr.mepc = epc;
   csr.mstatus = (csr.mstatus & ~0x80) | ((csr.mstatus << 4) & 0x80);
   csr.mstatus &= ~0x8;
-  isa_csr_display();
   return csr.mtvec;
 }
 
 word_t isa_query_intr() {
   if((csr.mstatus & 0x8) && cpu.INTR) {
-    printf("isa_raise intr\n");
     cpu.INTR = false;
     return IRQ_TIMER;
   }
