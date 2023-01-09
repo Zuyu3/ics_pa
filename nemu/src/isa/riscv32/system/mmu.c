@@ -23,12 +23,15 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   
   if((paddr_read(page_table1_addr, sizeof(paddr_t)) & 1) == 0) {
     printf("pc at %08x: vaddr: %08x, unmap in page table 1: %x\n", get_pc(), vaddr, page_table1_addr);
+    isa_reg_display();
   }
   assert(paddr_read(page_table1_addr, sizeof(paddr_t)) & 1);
   paddr_t page_table0_addr = (paddr_read(page_table1_addr, sizeof(paddr_t)) >> 10 << 12) + vpn0 * 4;
   
-  if((paddr_read(page_table0_addr, sizeof(paddr_t)) & 1) == 0)
+  if((paddr_read(page_table0_addr, sizeof(paddr_t)) & 1) == 0) {
     printf("pc at %08x: vaddr: %08x, unmap in page table 0: %x\n", get_pc(), vaddr, page_table0_addr);
+    isa_reg_display();
+  }
   assert(paddr_read(page_table0_addr, sizeof(paddr_t)) & 1);
   paddr_t paddr = (paddr_read(page_table0_addr, sizeof(paddr_t)) >> 10 << 12) + offset;
 
