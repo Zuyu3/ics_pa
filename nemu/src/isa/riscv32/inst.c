@@ -133,7 +133,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000001 ????? ????? 110 ????? 01100 11", rem    , R, R(dest) = (int)src1 % (int)src2); 
   INSTPAT("0000001 ????? ????? 111 ????? 01100 11", remu   , R, R(dest) = src1 % src2); 
 
-  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, printf("call mret\n"); s->dnpc = csr.mepc; csr.mstatus.m[3] = csr.mstatus.m[7]; csr.mstatus.m[7] = 1);
+  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, printf("call mret\n"); s->dnpc = csr.mepc; csr.mstatus.m[3] = csr.mstatus.m[7]; csr.mstatus.m[7] = 1; isa_csr_display());
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
 
   INSTPAT_END();
