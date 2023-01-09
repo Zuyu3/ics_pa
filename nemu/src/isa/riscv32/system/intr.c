@@ -15,6 +15,7 @@
 
 #include <isa.h>
 #include <generated/autoconf.h>
+#include <stdio.h>
 
 void add_ebuf_log(word_t NO, vaddr_t epc);
 
