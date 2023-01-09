@@ -68,7 +68,6 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-  // get_satp() has already let PPN multiple 4096( << 12)
   // page_table1 = PPN * 4096 + va[31:22] * 4
   // page_table0 = *page_table1.PPN * 4096 + va[21:12] * 4
   
