@@ -60,7 +60,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     fs_read(file_id, page_alloced, prog_header.p_filesz);
     if(prog_header.p_flags & 0x2) {
-      memset(page_alloced + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
+      printf("page alloced: %p, vaddr: %p, memset start offset from: %p\n", page_alloced, prog_header.p_vaddr, page_alloced + (prog_header.p_vaddr & 0xfff));
+      memset(page_alloced + (prog_header.p_vaddr & 0xfff) + prog_header.p_filesz, 0, prog_header.p_memsz - prog_header.p_filesz);
       printf("loader set maxbrk: %p\n", (prog_header.p_vaddr & ~0xfff) + 4096 * page_num);
       pcb->max_brk = (prog_header.p_vaddr & ~0xfff) + 4096 * page_num;
     }
