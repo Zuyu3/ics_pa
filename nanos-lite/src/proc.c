@@ -70,8 +70,8 @@ Context* schedule(Context *prev) {
   
   if(schedule_time_slice_index % RUN_PCB0_PER == 0) {
     current = &pcb[0];
-    schedule_time_slice_index = 0;
     printf("schedule pcb[0] at slice[%d]\n", schedule_time_slice_index);
+    schedule_time_slice_index = 0;
   }
   else {
     current = &pcb[pcb_index - 1];
