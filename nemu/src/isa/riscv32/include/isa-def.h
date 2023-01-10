@@ -34,6 +34,7 @@ typedef union {
 
     vaddr_t mtvec;    //0x305
 
+    word_t mscratch;  //0x340
     vaddr_t mepc;     //0x341
     word_t mcause;    //0x342
   };

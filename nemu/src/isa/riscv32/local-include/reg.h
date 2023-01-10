@@ -24,7 +24,7 @@ static inline int check_reg_idx(int idx) {
 }
 
 static inline int check_csr_idx(int idx) {
-  const int res[] = {0x180, 0x300, 0x305, 0x341, 0x342};
+  const int res[] = {0x180, 0x300, 0x305, 0x340, 0x341, 0x342};
   for(int i = 0; i < sizeof(res) / sizeof(int); i++) {
     if(idx == res[i])
       return i;
