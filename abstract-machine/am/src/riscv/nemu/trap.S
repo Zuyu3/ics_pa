@@ -49,8 +49,9 @@ save_context:
   csrr t3, mscratch
   //c->np = t4 = (sp==scratch ? 0(user) : 3(kernel)) = (xor(sp, scratch) != 0 ? 0(user) : 3(kernel))
   addi t4, sp, CONTEXT_SIZE
-  xor  t4, t4, t3
-  bnez t4, user_skip_add
+  xor  t5, t4, t3
+  mv   t4, zero
+  bnez t5, user_skip_add
   addi t4, t4, 3
 
 user_skip_add:
