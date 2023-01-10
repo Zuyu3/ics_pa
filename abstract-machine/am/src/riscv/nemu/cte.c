@@ -63,6 +63,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   ctp->gpr[0] = 0;
   ctp->gpr[10] = (uintptr_t)arg;
   ctp->pdir = NULL;
+  ctp->np = 3;
   //TODO: Maybe some problem here.
   ctp->gpr[2] = (uintptr_t)kstack.start + 4;  //set stack pointer sp
   return ctp;
