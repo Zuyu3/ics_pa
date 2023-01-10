@@ -16,7 +16,6 @@ uintptr_t sys_exit(int t) {
   #endif
 
   printf("call sys_exit\n");
-  halt(0);
   execve_load_ucontext("/bin/nterm", NULL, NULL);
   yield();
   //naive_uload(NULL, "/bin/nterm");
