@@ -111,7 +111,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 00000 00000 000 00000 01100 11", and    , R, R(dest) = src1 & src2);
 
 
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, printf("ecal\n"); s->dnpc = isa_raise_intr(8, s->pc););
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, printf("ecall\n"); s->dnpc = isa_raise_intr(8, s->pc););
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   
