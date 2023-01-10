@@ -189,7 +189,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   uarea.end = (void *)&pcb->cp + STACK_SIZE;
   pcb->cp = ucontext(&pcb->as, uarea, (void *)entry);
 
-  printf("uload set sp: %d\n", pcb->cp->gpr[2]);
+  pcb->cp->gpr[2] = (uintptr_t) pointer_stack;
 
   pcb->cp->GPRx = (uintptr_t) pointer_stack;
 }
