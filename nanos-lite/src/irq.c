@@ -15,7 +15,7 @@ static Context* do_event(Event e, Context* c) {
       do_syscall(c);
       break;
     case EVENT_IRQ_TIMER:
-      //Log("nanos get event IRQ_TIMER\n");
+      Log("nanos get event IRQ_TIMER\n");
       return schedule(c);
       break;
     default: panic("Unhandled event ID = %d", e.event);
