@@ -8,7 +8,7 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
 static int pcb_index = 0;
-//static int schedule_time_slice_index = 0;
+static int schedule_time_slice_index = 0;
 
 void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
@@ -67,17 +67,10 @@ void init_proc() {
 Context* schedule(Context *prev) {
   // save the context pointer
   current->cp = prev;
-  /*
-  if(schedule_time_slice_index % RUN_PCB0_PER == 0) {
-    current = &pcb[0];
-    schedule_time_slice_index = 0;
-  }
-  else {
-    current = &pcb[pcb_index - 1];
-  }
+  
+  current = schedule_time_slice_index % RUN_PCB0_PER == 0 ? &pcb[pcb_index - 1] : &pcb[0];
   schedule_time_slice_index++;
-  */
-  current = (current == &pcb[0] ? &pcb[pcb_index - 1] : &pcb[0]);
+  //current = (current == &pcb[0] ? &pcb[pcb_index - 1] : &pcb[0]);
   //Log("schedule %d\n", (current - &pcb[0]));
 
   // then return the new context
