@@ -42,7 +42,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
 
 word_t isa_query_intr() {
   //TODO: delete it later.
-  return INTR_EMPTY;
+  //return INTR_EMPTY;
   if((csr.mstatus & 0x8) && cpu.INTR) {
     cpu.INTR = false;
     return IRQ_TIMER;
