@@ -50,9 +50,9 @@ void init_proc() {
   
   context_kload(new_pcb(), hello_fun, (void *)0);
 
-  context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
+  //context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
   //context_uload(new_pcb(), "/bin/hello", NULL, NULL);
-  //context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
+  context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
 
   switch_boot_pcb();
 
