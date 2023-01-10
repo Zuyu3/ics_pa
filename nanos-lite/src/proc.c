@@ -2,7 +2,7 @@
 #include <fs.h>
 
 #define MAX_NR_PROC 4
-#define RUN_PCB0_PER 5
+#define RUN_PCB0_PER 20
 
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
