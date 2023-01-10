@@ -31,10 +31,12 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   csr.mepc = epc;
   csr.mstatus = (csr.mstatus & ~0x80) | ((csr.mstatus << 4) & 0x80);
   csr.mstatus &= ~0x8;
+  /*
   printf("when yield:\n");
   isa_reg_display();
   isa_csr_display();
   printf("\n");
+  */
   return csr.mtvec;
 }
 
