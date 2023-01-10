@@ -68,7 +68,7 @@ Context* schedule(Context *prev) {
   // save the context pointer
   current->cp = prev;
   
-  current = schedule_time_slice_index % RUN_PCB0_PER == 0 ? &pcb[pcb_index - 1] : &pcb[0];
+  current = schedule_time_slice_index % RUN_PCB0_PER ? &pcb[pcb_index - 1] : &pcb[0];
   schedule_time_slice_index++;
   //current = (current == &pcb[0] ? &pcb[pcb_index - 1] : &pcb[0]);
   //Log("schedule %d\n", (current - &pcb[0]));
