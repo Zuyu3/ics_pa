@@ -39,7 +39,7 @@ int execve_load_ucontext(const char *pathname, char *const argv[], char *const e
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    if(j % 100 == 0)
+    if(j % 1000 == 0)
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     //yield();
