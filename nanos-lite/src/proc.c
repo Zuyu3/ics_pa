@@ -64,8 +64,8 @@ void init_proc() {
 Context* schedule(Context *prev) {
   // save the context pointer
   current->cp = prev;
-  current = &pcb[0];
-  //current = (current == &pcb[0] ? &pcb[pcb_index - 1] : &pcb[0]);
+  
+  current = (current == &pcb[0] ? &pcb[pcb_index - 1] : &pcb[0]);
 
   // then return the new context
   return current->cp;
