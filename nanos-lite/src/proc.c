@@ -56,7 +56,7 @@ void init_proc() {
   context_uload(new_pcb(), "/bin/hello", NULL, NULL);
   context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
   context_uload(new_pcb(), "/bin/bird", NULL, NULL);
-  context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
+  context_uload(new_pcb(), "/bin/nslider", NULL, NULL);
 
   fg_pcb = pcb_index - 1;
 
