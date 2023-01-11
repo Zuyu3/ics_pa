@@ -9,6 +9,7 @@ static PCB pcb_boot = {};
 PCB *current = NULL;
 static int pcb_index = 0;
 static int schedule_time_slice_index = 0;
+int fg_pcb = 0;
 
 void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
@@ -55,6 +56,8 @@ void init_proc() {
   //context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
   context_uload(new_pcb(), "/bin/hello", NULL, NULL);
   context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
+
+  fg_pcb = pcb_index - 1;
 
   switch_boot_pcb();
 
