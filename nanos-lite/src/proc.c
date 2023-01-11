@@ -9,7 +9,7 @@ static PCB pcb_boot = {};
 PCB *current = NULL;
 static int pcb_index = 0;
 static int schedule_time_slice_index = 0;
-int fg_pcb = 0;
+static int fg_pcb = 0;
 
 void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
@@ -65,6 +65,13 @@ void init_proc() {
 
   // load program here
   //naive_uload(NULL, "/bin/nterm");
+}
+
+void switch_fg_pcb(int n) {
+  if(n < pcb_index) {
+    printf("fg_pcb change: %d -> %d\n", fg_pcb, n);
+    fg_pcb = n;
+  }
 }
 
 Context* schedule(Context *prev) {

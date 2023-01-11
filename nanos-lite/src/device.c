@@ -14,7 +14,7 @@ static const char *keyname[256] __attribute__((used)) = {
   AM_KEYS(NAME)
 };
 
-extern int fg_pcb;
+void switch_fg_pcb(int n);
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   //yield(();
@@ -41,20 +41,16 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   strcpy(buf + 3, keyname[kbd.keycode]);
   
   if(kbd.keydown) {
+    printf("kd %d, %s\n", kbd.keycode, keyname[kbd.keycode]);
     switch (kbd.keycode) {
       case 1:
-        fg_pcb = 1;
-        break;
       case 2:
-        fg_pcb = 2;
-        break;
       case 3:
-        fg_pcb = 3;
+        switch_fg_pcb(kbd.keycode);
         break;
       default:
         break;
     }
-    printf("kd %d: %s, fg_pcb=%d\n", kbd.keycode, keyname[kbd.keycode], fg_pcb);
   }
 
   res = strlen(buf);
