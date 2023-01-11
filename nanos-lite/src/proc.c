@@ -54,7 +54,7 @@ void init_proc() {
   context_kload(new_pcb(), hello_fun, (void *)0);
 
   //context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
-  //context_uload(new_pcb(), "/bin/hello", NULL, NULL);
+  context_uload(new_pcb(), "/bin/hello", NULL, NULL);
   context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
 
   fg_pcb = pcb_index - 1;
@@ -78,7 +78,7 @@ Context* schedule(Context *prev) {
   // save the context pointer
   current->cp = prev;
   
-  current = schedule_time_slice_index % RUN_PCB0_PER ? &pcb[pcb_index - 1] : &pcb[0];
+  current = schedule_time_slice_index % RUN_PCB0_PER ? &pcb[fg_pcb] : &pcb[0];
   schedule_time_slice_index++;
   //current = (current == &pcb[0] ? &pcb[pcb_index - 1] : &pcb[0]);
   //Log("schedule %d\n", (current - &pcb[0]));

@@ -41,7 +41,6 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   strcpy(buf + 3, keyname[kbd.keycode]);
   
   if(kbd.keydown) {
-    printf("kd %d, %s\n", kbd.keycode, keyname[kbd.keycode]);
     switch (kbd.keycode) {
       case 2:
       case 3:
