@@ -51,10 +51,11 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   
-  context_kload(new_pcb(), hello_fun, (void *)0);
+  //context_kload(new_pcb(), hello_fun, (void *)0);
 
-  //context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
   context_uload(new_pcb(), "/bin/hello", NULL, NULL);
+  context_uload(new_pcb(), "/bin/pal", test_arg, NULL);
+  context_uload(new_pcb(), "/bin/bird", NULL, NULL);
   context_uload(new_pcb(), "/bin/nterm", NULL, NULL);
 
   fg_pcb = pcb_index - 1;
