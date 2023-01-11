@@ -47,6 +47,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
       case 3:
       case 4:
         switch_fg_pcb(kbd.keycode - 1);
+        return 0;
         break;
       default:
         break;
