@@ -43,10 +43,10 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   if(kbd.keydown) {
     printf("kd %d, %s\n", kbd.keycode, keyname[kbd.keycode]);
     switch (kbd.keycode) {
-      case 1:
       case 2:
       case 3:
-        switch_fg_pcb(kbd.keycode);
+      case 4:
+        switch_fg_pcb(kbd.keycode - 1);
         break;
       default:
         break;
